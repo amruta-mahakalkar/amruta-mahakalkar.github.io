@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public places in Paris during heatwave — hot or not? — Play with maps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #1a1a1a;
+            background: #ffffff;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        /* Nav */
+        nav {
+            background: #160e0e;
+            color: #fffffe;
+            padding: 1.2rem 4vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-site-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: #fffffe;
+        }
+        .menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #fffffe;
+            border-radius: 1px;
+            transition: 0.3s;
+        }
+        .menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .menu-btn.active span:nth-child(2) { opacity: 0; }
+        .menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        .dropdown {
+            position: absolute;
+            top: 60px;
+            right: 4vw;
+            background: #160e0e;
+            border: 1px solid #333;
+            border-radius: 4px;
+            list-style: none;
+            min-width: 220px;
+            display: none;
+            z-index: 100;
+        }
+        .dropdown.open { display: block; }
+        .dropdown li { border-bottom: 1px solid #2a2a2a; }
+        .dropdown li:last-child { border-bottom: none; }
+        .dropdown a {
+            display: block;
+            padding: 0.75rem 1.2rem;
+            color: #cccccc;
+            font-size: 0.85rem;
+            transition: background 0.2s, color 0.2s;
+        }
+        .dropdown a:hover { background: #2a2a2a; color: #fffffe; }
+
+        .nav-wrap { position: relative; }
+
+        /* Post */
+        .post {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 3rem 4vw 4rem;
+        }
+        .post h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+        .post-date {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+        .post p {
+            margin-bottom: 1.2rem;
+            color: #333;
+        }
+        .post h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        .post h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem;
+        }
+        .post ul, .post ol {
+            margin-bottom: 1.2rem;
+            padding-left: 1.5rem;
+            color: #333;
+        }
+        .post li { margin-bottom: 0.4rem; }
+        .post figure {
+            margin: 1.5rem 0;
+        }
+        .post figure img {
+            border-radius: 4px;
+        }
+        .post figcaption {
+            font-size: 0.8rem;
+            color: #888;
+            text-align: center;
+            margin-top: 0.4rem;
+        }
+        .post blockquote {
+            border-left: 3px solid #160e0e;
+            padding-left: 1.2rem;
+            margin: 1.5rem 0;
+            color: #555;
+            font-style: italic;
+        }
+        .post blockquote p { margin-bottom: 0; }
+        .post mark {
+            background: none;
+            font-weight: 600;
+        }
+        .post .image-pair {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .post .image-pair figure {
+            flex: 1;
+            margin: 0;
+        }
+        .post .google-map {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .post .google-map iframe {
+            max-width: 100%;
+            border: none;
+            border-radius: 4px;
+        }
+        .post .note {
+            color: #878787;
+            font-size: 0.9rem;
+        }
+        .post a {
+            color: #555;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .post a:hover { color: #000; }
+        .post strong { font-weight: 600; }
+
+        /* Back link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .back-link:hover { color: #1a1a1a; }
+
+        /* Footer */
+        footer {
+            background: #160e0e;
+            color: #fffffe;
+            padding: 4rem 4vw;
+            font-size: 0.95rem;
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem 4rem;
+            justify-content: space-between;
+        }
+        .footer-col h3 {
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .footer-site-title {
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .footer-desc { color: #aaaaaa; font-size: 0.9rem; }
+        .footer-social { display: flex; gap: 1rem; justify-content: center; }
+        .footer-social a {
+            color: #aaaaaa;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+        }
+        .footer-social a:hover { color: #fffffe; }
+        .footer-social svg { width: 24px; height: 24px; fill: currentColor; }
+
+        @media (max-width: 768px) {
+            .post h1 { font-size: 1.5rem; }
+            .post .image-pair { flex-direction: column; }
+            .footer-inner { flex-direction: column; gap: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="../index.html" class="nav-site-title">Play with maps</a>
+        <div class="nav-wrap">
+            <button class="menu-btn" id="menuBtn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="dropdown" id="dropdown">
+                <li><a href="paris-heatwave.html">Public places in Paris during heatwave</a></li>
+                <li><a href="#">Checking the pulse of Paris with Vélib</a></li>
+                <li><a href="#">Streets with Tour Eiffel</a></li>
+                <li><a href="#">Mapping urban health and vulnerability</a></li>
+                <li><a href="#">Portfolio</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <article class="post">
+        <a href="../index.html" class="back-link">&larr; Back to home</a>
+        <h1>Public places in Paris during heatwave — hot or not?</h1>
+        <p class="post-date">July 18, 2026</p>
+
+        <p>As Paris entered its third <em>canicule</em> or heatwave of the summer, temperatures on Bastille Day was forecasted to reach 35&deg;C (95&deg;F) with an orange heat alert. While news reports have highlighted the failure of Parisian housing stock, built for a climate that no longer exists, resident influencers have gone viral for frying eggs on their windowsills to monetize the purchase of new air conditioners. Trapped in one such apartment, where my room temperature soared to 40&deg;C, I noticed many Parisians seeking refuge either in their neighbourhood public spaces or in air-conditioned cafes.</p>
+
+        <p>In terms of organising its public spaces, Paris has been a frontrunner in designing climate resilient and adaptive urbanism, especially with the lessons learned from a fatal heatwave over 20 years ago in 2003 that killed nearly&nbsp;15,000 people across the nation. Some of the ambitious measures Paris has implemented so far are:</p>
+
+        <ul>
+            <li>Forestification of public spaces with local and diverse flora, paired with shaded seatings.</li>
+            <li>Drinking water fountains and installation of public misting systems for cooling.</li>
+            <li>Rapid expansion of bike lane network and cycling infrastructure, especially post COVID-19, that has significantly shifted the model choice of commuting from cars to biking for shorter trips. It has simultaneously brought down air pollution levels and transformed car parking spaces for better public use.</li>
+            <li>Promotion of <em>15-minutes urbanism</em> &mdash; a feature already intrinsic to the dense and diverse land use of french cities that shortens the need for longer trips, especially when supported by walkable and bicycle-friendly streets.</li>
+            <li>Pedestrianising hundreds of streets and transforming 500 streets as &ldquo;garden roads&rdquo; across the city.</li>
+            <li>Adoption of an anti-pollution fare that allows riding public transportation at a reduced cost on days when a heatwave or very high levels of air pollution are declared. This prevents relapse to private vehicles as well as reduces exposure to environmental stressors during commuting by non-motorised modes of transport.</li>
+        </ul>
+
+        <p>However, resistance to radical urban projects and a lack of political urgency continue to slow down efforts to cool the city. So, are these measures already enough to mitigate the effects of the ongoing sweltering heat?</p>
+
+        <p>With that in mind, I designed a DIY setup to record and compare the thermal exposure in some traditional and newly transformed public spaces in the city centre. I mounted a <a href="https://docs.steminds.com/kits/eduponics_mini/basic_sensors_usage/dht11_temperature_and_humidity/">DHT11</a> sensor on my bicycle and connected it to my phone's GPS to record geolocated <strong>ambient temperature</strong> and <strong>humidity</strong> in real time every two seconds, as I rode along bike lanes and walked through parks. I also decided to ride a couple of metro lines, wondering if the underground system would be any more comfortable than biking or walking during a heatwave. Additionally, I picked up my husband's pizza-oven thermometer gun to record <strong>surface temperature</strong> on bike lanes, footpaths, and shaded and unshaded public spaces.</p>
+
+        <figure>
+            <img src="../images/paris-heatwave/whatsapp-image-2026-07-14-at-17.20.55-edited.jpeg" alt="Amruta on a bike with sensor setup" />
+        </figure>
+
+        <h3>Route Design</h3>
+
+        <p>The day was July 14, 2026, a national holiday marking Bastille Day. Temperatures were forecast to peak between 16:00 and 18:00, with light winds and partly cloudy skies.</p>
+
+        <figure>
+            <img src="../images/paris-heatwave/map_1-4.jpg" alt="Map showing Place de la Concorde in blue, the river Seine in red" />
+            <figcaption><sub><em>Place de la Concorde in blue, the river Seine in red</em></sub></figcaption>
+        </figure>
+
+        <p>I began my survey from <em>Place de la Concorde</em>, the largest square in the city that adorns an Egyptian obelisk, a few statues, giant fountains and a view of the Eiffel Tower. Historically used as a site for public executions, today this immense concrete and asphalt square occasionally hosts public events (without guillotines), and primarily functions as a major intersection for vehicular circulation. With no intuitive channelisation, this spot is a top-tier navigational challenge for novice cyclists.</p>
+
+        <p>Crossing this 360-m long square on foot or by bike in sweltering heat without risking heat exhaustion is possible with a quick visit to the adjacent Tuileries Garden. Located along the Seine river, this garden is one of the largest parks in the city with flower beds, ponds, manicured tree-lined pathways, and plenty of seating areas. I walked through a few parts of the park to compare temperatures under the wooded areas, along the sandy grand axis running east-west, and the spaces surrounding one of the larger ponds.</p>
+
+        <figure>
+            <img src="../images/paris-heatwave/map_3-1.jpg" alt="Map of Place de la Concorde and Tuileries Garden" />
+            <figcaption><em><sub>Place de la Concorde and Tuileries Garden between Rue de Rivoli and the Seine River</sub></em></figcaption>
+        </figure>
+
+        <p>My next stop was <em>Rue de Rivoli</em>, an iconic Haussmannian boulevard leading to the famous Louvre Museum. Once infested with heavy car traffic, it is now largely reserved for cyclists and pedestrians &mdash; a bold post-COVID tactical urbanism experiment that was made permanent after its success, with up to <a href="https://compteurs.parisenselle.fr/details/64-rue-de-rivoli/" target="_blank" rel="noopener">20,000 cyclists</a> using the street daily last year.</p>
+
+        <p>I then cycled through the forecourt of the Louvre Museum which is a large open square dominated by the iconic glass pyramid. Although this expansive public space offers plenty of seating areas, it notably has no vegetation to provide shade for the visitors.</p>
+
+        <div class="image-pair">
+            <figure>
+                <img src="../images/paris-heatwave/eypbcc1wsaaa2hl-1.jpg" alt="Rue de Rivoli in the 1980s" />
+            </figure>
+            <figure>
+                <img src="../images/paris-heatwave/20260714_170042.jpg" alt="Rue de Rivoli in 2026" />
+            </figure>
+        </div>
+        <p style="text-align:center;font-size:0.8rem;color:#888;margin-top:-1rem;"><em>Rue de Rivoli in the 1980s vs 2026</em></p>
+
+        <p>I went ahead and also inspected smaller public spaces around the museum, taking a quick walk to a square across from the Louvre Museum that was temporarily used as an exhibition space, followed by a visit to a tiny park surrounding <em>Saint-Jacques Tower</em>, about a kilometer further down the street.</p>
+
+        <figure>
+            <img src="../images/paris-heatwave/map_5.jpg" alt="Map showing smaller public spaces" />
+        </figure>
+
+        <p>My next stop was the city hall or <em>H&ocirc;tel de Ville</em>, another important landmark along <em>Rue de Rivoli</em> with a large square serving as a gathering space. The square has very recently undergone a <a href="https://www.paris.fr/pages/foret-urbaine-de-l-hotel-de-ville-la-plantation-a-commence-ce-qu-il-faut-savoir-29934" target="_blank" rel="noopener">redevelopment</a>, with around 30% of its surface area transformed into dense, tall vegetation accompanied by benches underneath. I recorded readings while biking through the newly grown <em>for&ecirc;t urbaine</em> and the remaining open concrete areas before exiting toward <em>Pont l'Arcole</em>, a bridge that traverses the Seine, and then descending to another popular public space project called <em><a href="https://www.pps.org/places/paris-plages" target="_blank" rel="noopener">Paris Plages</a></em>.</p>
+
+        <p>Paris Plages has been a successful public space initiative since its conception in 2002, when the city decided to convert an expressway along the right bank of the Seine into an urban beach. Despite the heatwave, hundreds of Parisians were unwinding, playing music or taking a dip in the newly opened swimming area in the river.</p>
+
+        <p>I exited the Paris Plages by climbing back to the main street, <em>Quai de l'H&ocirc;tel de Ville</em>, and continued cycling along the protected bike lane toward <em>Louvre-Rivoli</em> metro station. From there, I jumped on the air-conditioned Line 1 to reach <em>Place de la Concorde</em> station. Then I hopped onto Line 12, which was not air-conditioned and relied on natural ventilation through open windows, to reach Saint Lazare Station &mdash; all while using the discounted tickets offered by the <a href="https://www.sortiraparis.com/en/news/in-paris/articles/134579-the-anti-pollution-pass-priced-at-5-10-is-renewed-in-ile-de-france-on-june-24" target="_blank" rel="noopener"><em>forfait anti-pollution</em></a>.</p>
+
+        <figure>
+            <img src="../images/paris-heatwave/map_7-edited.jpg" alt="Map showing temperatures recorded" />
+            <figcaption><em>Temperature recorded at public spaces between Place de la Concorde and Paris Plages on bike, by walk and on metro.</em></figcaption>
+        </figure>
+
+        <blockquote>
+            <p><strong>So, how well did all these public spaces withstand the heatwave?</strong></p>
+        </blockquote>
+
+        <p>While the meteorological forecast reported 35&deg;C in Paris with light winds, partly cloudy skies and low humidity (around 21%) during peak hot hours, the microclimatic experience varied significantly across different land uses and their built materials.</p>
+
+        <p>As per the sensor records, humidity remained low, ranging between 10% to 29%. The ambient temperature ranged from 35&deg;C to 38.8&deg;C, whereas surface temperature varied widely between 24.4&deg;C to 58.6&deg;C. This substantial difference between surface and air temperature coupled with wind speed strongly influenced the thermal comfort across these public spaces.</p>
+
+        <h3>How hot?</h3>
+
+        <p>Cycling and navigating the first landmark, <em>Place de la Concorde</em> was far from a physically pleasant experience. The square recorded both the highest (38.8&deg;C) as well as lowest (35.4&deg;C) air temperature albeit this 3.4&deg;C difference in temperature was not felt considerably.</p>
+
+        <p>Cycling along <em>Quai de l'H&ocirc;tel de Ville</em> was similarly uncomfortable, with mean air temperature of around 37.8&deg;C and surface temperature reaching up to 56.4&deg;C on the unshaded bike lane. Despite its proximity to the Seine, the cooling effect of the river did not reach this street, potentially offset by the heat absorbed by dark asphalt and populated by car traffic.</p>
+
+        <div class="image-pair">
+            <figure>
+                <img src="../images/paris-heatwave/20260714_164125-e1784245054169.jpg" alt="Surface temperature on Rue de Rivoli bike lane" />
+            </figure>
+            <figure>
+                <img src="../images/paris-heatwave/20260714_171522-e1784245071634.jpg" alt="Vegetation at H&ocirc;tel de Ville" />
+            </figure>
+        </div>
+        <p style="text-align:center;font-size:0.8rem;color:#888;margin-top:-1rem;"><em>Surface temperature on Rue de Rivoli bike lane vs. vegetation at H&ocirc;tel de Ville</em></p>
+
+        <p>Observations from <em>Rue de Rivoli</em> were interesting with air temperatures at 37&deg;C&plusmn;std dev&deg;C, but surface temperature varying dramatically between footpaths and bike lanes. The footpath along the edge of Tuileries Garden was noticeably cooler, with surface temperature at 32.8&deg;C, and was more comfortable to walk on, especially in the shaded areas. In contrast, bake lanes exposed to direct sunlight reached up to 58.6&deg;C. However, the continuous airflow along the street, together with low relative humidity (21%), helped make cycling a less unpleasant experience despite the high temperatures.</p>
+
+        <p>The exposed concrete areas in front of the Louvre Museum and <em>H&ocirc;tel de Ville</em> were particularly harsh with surface temperatures reaching upto 51&deg;C, discouraging people to use these parts and leaving most of the seating places unoccupied. Parts of the <em>Pont l'Arcole</em> were similarly too warm for prolonged use, with surface temperatures reaching upto 50&deg;C despite its proximity to the Seine. Nonetheless, the bridge remained relatively pleasant for walking and cycling with its average air temperature of 36.8&deg;C, a gentle breeze and a scenic view.</p>
+
+        <p>As expected, the fully paved square in front of the Louvre Museum remained one of the least comfortable spaces, with air temperatures around 37&deg;C and surface temperatures reaching 52&deg;C. At the time of observation, the square was largely avoided by tourists despite being a host of some large artworks along with seating arrangements.</p>
+
+        <h3>Cool Places</h3>
+
+        <p>I hypothesized that parks and natural areas would be cooler and more thermally comfortable than built public spaces. However, remarkable difference in temperature and thermal comfort was observed based on the design and vegetation structure of the parks. Overall, the coolest place was the park around <em>Saint-Jacques Tower</em>, with a mean air temperature of 36.2&deg;C and surface temperatures ranging between 24.4&deg;C and 32.4&deg;C. The dense foliage of this small park made resting and movement a soothing experience, and thus remained crowded during the hottest hours of the day.</p>
+
+        <p>Tuileries Garden, on the other hand, recorded a higher air temperature of around 37.7&deg;C. Consisting of shaded tree-lined areas as well as exposed pathways, this large park showed a significant surface temperature difference of 15&deg;C between the shaded and sun-exposed areas. Despite the light-coloured sand, exposed pathways reached up to 48.5&deg;C, even near the pond, whereas hang out places shaded by trees remained considerably cooler at around 33&deg;C.</p>
+
+        <p>Another impressively cool location was the newly forested part of <em>H&ocirc;tel de Ville</em>. The densely vegetated pathways lined with seating structures, recorded air temperature of 36&deg;C and a much lower surface temperature of up to 26.8&deg;C, attracting many visitors to use the seating space and take a break from the heat.</p>
+
+        <p>The cooling effect of the Seine was most detectable at the Paris Plages, where average air temperature was 36.6&deg;C and surface temperature dropped to 32.5&deg;C in shaded areas. However, unshaded concrete and asphalt areas still recorded surface temperatures as high as 52.2&deg;C.</p>
+
+        <div class="image-pair">
+            <figure>
+                <img src="../images/paris-heatwave/20260713_130132-3.jpg" alt="Place de la Concorde" />
+            </figure>
+            <figure>
+                <img src="../images/paris-heatwave/20260714_173142-3.jpg" alt="Paris Plages" />
+            </figure>
+        </div>
+        <p style="text-align:center;font-size:0.8rem;color:#888;margin-top:-1rem;"><em>Place de la Concorde vs. Paris Plages</em></p>
+
+        <div class="image-pair">
+            <figure>
+                <img src="../images/paris-heatwave/20260714_165553-1.jpg" alt="Square next to Louvre Museum" />
+            </figure>
+            <figure>
+                <img src="../images/paris-heatwave/20260714_170417-1.jpg" alt="Park around St. Jacques Tower" />
+            </figure>
+        </div>
+        <p style="text-align:center;font-size:0.8rem;color:#888;margin-top:-1rem;"><em>Square next to Louvre Museum vs. Park around St. Jacques Tower</em></p>
+
+        <div class="google-map">
+            <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1M7G6ojkMHUWU1N5Up4239Tidd2Ao88Q&ehbc=2E312F&noprof=1" width="100%" height="480" allowfullscreen></iframe>
+            <p style="font-size:0.8rem;color:#888;margin-top:0.4rem;"><em>Interactive map with values of ambient and surface temperature recorded in public spaces in Paris.</em></p>
+        </div>
+
+        <h3>Is metro any better?</h3>
+
+        <p>Taking advantage of the anti-pollution fare, I rode Line 1 from <em>Louvre-Rivoli</em> metro station to <em>Concorde</em>, with trains running every three minutes. Despite being air-conditioned and relatively uncrowded due to the public holiday, the carriage temperature remained around 35&deg;C along with relatively higher humidity levels (up to 25%). On the other hand, my journey on Line 12 from <em>Concorde</em> to Saint Lazare station felt slightly more comfortable despite the absence of air conditioning, with humidity ranging from 11% to 29%. Although temperatures remained within a similar range to Line 1, natural ventilation through open windows improved airflow, helping to reduce thermal discomfort and excessive sweating. While I only travelled a couple of stops on each line, longer journeys during the hottest hours could potentially become just as uncomfortable as cycling outdoors, particularly in higher humidity levels and crowded conditions.</p>
+
+        <h2>Final thoughts..</h2>
+
+        <p>My biggest takeaway from this DIY experiment was that, during extremely hot days or a heatwave in this case, thermal comfort in outdoor public spaces is shaped not only by ambient temperature but also by the contrast between ambient and surface temperatures. This contrast is largely determined by factors such as the characteristics of the construction materials of the public space, and the design of public spaces that control both natural and artificial shading. Shading, whether provided by trees or dense built-up structures, significantly brings down the surface temperature, although air temperatures could remain relatively stable across these spaces. Furthermore, higher relative humidity could elevate wet-bulb temperature, thereby exacerbating thermal discomfort compared with hotter but drier environments.</p>
+
+        <p>The hottest places were those directly exposed to the sun and composed of darker surface, whereas the coolest locations were densely vegetated parks with continuous airflow. Even amongst the cooler green spaces, differences in design significantly influenced thermal comfort. Tuileries Garden, with its traditional geometric layout, offered a regal aesthetic but was not as effective at reducing heat as the <em>wilder</em> greening projects such as the park around <em>Saint Jacque Tower</em> or seating areas in front of the city hall.</p>
+
+        <p>Tourist magnets such as the Louvre Museum or <em>Place de la Concorde</em> with their common spaces covered by concrete or asphalt still behave like frying pans. While they provide a direct and clear view to the monuments, it costs health risk among visitors who may visit many such monuments in a single day.</p>
+
+        <p>The city is ambitiously promoting cycling to shift trips away from cars and reduce overcrowding in public transportation, with commuting short distances by bike becoming faster than other modes. So, it is important to further improve the biking experience by not just making it safer but also more pleasant in difficult weather. However, during the moments of extreme environmental stress, especially during heatwaves, the question arises if measures such as anti-pollution fare can protect the most vulnerable populations from extreme discomfort or acute health outcomes if the metros are not designed with effective cooling mechanisms.</p>
+
+        <p>At present, the new greening and cooling initiatives in Paris are promising and demonstrate political commitment to take adaptation and mitigation efforts against urban climate hazards. But the question remains &mdash; will Paris, an emerging pioneer of sustainable urbanism, be able to keep pace with the increasing frequency and intensity of heatwaves?</p>
+
+        <p class="note"><em>Note: 1. Ambient temperature and humidity readings from DHT11 sensor have limited accuracy and are susceptible to measurement errors. Likewise, the infrared thermometer readings are also subject to uncertainty, as surface temperature measurements can be affected by viewing angle and distance from the target. 2. True thermal comfort also depends on wind speed that I couldn't empirically measure.</em></p>
+    </article>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-col">
+                <div class="footer-site-title">Play with maps</div>
+                <p class="footer-desc">Experiments with urban data, mapping and GIS tools</p>
+            </div>
+            <div class="footer-col">
+                <h3>Get in touch</h3>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/in/amruta-mahakalkar-6826258b" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                    <a href="mailto:amrutamahakalkar3@gmail.com" aria-label="Email">
+                        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('menuBtn');
+        const dropdown = document.getElementById('dropdown');
+        btn.addEventListener('click', () => {
+            btn.classList.toggle('active');
+            dropdown.classList.toggle('open');
+        });
+        document.addEventListener('click', (e) => {
+            if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+                btn.classList.remove('active');
+                dropdown.classList.remove('open');
+            }
+        });
+    </script>
+
+</body>
+</html>

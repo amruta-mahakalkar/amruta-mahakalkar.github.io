@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -221,10 +222,9 @@
             margin: 1.5rem 0;
         }
         .img-gif-stack figure {
-            margin: 1.5rem 0;
-            max-width: 90%;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 2rem auto;
+            max-width: 85%;
+            width: 85%;
         }
         .img-gif-stack figcaption {
             font-size: 0.8rem;
@@ -350,7 +350,7 @@
 
         <p>Although the city geoportal provides real-time V&eacute;lib station status and allows users to download the data, it does not keep any archives. This poses a challenge to collect day-long or earlier datasets for research purpose. I decided to dedicate two full days &ndash; 8/9/2022 (Thursday) and 10/9/2022 (Saturday) for data downloading and used this python code to automate the task every 30 minutes:</p>
 
-        <pre><code>import urllib.request
+        <pre><code class="language-python">import urllib.request
 from time import sleep
 
 # define API and folder location
@@ -527,7 +527,10 @@ for i in range(waitFor):
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script>
+        hljs.highlightAll();
+
         const btn = document.getElementById('menuBtn');
         const dropdown = document.getElementById('dropdown');
         btn.addEventListener('click', () => {

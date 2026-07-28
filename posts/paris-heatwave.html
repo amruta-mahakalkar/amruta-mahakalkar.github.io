@@ -205,21 +205,20 @@
             z-index: 10;
         }
         .img-compare-handle::before {
-            content: '\2B9C';
+            content: '';
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: white;
-            color: #333;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
+            background: #fff;
             box-shadow: 0 0 4px rgba(0,0,0,0.3);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M10 6l-6 6 6 6M14 6l6 6-6 6' stroke='%23333' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 18px;
         }
         .img-compare-label {
             font-size: 0.8rem;
@@ -387,9 +386,7 @@
             <div class="media-figure">
                 <img src="../images/paris-heatwave/whatsapp-image-2026-07-14-at-17.20.55-edited.jpeg" alt="Amruta on a bike with sensor setup" />
             </div>
-            <div class="media-text">
                 <p>With that in mind, I designed a DIY setup to record and compare the thermal exposure in some traditional and newly transformed public spaces in the city centre. I mounted a <a href="https://docs.steminds.com/kits/eduponics_mini/basic_sensors_usage/dht11_temperature_and_humidity/">DHT11</a> sensor on my bicycle and connected it to my phone's GPS to record geolocated <strong>ambient temperature</strong> and <strong>humidity</strong> in real time every two seconds, as I rode along bike lanes and walked through parks. I also decided to ride a couple of metro lines, wondering if the underground system would be any more comfortable than biking or walking during a heatwave. Additionally, I picked up my husband's pizza-oven thermometer gun to record <strong>surface temperature</strong> on bike lanes, footpaths, and shaded and unshaded public spaces.</p>
-            </div>
         </div>
 
         <h3>Route Design</h3>
@@ -400,18 +397,14 @@
             <div class="media-figure">
                 <img src="../images/paris-heatwave/map_1-4.jpg" alt="Map showing Place de la Concorde in blue, the river Seine in red" />
             </div>
-            <div class="media-text">
-                <p>I began my survey from <em>Place de la Concorde</em>, the largest square in the city that adorns an Egyptian obelisk, a few statues, giant fountains and a view of the Eiffel Tower. Historically used as a site for public executions, today this immense concrete and asphalt square occasionally hosts public events (without guillotines), and primarily functions as a major intersection for vehicular circulation. With no intuitive channelisation, this spot is a top-tier navigational challenge for novice cyclists.</p>
-            </div>
+            <p>I began my survey from <em>Place de la Concorde</em>, the largest square in the city that adorns an Egyptian obelisk, a few statues, giant fountains and a view of the Eiffel Tower. Historically used as a site for public executions, today this immense concrete and asphalt square occasionally hosts public events (without guillotines), and primarily functions as a major intersection for vehicular circulation. With no intuitive channelisation, this spot is a top-tier navigational challenge for novice cyclists.</p>
         </div>
 
         <div class="media-block right">
             <div class="media-figure">
                 <img src="../images/paris-heatwave/map_3-1.jpg" alt="Map of Place de la Concorde and Tuileries Garden" />
             </div>
-            <div class="media-text">
-                <p>Crossing this 360-m long square on foot or by bike in sweltering heat without risking heat exhaustion is possible with a quick visit to the adjacent Tuileries Garden. Located along the Seine river, this garden is one of the largest parks in the city with flower beds, ponds, manicured tree-lined pathways, and plenty of seating areas. I walked through a few parts of the park to compare temperatures under the wooded areas, along the sandy grand axis running east-west, and the spaces surrounding one of the larger ponds.</p>
-            </div>
+            <p>Crossing this 360-m long square on foot or by bike in sweltering heat without risking heat exhaustion is possible with a quick visit to the adjacent Tuileries Garden. Located along the Seine river, this garden is one of the largest parks in the city with flower beds, ponds, manicured tree-lined pathways, and plenty of seating areas. I walked through a few parts of the park to compare temperatures under the wooded areas, along the sandy grand axis running east-west, and the spaces surrounding one of the larger ponds.</p>
         </div>
 
         <div class="media-block right">
@@ -427,10 +420,8 @@
                     <div class="img-compare-label"><em>Rue de Rivoli in the 1980s vs 2026</em></div>
                 </div>
             </div>
-            <div class="media-text">
-                <p>My next stop was <em>Rue de Rivoli</em>, an iconic Haussmannian boulevard leading to the famous Louvre Museum. Once infested with heavy car traffic, it is now largely reserved for cyclists and pedestrians &mdash; a bold post-COVID tactical urbanism experiment that was made permanent after its success, with up to <a href="https://compteurs.parisenselle.fr/details/64-rue-de-rivoli/" target="_blank" rel="noopener">20,000 cyclists</a> using the street daily last year.</p>
-                <p>I then cycled through the forecourt of the Louvre Museum which is a large open square dominated by the iconic glass pyramid. Although this expansive public space offers plenty of seating areas, it notably has no vegetation to provide shade for the visitors.</p>
-            </div>
+            <p>My next stop was <em>Rue de Rivoli</em>, an iconic Haussmannian boulevard leading to the famous Louvre Museum. Once infested with heavy car traffic, it is now largely reserved for cyclists and pedestrians &mdash; a bold post-COVID tactical urbanism experiment that was made permanent after its success, with up to <a href="https://compteurs.parisenselle.fr/details/64-rue-de-rivoli/" target="_blank" rel="noopener">20,000 cyclists</a> using the street daily last year.</p>
+            <p>I then cycled through the forecourt of the Louvre Museum which is a large open square dominated by the iconic glass pyramid. Although this expansive public space offers plenty of seating areas, it notably has no vegetation to provide shade for the visitors.</p>
         </div>
 
         <p>I went ahead and also inspected smaller public spaces around the museum, taking a quick walk to a square across from the Louvre Museum that was temporarily used as an exhibition space, followed by a visit to a tiny park surrounding <em>Saint-Jacques Tower</em>, about a kilometer further down the street.</p>
@@ -477,9 +468,7 @@
                     <div class="img-compare-label"><em>Surface temperature on Rue de Rivoli bike lane vs. vegetation at H&ocirc;tel de Ville</em></div>
                 </div>
             </div>
-            <div class="media-text">
-                <p>Observations from <em>Rue de Rivoli</em> were interesting with air temperatures at 37&deg;C&plusmn;std dev&deg;C, but surface temperature varying dramatically between footpaths and bike lanes. The footpath along the edge of Tuileries Garden was noticeably cooler, with surface temperature at 32.8&deg;C, and was more comfortable to walk on, especially in the shaded areas. In contrast, bake lanes exposed to direct sunlight reached up to 58.6&deg;C. However, the continuous airflow along the street, together with low relative humidity (21%), helped make cycling a less unpleasant experience despite the high temperatures.</p>
-            </div>
+            <p>Observations from <em>Rue de Rivoli</em> were interesting with air temperatures at 37&deg;C&plusmn;std dev&deg;C, but surface temperature varying dramatically between footpaths and bike lanes. The footpath along the edge of Tuileries Garden was noticeably cooler, with surface temperature at 32.8&deg;C, and was more comfortable to walk on, especially in the shaded areas. In contrast, bake lanes exposed to direct sunlight reached up to 58.6&deg;C. However, the continuous airflow along the street, together with low relative humidity (21%), helped make cycling a less unpleasant experience despite the high temperatures.</p>
         </div>
 
         <p>The exposed concrete areas in front of the Louvre Museum and <em>H&ocirc;tel de Ville</em> were particularly harsh with surface temperatures reaching upto 51&deg;C, discouraging people to use these parts and leaving most of the seating places unoccupied. Parts of the <em>Pont l'Arcole</em> were similarly too warm for prolonged use, with surface temperatures reaching upto 50&deg;C despite its proximity to the Seine. Nonetheless, the bridge remained relatively pleasant for walking and cycling with its average air temperature of 36.8&deg;C, a gentle breeze and a scenic view.</p>

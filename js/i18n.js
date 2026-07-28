@@ -17,7 +17,7 @@
       if (titleVal) document.title = titleVal;
     }
     document.querySelectorAll('[data-i18n-container]').forEach(function (el) {
-      el.style.display = el.getAttribute('lang') === currentLang ? '' : 'none';
+      el.style.display = el.getAttribute('lang') === currentLang ? 'block' : 'none';
     });
     document.querySelectorAll('.lang-btn').forEach(function (b) {
       b.classList.toggle('active', b.getAttribute('data-lang') === currentLang);

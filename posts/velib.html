@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checking the pulse of Paris with Vélib' — Play with maps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #1a1a1a;
+            background: #ffffff;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        nav {
+            background: #160e0e;
+            color: #fffffe;
+            padding: 1.2rem 4vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-site-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: #fffffe;
+        }
+        .menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #fffffe;
+            border-radius: 1px;
+            transition: 0.3s;
+        }
+        .menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .menu-btn.active span:nth-child(2) { opacity: 0; }
+        .menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        .dropdown {
+            position: absolute;
+            top: 60px;
+            right: 4vw;
+            background: #160e0e;
+            border: 1px solid #333;
+            border-radius: 4px;
+            list-style: none;
+            min-width: 220px;
+            display: none;
+            z-index: 100;
+        }
+        .dropdown.open { display: block; }
+        .dropdown li { border-bottom: 1px solid #2a2a2a; }
+        .dropdown li:last-child { border-bottom: none; }
+        .dropdown a {
+            display: block;
+            padding: 0.75rem 1.2rem;
+            color: #cccccc;
+            font-size: 0.85rem;
+            transition: background 0.2s, color 0.2s;
+        }
+        .dropdown a:hover { background: #2a2a2a; color: #fffffe; }
+        .nav-wrap { position: relative; }
+
+        .post {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 3rem 4vw 4rem;
+        }
+        .post h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+        .post-date {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+        .post p {
+            margin-bottom: 1.2rem;
+            color: #333;
+        }
+        .post h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        .post h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem;
+        }
+        .post h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem;
+        }
+        .post ul, .post ol {
+            margin-bottom: 1.2rem;
+            padding-left: 1.5rem;
+            color: #333;
+        }
+        .post li { margin-bottom: 0.4rem; }
+        .post blockquote {
+            border-left: 3px solid #160e0e;
+            padding-left: 1.2rem;
+            margin: 1.5rem 0;
+            color: #555;
+            font-style: italic;
+        }
+        .post blockquote p { margin-bottom: 0; }
+        .post mark { background: none; font-weight: 600; }
+        .post a {
+            color: #555;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .post a:hover { color: #000; }
+        .post strong { font-weight: 600; }
+
+        .img-compare-wrap {
+            margin: 1.5rem 0;
+        }
+        .img-compare {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            cursor: ew-resize;
+            user-select: none;
+        }
+        .img-compare img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .img-compare-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            clip-path: inset(0 50% 0 0);
+        }
+        .img-compare-overlay img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .img-compare-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 3px;
+            margin-left: -1.5px;
+            background: white;
+            cursor: ew-resize;
+            z-index: 10;
+        }
+        .img-compare-handle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 4px rgba(0,0,0,0.3);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M10 6l-6 6 6 6M14 6l6 6-6 6' stroke='%23333' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 18px;
+        }
+        .img-compare-label {
+            font-size: 0.8rem;
+            color: #888;
+            text-align: center;
+            margin-top: 0.4rem;
+        }
+
+        .slider-pair-half {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .slider-pair-half .img-compare-wrap {
+            flex: 1;
+            margin: 0;
+        }
+        .slider-pair-half .img-compare-label {
+            font-size: 0.7rem;
+        }
+
+        .img-gif-pair {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .img-gif-pair figure {
+            flex: 1;
+            margin: 0;
+        }
+        .img-gif-pair figcaption {
+            font-size: 0.8rem;
+            color: #888;
+            text-align: center;
+            margin-top: 0.4rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .back-link:hover { color: #1a1a1a; }
+
+        .note {
+            color: #878787;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background: #160e0e;
+            color: #fffffe;
+            padding: 4rem 4vw;
+            font-size: 0.95rem;
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem 4rem;
+            justify-content: space-between;
+        }
+        .footer-col h3 {
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .footer-site-title {
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .footer-desc { color: #aaaaaa; font-size: 0.9rem; }
+        .footer-social { display: flex; gap: 1rem; justify-content: center; }
+        .footer-social a {
+            color: #aaaaaa;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+        }
+        .footer-social a:hover { color: #fffffe; }
+        .footer-social svg { width: 24px; height: 24px; fill: currentColor; }
+
+        @media (max-width: 768px) {
+            .post h1 { font-size: 1.5rem; }
+            .slider-pair-half { flex-direction: column; }
+            .img-gif-pair { flex-direction: column; }
+            .footer-inner { flex-direction: column; gap: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="../index.html" class="nav-site-title">Play with maps</a>
+        <div class="nav-wrap">
+            <button class="menu-btn" id="menuBtn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="dropdown" id="dropdown">
+                <li><a href="paris-heatwave.html">Public places in Paris during heatwave</a></li>
+                <li><a href="velib.html">Checking the pulse of Paris with Vélib</a></li>
+                <li><a href="#">Streets with Tour Eiffel</a></li>
+                <li><a href="#">Mapping urban health and vulnerability</a></li>
+                <li><a href="#">Portfolio</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <article class="post">
+        <a href="../index.html" class="back-link">&larr; Back to home</a>
+        <h1>Checking the pulse of Paris with V&eacute;lib&rsquo;</h1>
+        <p class="post-date">September 11, 2022</p>
+
+        <p>In recent years, Paris has been emerging as a frontrunner of sustainable slow mobility with proactive promotion of biking and walking. One of the important modes of shared transit offered by the city is V&eacute;lib&rsquo;, a public bike sharing system that was launched in 2007. This network of 1400 bike station serves the entire city and peripheral municipalities.</p>
+
+        <p>Widely popular amongst Parisians and tourists, this service provides both mechanical and electric bikes through a subscription-based app. Observing the demand patterns of such mobility systems can be an insightful way in understanding the urban flows. Moreover, by superimposing such trends on land uses, decision makers can design better strategies in meeting the demand-supply gap or even induce further demand.</p>
+
+        <p>The open-data geoportal of Paris city offers an extensive real time data of V&eacute;lib stations and is updated every minute. I decided to capitalize this data availability to map and study the trends of V&eacute;lib stations on a weekday and weekend day, and received some exciting results!</p>
+
+        <h4>Data challenges</h4>
+
+        <p>Although the city geoportal provides real-time V&eacute;lib station status and allows users to download the data, it does not keep any archives. This poses a challenge to collect day-long or earlier datasets for research purpose. I decided to dedicate two full days &ndash; 8/9/2022 (Thursday) and 10/9/2022 (Saturday) for data downloading and used this python code to automate the task every 30 minutes:</p>
+
+        <p>This gave me total 96 .json files over the course of two days which I merged and converted into a single .csv, transferring them in QGIS. I deleted duplicate values and cleaned up the original timestamp by adding a new field. This file now provides me the total capacity, time-wise vacant and parked slots of electric and mechanical bikes of each V&eacute;lib station. Interestingly, I observed that the timestamps appeared to be updated every hour rather than every minute by the portal.</p>
+
+        <p>To overlay the mobility data over a base layer of urban functions, I decided to adopt population and job density instead of the conventional land use data. The city of Paris is astoundingly mixed used. So much so that its existing land and built uses cannot be thoroughly recorded. Often a building holds several uses that cannot be easily categorized. Likewise, a same space is used for different purposed over time. Therefore, understanding the distribution of broad &lsquo;housing&rsquo; and &lsquo;working&rsquo; centralities makes more logic.</p>
+
+        <p>For this, I then extracted the population and job density data from French census. While census-level population was available, the job density was only given for arrondissements (districts in Paris city) and municipalities which is not granular enough to understand the trends. I could only find one pdf on the official website for census-level job density, which I managed to convert into a GIS layer.</p>
+
+        <h4>Visualization and interpretation</h4>
+
+        <p>I used an open-source platform, kepler.gl to compile and visualize the data using its playback tool. The day-long transition videos are in the end of this blog. Here, I share some comparative screenshots with my insights.</p>
+
+        <p>The job density in Paris is highest in the north and north-western part of the Seine. It also stays high towards La D&eacute;fense district on the north-western periphery and Boulogne-Billancourt in the south-western periphery of the city. On the other hand, the residential density is quite high across the city, except in neighbourhoods with very high job density. Also, it remains medium high in all its adjacent municipalities, especially in the north. Considering this context, the day and time-wise occupancies of V&eacute;lib stations:</p>
+
+        <h3>Morning</h3>
+
+        <p>On weekday, all the stations in the central employment hotspots get full (low to high occupancy indicated by blue to red dots), implying complete inflow of bike movement in city centre and job districts like La D&eacute;fense. But on weekends, the bike movement appears fairly dispersed and slightly concentrated in the north-east and south-west of the city.</p>
+
+        <div class="slider-pair-half">
+            <div class="img-compare-wrap">
+                <div class="img-compare" data-position="50">
+                    <img src="../images/velib/job_morn-noon-2.png" alt="Weekday morning job density" />
+                    <div class="img-compare-overlay">
+                        <img src="../images/velib/job_morn-noon_we-2.png" alt="Weekend morning job density" />
+                    </div>
+                    <div class="img-compare-handle"></div>
+                </div>
+                <div class="img-compare-label"><em>Morning occupancy on weekday and weekend (job density)</em></div>
+            </div>
+            <div class="img-compare-wrap">
+                <div class="img-compare" data-position="50">
+                    <img src="../images/velib/res_morn-noon.png" alt="Weekday morning population density" />
+                    <div class="img-compare-overlay">
+                        <img src="../images/velib/res_morn-noon_we.png" alt="Weekend morning population density" />
+                    </div>
+                    <div class="img-compare-handle"></div>
+                </div>
+                <div class="img-compare-label"><em>Morning occupancy on weekday and weekend (population density)</em></div>
+            </div>
+        </div>
+
+        <h3>Afternoon</h3>
+
+        <p>On weekend during afternoon, the bike occupancy seems to be dispersed around the city whereas on the weekday, the bikes were found away from the job dense places, perhaps being used by non-working commuters such as tourists.</p>
+
+        <div class="slider-pair-half">
+            <div class="img-compare-wrap">
+                <div class="img-compare" data-position="50">
+                    <img src="../images/velib/job_afternoon.png" alt="Weekday afternoon job density" />
+                    <div class="img-compare-overlay">
+                        <img src="../images/velib/job_afternoon_we.png" alt="Weekend afternoon job density" />
+                    </div>
+                    <div class="img-compare-handle"></div>
+                </div>
+                <div class="img-compare-label"><em>Afternoon occupancy on weekday and weekend (job density)</em></div>
+            </div>
+            <div class="img-compare-wrap">
+                <div class="img-compare" data-position="50">
+                    <img src="../images/velib/res_afternoon-1.png" alt="Weekday afternoon population density" />
+                    <div class="img-compare-overlay">
+                        <img src="../images/velib/res_afternoon_we-1.png" alt="Weekend afternoon population density" />
+                    </div>
+                    <div class="img-compare-handle"></div>
+                </div>
+                <div class="img-compare-label"><em>Afternoon occupancy on weekday and weekend (population density)</em></div>
+            </div>
+        </div>
+
+        <h3>Evening</h3>
+
+        <p>It can be noticed that on weekdays, bikes flock back to the residential hotspots after office hours. To the contrary, the bikes remain concentrated in the east of Paris along the Seine and in the south on the weekend. East of Paris holds plenty of recreational public and private places &ndash; potentially explaining this trend.</p>
+
+        <div class="slider-pair-half">
+            <div class="img-compare-wrap">
+                <div class="img-compare" data-position="50">
+                    <img src="../images/velib/job_evening.png" alt="Weekday evening job density" />
+                    <div class="img-compare-overlay">
+                        <img src="../images/velib/job_evening_we.png" alt="Weekend evening job density" />
+                    </div>
+                    <div class="img-compare-handle"></div>
+                </div>
+                <div class="img-compare-label"><em>Evening occupancy on weekday and weekend (job density)</em></div>
+            </div>
+            <div class="img-compare-wrap">
+                <div class="img-compare" data-position="50">
+                    <img src="../images/velib/res_evening-1.png" alt="Weekday evening population density" />
+                    <div class="img-compare-overlay">
+                        <img src="../images/velib/res_evening_we.png" alt="Weekend evening population density" />
+                    </div>
+                    <div class="img-compare-handle"></div>
+                </div>
+                <div class="img-compare-label"><em>Evening occupancy on weekday and weekend (population density)</em></div>
+            </div>
+        </div>
+
+        <h3>Night</h3>
+
+        <p>Just opposite to the morning movement trend, the V&eacute;lib bikes move back to residential zones at night on both week and weekend days, off to sleep.</p>
+
+        <div class="slider-pair-half">
+            <div class="img-compare-wrap">
+                <div class="img-compare" data-position="50">
+                    <img src="../images/velib/job_night.png" alt="Weekday night job density" />
+                    <div class="img-compare-overlay">
+                        <img src="../images/velib/job_night_we.png" alt="Weekend night job density" />
+                    </div>
+                    <div class="img-compare-handle"></div>
+                </div>
+                <div class="img-compare-label"><em>Night occupancy on weekday and weekend (job density)</em></div>
+            </div>
+            <div class="img-compare-wrap">
+                <div class="img-compare" data-position="50">
+                    <img src="../images/velib/res_night.png" alt="Weekday night population density" />
+                    <div class="img-compare-overlay">
+                        <img src="../images/velib/res_night_we.png" alt="Weekend night population density" />
+                    </div>
+                    <div class="img-compare-handle"></div>
+                </div>
+                <div class="img-compare-label"><em>Night occupancy on weekday and weekend (population density)</em></div>
+            </div>
+        </div>
+
+        <p>Check out these twinkling transitions of V&eacute;lib bikes flowing around Paris on the week and weekend day.</p>
+
+        <div class="img-gif-pair">
+            <figure>
+                <img src="../images/velib/wd1.gif" alt="V&eacute;lib flow on weekday" />
+                <figcaption><em>V&eacute;lib flow on the weekday</em></figcaption>
+            </figure>
+            <figure>
+                <img src="../images/velib/we1.gif" alt="V&eacute;lib flow on weekend" />
+                <figcaption><em>V&eacute;lib flow on the weekend day</em></figcaption>
+            </figure>
+        </div>
+
+    </article>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-col">
+                <div class="footer-site-title">Play with maps</div>
+                <p class="footer-desc">Experiments with urban data, mapping and GIS tools</p>
+            </div>
+            <div class="footer-col">
+                <h3>Get in touch</h3>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/in/amruta-mahakalkar-6826258b" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                    <a href="mailto:amrutamahakalkar3@gmail.com" aria-label="Email">
+                        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('menuBtn');
+        const dropdown = document.getElementById('dropdown');
+        btn.addEventListener('click', () => {
+            btn.classList.toggle('active');
+            dropdown.classList.toggle('open');
+        });
+        document.addEventListener('click', (e) => {
+            if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+                btn.classList.remove('active');
+                dropdown.classList.remove('open');
+            }
+        });
+
+        document.querySelectorAll('.img-compare').forEach(el => {
+            const overlay = el.querySelector('.img-compare-overlay');
+            const handle = el.querySelector('.img-compare-handle');
+            let pos = parseFloat(el.dataset.position) || 50;
+            let dragging = false;
+
+            function update(p) {
+                pos = Math.max(0, Math.min(100, p));
+                overlay.style.clipPath = 'inset(0 ' + (100 - pos) + '% 0 0)';
+                handle.style.left = pos + '%';
+                el.dataset.position = pos;
+            }
+
+            function onMove(clientX) {
+                const rect = el.getBoundingClientRect();
+                const pct = ((clientX - rect.left) / rect.width) * 100;
+                update(pct);
+            }
+
+            handle.addEventListener('mousedown', e => { dragging = true; e.preventDefault(); });
+            handle.addEventListener('touchstart', e => { dragging = true; e.preventDefault(); });
+            el.addEventListener('mousemove', e => { if (dragging) onMove(e.clientX); });
+            el.addEventListener('touchmove', e => { if (dragging) onMove(e.touches[0].clientX); });
+            document.addEventListener('mouseup', () => { dragging = false; });
+            document.addEventListener('touchend', () => { dragging = false; });
+            el.addEventListener('click', e => { onMove(e.clientX); });
+            update(pos);
+        });
+    </script>
+
+</body>
+</html>

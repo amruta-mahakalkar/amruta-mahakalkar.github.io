@@ -303,7 +303,7 @@
 
         <p>The conservation of forest and natural areas from the threat of ill-conceived urbanization and development involves understanding their form and physical structure. The fragmentation and degradation of the continuity of natural elements can cause loss of biodiversity and habitats. Therefore, it is important to identify the nodes and connections of regional landscape networks to formulate strategies to protect them from further damage as well as establish new improved connections.</p>
 
-        <p>One of the tools to assess landscape patterns and their components is MSPA (Morphological Spatial Pattern Analysis) developed by the <a href="https://forest.jrc.ec.europa.eu/en/activities/lpa/mspa/" target="_blank" rel="noopener">European Commission</a>. In general, this tool was designed to detect and describe the morphological features of any binary digital image. It is a simple tool that has been adopted in various scientific research associated with image processing such as <a href="https://doi.org/10.1016/j.jaridenv.2018.04.009" target="_blank" rel="noopener">wildlife habitat</a>, <a href="https://link.springer.com/article/10.1007/s11252-019-00868-4" target="_blank" rel="noopener">land cover management</a> and <a href="https://doi.org/10.1016/j.mio.2016.03.003" target="_blank" rel="noopener">marine research</a>.</p>
+        <p>One of the tools to assess landscape patterns and their components is <a href="https://doi.org/10.1016/j.patrec.2008.10.015" target="_blank" rel="noopener">MSPA</a> (Morphological Spatial Pattern Analysis) developed by the European Commission. In general, this tool was designed to detect and describe the morphological features of any binary digital image. It is a simple tool that has been adopted in various scientific research associated with image processing such as <a href="https://doi.org/10.1016/j.jaridenv.2018.04.009" target="_blank" rel="noopener">wildlife habitat</a>, <a href="https://link.springer.com/article/10.1007/s11252-019-00868-4" target="_blank" rel="noopener">land cover management</a> and <a href="https://doi.org/10.1016/j.mio.2016.03.003" target="_blank" rel="noopener">marine research</a>.</p>
 
         <p>MSPA uses a geometrical concept to mathematically analyse a binary image wherein the foreground pixels are the pixels of interest, and the rest of the pixels in which the foreground is embedded are called background.</p>
 
@@ -333,16 +333,16 @@
 
         <p style="text-align:center;font-style:italic;">To find different data sources of BGI suitable for MSPA and to compare their results.</p>
 
-        <p>To conduct land cover assessments, studies often rely on land use land cover (LULC) vector maps that are increasingly becoming available at granular level. For example, <a href="https://land.copernicus.eu/pan-european/corine-land-cover" target="_blank" rel="noopener">CORINE Land Cover</a> provides LULC data into 44 categories for Europe including forests, agricultural fields, open green areas, urban parks, etc. Local governments in Europe also generate and provide their own details land cover vector maps, such as in case of Prague, the <a href="https://www.geoportalpraha.cz/cs/data" target="_blank" rel="noopener">open data on existing land use</a> categorized LULC into 126 types. While LULC vectors represent homogeneous landscape patterns, they do not indicate the quality of vegetation and mass of canopy that in fact define the input for MSPA. Moreover, outdated LULC in dynamic urbanization scenario can also produce inaccurate outputs. For example the 'meadows, pastures, grass fields' category in Prague's vector map has different density of vegetation. This inconsistency might skew the results and identify barren land with no canopy as possible sites with ecosystems under MSPA.</p>
+        <p>To conduct land cover assessments, studies often rely on land use land cover (LULC) vector maps that are increasingly becoming available at granular level. For example, <a href="https://land.copernicus.eu/pan-european/corine-land-cover" target="_blank" rel="noopener">CORINE Land Cover</a> provides LULC data into 44 categories for Europe including forests, agricultural fields, open green areas, urban parks, etc. Local governments in Europe also generate and provide their own details land cover vector maps, such as in case of Prague, the open data on <a href="https://www.geoportalpraha.cz/cs/data" target="_blank" rel="noopener">existing land use</a> categorized LULC into 126 types. While LULC vectors represent homogeneous landscape patterns, they do not indicate the quality of vegetation and mass of canopy that in fact define the input for MSPA. Moreover, outdated LULC in dynamic urbanization scenario can also produce inaccurate outputs. For example the 'meadows, pastures, grass fields' category in Prague's vector map has different density of vegetation. This inconsistency might skew the results and identify barren land with no canopy as possible sites with ecosystems under MSPA.</p>
 
         <figure>
             <img src="../images/landscape/sample-3.jpg" alt="Land parcels with different vegetation density" />
-            <figcaption><em>Land parcels with different vegetation density categorized as "meadows, pastures, grass fields" by <a href="https://www.geoportalpraha.cz/en" target="_blank" rel="noopener">Prague's official geoportal</a></em></figcaption>
+            <figcaption><em>Land parcels with different vegetation density categorized as "meadows, pastures, grass fields" by Prague's official geoportal</em></figcaption>
         </figure>
 
         <h3>Methodology</h3>
 
-        <p>Other than vector maps, raster satellite imageries are often seen as primary sources to identify real canopy and in fact process them to delineate the natural and semi-natural areas of <a href="https://www.geoportalpraha.cz/cs/data" target="_blank" rel="noopener">LULC vector</a>. The commonly used index to measure the presence and quality of live green vegetation from a satellite imagery is <a href="https://en.wikipedia.org/wiki/Normalized_difference_vegetation_index" target="_blank" rel="noopener">NDVI</a> (Normalized difference vegetation index) that takes into account red (visible) and near-infrared spectral bands and calculates the pixel values that represents the magnitude of vegetation greenness. Ranging between -1 to 1, higher values (0.60 - 1.00) are generated by pixels with healthy dense vegetation, 0.35 - 0.60 as moderately healthy canopy whereas values in negative are found to be water, clouds or snow.</p>
+        <p>Other than vector maps, raster satellite imageries are often seen as primary sources to identify real canopy and in fact process them to delineate the natural and semi-natural areas of <a href="https://link.springer.com/article/10.1007/s11042-020-09531-z" target="_blank" rel="noopener">LULC vector</a>. The commonly used index to measure the presence and quality of live green vegetation from a satellite imagery is <a href="https://earthobservatory.nasa.gov/features/MeasuringVegetation/measuring_vegetation_2.php" target="_blank" rel="noopener">NDVI</a> (Normalized difference vegetation index) that takes into account red (visible) and near-infrared spectral bands and calculates the pixel values that represents the magnitude of vegetation greenness. Ranging between -1 to 1, higher values (0.60 - 1.00) are generated by pixels with healthy dense vegetation, 0.35 - 0.60 as moderately healthy canopy whereas values in negative are found to be water, clouds or snow.</p>
 
         <p>To conduct the MSPA of the city of Prague, I used three types of data sources as detailed below:</p>
 
@@ -373,9 +373,8 @@
                 <p style="font-size:0.7rem;color:#888;text-align:center;margin-top:0.3rem;"><em>NDVI merging process</em></p>
             </div>
             <p>As the latest cloud-free satellite imageries for both Sentinel 2 and Landsat 8-9 images were available only for the months of May, June and July, they were used as input for NDVI calculation. Here, red (visible) and near-infrared spectral bands from Sentinel 2 and Landsat 8-9 were used to develop the NDVI rasters and pixels with values greater than 0.4 were chosen and overlaid for the selected months. The figure demonstrates that for each cropping month (May, June and July), the rasters derived from Landsat 8-9 were transformed into binary rasters with pixels valued greater than 0.4.</p>
+            <p>For blue infrastructure, shapefiles from city's open portal were used and transformed into the same valued pixels as green infrastructure and merged into the final raster. These final binary rasters for both satellite sources were used as inputs for the MSPA and the results were visually juxtaposed and statistically compared.</p>
         </div>
-
-        <p>For blue infrastructure, shapefiles from city's open portal were used and transformed into the same valued pixels as green infrastructure and merged into the final raster. These final binary rasters for both satellite sources were used as inputs for the MSPA and the results were visually juxtaposed and statistically compared.</p>
 
         <h3>Outcome</h3>
 
@@ -402,16 +401,14 @@
         <div class="img-row-three">
             <figure>
                 <img src="../images/landscape/opendata_mspa11.jpg" alt="Blow-up of vector MSPA" />
-                <figcaption><em>Blow-up of vector MSPA</em></figcaption>
             </figure>
             <figure>
                 <img src="../images/landscape/sentinal_mspa1.jpg" alt="Blow-up of Sentinel 2 MSPA" />
-                <figcaption><em>Blow-up of Sentinel 2 MSPA</em></figcaption>
             </figure>
             <figure>
                 <img src="../images/landscape/landsat_mspa1.jpg" alt="Blow-up of Landsat 8-9 MSPA" />
-                <figcaption><em>Blow-up of Landsat 8-9 MSPA</em></figcaption>
             </figure>
+            <figcaption style="text-align:center;font-style:italic;color:#888;font-size:0.85rem;margin-top:0.5rem;">Blow-ups of MSPA of the city of LULC vector, Sentinel 2 and Landsat 8-9</figcaption>
         </div>
 
         <figure class="img-full">

@@ -19,8 +19,13 @@
     "subtitle": "Expérimentations avec des données urbaines, la cartographie et les outils SIG",
     "get_in_touch": "Me contacter"
   },
+  "share": {
+    "label": "Partager cette publication",
+    "copy": "Copier le lien",
+    "copied": "Copié !"
+  },
   "back": {
-    "home": "← Retour à l’accueil"
+    "home": "← Retour à l'accueil"
   },
   "work": {
     "heatwave": {

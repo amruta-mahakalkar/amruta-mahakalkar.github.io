@@ -19,6 +19,11 @@
     "subtitle": "Experiments with urban data, mapping and GIS tools",
     "get_in_touch": "Get in touch"
   },
+  "share": {
+    "label": "Share this post",
+    "copy": "Copy link",
+    "copied": "Copied!"
+  },
   "back": {
     "home": "\u2190 Back to home"
   },

@@ -95,6 +95,14 @@
         .lang-btn:hover, .lang-btn.active { color: #fffffe; border-color: #fffffe; }
         .i18n-content[lang="fr"] { display: none; }
 
+        .share-section { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+        .share-label { font-size: 0.85rem; color: #888; margin-right: 0.5rem; }
+        .share-btn { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid #ddd; border-radius: 50%; background: none; cursor: pointer; transition: 0.2s; color: #555; }
+        .share-btn:hover { background: #f5f5f5; border-color: #bbb; }
+        .share-btn svg { fill: currentColor; }
+        .share-copy { width: auto; border-radius: 4px; padding: 0 0.75rem; font-size: 0.8rem; font-family: inherit; }
+        .comments-container { margin: 2rem auto; max-width: 860px; padding: 0 4vw; }
+
         .post {
             max-width: 860px;
             margin: 0 auto;
@@ -500,7 +508,16 @@
             <li>The data analysis was conducted using open data as an academic exercise. The indices were formulated and the parametric weightages were assumed by the author. Thus, final results might deviate from actual reality.</li>
             <li>The database was cleaned, compiled, analyzed and visualized in QGIS software. Open-source software <a href="https://geodacenter.github.io/" target="_blank" rel="noopener">Geoda</a> was also used for some spatio-statistical analyses. The dynamic mapping was done using <a href="https://kepler.gl/" target="_blank" rel="noopener">kepler.gl</a> and <a href="https://www.mapbox.com/" target="_blank" rel="noopener">mapbox</a>.</li>
         </ul>
-
+        <div class="share-section">
+            <span class="share-label" data-i18n="share.label">Share this post</span>
+            <button class="share-btn share-x" onclick="shareOnX()" aria-label="Share on X">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </button>
+            <button class="share-btn share-fb" onclick="shareOnFB()" aria-label="Share on Facebook">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </button>
+            <button class="share-btn share-copy" onclick="copyLink()" data-i18n="share.copy">Copy link</button>
+        </div>
         </div>
         <div class="i18n-content" lang="fr" data-i18n-container>
         <a href="../index.html" class="back-link" data-i18n="back.home">&larr; Retour à l'accueil</a>
@@ -663,9 +680,28 @@
             <li>L'analyse des données a été réalisée à l'aide de données ouvertes dans le cadre d'un exercice académique. Les indices ont été formulés et les pondérations paramétriques ont été assumées par l'autrice. Ainsi, les résultats finaux pourraient s'écarter de la réalité effective.</li>
             <li>La base de données a été nettoyée, compilée, analysée et visualisée dans le logiciel QGIS. Le logiciel open-source <a href="https://geodacenter.github.io/" target="_blank" rel="noopener">Geoda</a> a également été utilisé pour certaines analyses spatio-statistiques. La cartographie dynamique a été réalisée à l'aide de <a href="https://kepler.gl/" target="_blank" rel="noopener">kepler.gl</a> et <a href="https://www.mapbox.com/" target="_blank" rel="noopener">mapbox</a>.</li>
         </ul>
-
+        <div class="share-section">
+            <span class="share-label" data-i18n="share.label">Share this post</span>
+            <button class="share-btn share-x" onclick="shareOnX()" aria-label="Share on X">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </button>
+            <button class="share-btn share-fb" onclick="shareOnFB()" aria-label="Share on Facebook">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </button>
+            <button class="share-btn share-copy" onclick="copyLink()" data-i18n="share.copy">Copy link</button>
+        </div>
         </div>
     </article>
+
+    <div class="comments-container">
+        <script src="https://utteranc.es/client.js"
+            repo="amruta-mahakalkar/amruta-mahakalkar.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+        </script>
+    </div>
 
     <footer>
         <div class="footer-inner">
@@ -701,6 +737,25 @@
             }
         });
 
+    </script>
+    <script>
+    function shareOnX() {
+        var url = encodeURIComponent(window.location.href);
+        var text = encodeURIComponent(document.title);
+        window.open('https://twitter.com/intent/tweet?text=' + text + '&url=' + url, '_blank', 'width=600,height=400');
+    }
+    function shareOnFB() {
+        var url = encodeURIComponent(window.location.href);
+        window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, '_blank', 'width=600,height=400');
+    }
+    function copyLink() {
+        var btn = document.querySelector('.share-copy');
+        var orig = btn.textContent;
+        navigator.clipboard.writeText(window.location.href).then(function () {
+            btn.textContent = 'Copied!';
+            setTimeout(function () { btn.textContent = orig; }, 2000);
+        });
+    }
     </script>
     <script src="/js/i18n.js"></script>
 

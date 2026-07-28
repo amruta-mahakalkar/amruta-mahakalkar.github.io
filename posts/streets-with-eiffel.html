@@ -295,6 +295,10 @@
         <h1>Streets with Tour Eiffel</h1>
         <p class="post-date">August 30, 2022</p>
 
+        <div class="map-embed">
+            <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1mWjJl7Jw4T-tOFzsgTWpxbsafPPIonM&ehbc=2E312F" allowfullscreen></iframe>
+        </div>
+
         <p>Every time I visit Paris, I engage myself in playing "Spot the Eiffel" game. Once on a clear day, I was surprised to spot a little portion of Tour Eiffel from an alley some 2 km on the other side of the Seine. Excited, I climbed Montmartre hoping to spot the Eiffel from the Sacre-Coeur, but with a crow fly distance of over 4 km, the giant tower gets hazy and is just narrowly obstructed by trees.</p>
 
         <p>This inspired me to question:</p>
@@ -316,7 +320,7 @@
 
         <p><a href="https://pro.arcgis.com/en/pro-app/2.8/tool-reference/spatial-analyst/viewshed.htm" target="_blank" rel="noopener">Viewshed</a> in ArcGIS is an interesting spatial analyst tool to determine the raster surface locations visible to a set of observer features. Conducting this exercise requires an elevation raster with the vector points of observation and their respective heights. While using this tool was easy, collecting and compiling the ingredients was a task.</p>
 
-        <div class="img-row-two">
+        <div class="img-row-three">
             <figure>
                 <img src="../images/eiffel/elevation-2.jpg" alt="Digital Elevation Model" />
                 <figcaption><em>Digital Elevation Model</em></figcaption>
@@ -325,18 +329,16 @@
                 <img src="../images/eiffel/buildings.jpg" alt="Building heights" />
                 <figcaption><em>Building heights</em></figcaption>
             </figure>
-        </div>
-
-        <div class="img-row-two">
             <figure>
                 <img src="../images/eiffel/trees-1.jpg" alt="Tree canopy" />
                 <figcaption><em>Tree canopy</em></figcaption>
             </figure>
-            <figure>
-                <img src="../images/eiffel/dtm2.jpg" alt="Digital Surface Model" />
-                <figcaption><em>Digital Surface Model</em></figcaption>
-            </figure>
         </div>
+
+        <figure>
+            <img src="../images/eiffel/dtm2.jpg" alt="Digital Surface Model" />
+            <figcaption><em>Digital Surface Model</em></figcaption>
+        </figure>
 
         <p>For that, first I extracted and clipped a Digital Elevation Model (DEM) from <a href="https://search.earthdata.nasa.gov" target="_blank" rel="noopener">ASTER NASA Earth Data</a>. The best resolution I could acquire was 30 m. For building and tree cover, I downloaded their shapefiles from Paris's <a href="https://opendata.paris.fr/pages/home/" target="_blank" rel="noopener">open data</a> portal. I rasterized them with the resolution of 1 m and assigned their height as the z-coordinate. For the building layer, the original data did not have exact height but only the maximum number of floors (including some zero values!). To resolve this, I factors in an assumed average wall height of 3.5 m and went on with the rasterization. Trees, on the other hand were tricky. The data was a point layer with fields for approximate height and circumference (from which I mapped their radius and made circular buffer). But for rasterization, only the tallest overlapping tree section had to be selected. Therefore, all the buffers were intersected with themselves and duplicate geometries were deleted except the highest values, followed by their rasterization.</p>
 
@@ -359,13 +361,7 @@
 
         <p>The final result is this estimated map of streets in the city of Paris from where one can expect to spot the Eiffel Tower on a clear day.</p>
 
-        <h3>Interactive Map</h3>
-
-        <div class="map-embed">
-            <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1mWjJl7Jw4T-tOFzsgTWpxbsafPPIonM&ehbc=2E312F" allowfullscreen></iframe>
-        </div>
-
-        <h3>Street Views</h3>
+        <p>Bisous!</p>
 
         <div class="streetview-row">
             <figure>
@@ -378,8 +374,6 @@
                 <iframe src="https://www.google.com/maps/embed?pb=!4v1661859063917!6m8!1m7!1slkjQvnpyO5gMvBu0n2Nhkw!2m2!1d48.83793233583383!2d2.317826494360413!3f339.7897263266168!4f-1.5581896015062853!5f0.7820865974627469" allowfullscreen></iframe>
             </figure>
         </div>
-
-        <p>Bisous!</p>
 
         <h3>References</h3>
 

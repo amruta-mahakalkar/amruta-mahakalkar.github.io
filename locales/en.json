@@ -1,0 +1,51 @@
+{
+  "site": {
+    "subtitle": "Experiments with urban data, mapping and GIS tools"
+  },
+  "nav": {
+    "heatwave": "Public places in Paris during heatwave",
+    "velib": "Checking the pulse of Paris with V\u00e9lib\u2019",
+    "landscape": "Landscape Pattern Analysis",
+    "eiffel": "Streets with Tour Eiffel",
+    "urban": "Mapping urban health and vulnerability",
+    "portfolio": "Portfolio"
+  },
+  "hero": {
+    "heading": "Hello!",
+    "desc": "I am Amruta. I am an urban planner and spatial researcher, and I love working on cities using data and through discussion. I share here my experiments and exploration with spatial data.",
+    "cta": "Check out my work"
+  },
+  "footer": {
+    "subtitle": "Experiments with urban data, mapping and GIS tools",
+    "get_in_touch": "Get in touch"
+  },
+  "back": {
+    "home": "\u2190 Back to home"
+  },
+  "work": {
+    "heatwave": {
+      "title": "Public places in Paris during heatwave \u2013 hot or not?",
+      "desc": "As Paris entered its third heatwave of the summer, how do the city\u2019s public spaces perform under extreme temperatures? A look at land surface temperature across parks, plazas, and streets."
+    },
+    "velib": {
+      "title": "Checking the pulse of Paris with V\u00e9lib\u2019",
+      "desc": "Analysing the temporal rhythms of Paris through V\u00e9lib\u2019 bike-sharing data \u2013 exploring morning and evening peaks, weekend patterns, and station-level activity across the city."
+    },
+    "landscape": {
+      "title": "Landscape Pattern Analysis: What data type works better?",
+      "desc": "Comparing vector and raster data types for landscape connectivity analysis using morphological spatial pattern analysis (MSPA) in the Lisbon metropolitan area."
+    },
+    "eiffel": {
+      "title": "Streets with Tour Eiffel",
+      "desc": "A viewshed analysis to identify from which streets in Paris one can spot the Eiffel Tower, using DEM, building heights, and tree canopy data."
+    },
+    "urban": {
+      "title": "Mapping urban health and vulnerability",
+      "desc": "An urban health index and vulnerability index for Ferrara, Italy, using open data to understand the relationship between built environment quality and socio-demographic vulnerability at the census tract level."
+    },
+    "portfolio": {
+      "title": "Portfolio",
+      "desc": "Research, academic and professional projects from 2017 to 2021."
+    }
+  }
+}

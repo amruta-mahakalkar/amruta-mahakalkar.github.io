@@ -80,30 +80,20 @@
         .nav-wrap { position: relative; }
 
         .nav-right { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
-        #google_translate_element { display: inline-flex; align-items: center; }
-        .goog-te-gadget-simple {
-            background: transparent !important;
-            border: none !important;
-            padding: 0 !important;
-            font-size: 0 !important;
-            line-height: 0 !important;
-        }
-        .goog-te-combo {
-            background: transparent;
+        .lang-btn {
+            background: none;
             border: 1px solid #555;
             color: #aaa;
             padding: 0.2rem 0.45rem;
-            font-size: 0.72rem !important;
+            font-size: 0.72rem;
             font-family: inherit;
             cursor: pointer;
             border-radius: 2px;
+            transition: 0.2s;
             line-height: 1.2;
-            outline: none;
         }
-        .goog-te-combo:hover, .goog-te-combo:focus { color: #fffffe; border-color: #fffffe; }
-        .goog-te-banner-frame, .goog-te-banner-frame.skiptranslate { display: none !important; }
-        body { top: 0px !important; }
-        .skiptranslate.goog-te-gadget { font-size: 0 !important; }
+        .lang-btn:hover, .lang-btn.active { color: #fffffe; border-color: #fffffe; }
+        .i18n-content[lang="fr"] { display: none; }
 
         .page {
             max-width: 860px;
@@ -206,7 +196,8 @@
     <nav>
         <a href="index.html" class="nav-site-title" translate="no">Play with maps</a>
         <div class="nav-right">
-            <div id="google_translate_element"></div>
+            <button class="lang-btn active" data-lang="en" onclick="switchLang('en')">EN</button>
+            <button class="lang-btn" data-lang="fr" onclick="switchLang('fr')">FR</button>
             <div class="nav-wrap">
             <button class="menu-btn" id="menuBtn" aria-label="Menu">
                 <span></span>
@@ -214,51 +205,50 @@
                 <span></span>
             </button>
             <ul class="dropdown" id="dropdown">
-                <li><a href="posts/paris-heatwave.html">Public places in Paris during heatwave</a></li>
-                <li><a href="posts/velib.html">Checking the pulse of Paris with Vélib</a></li>
-                <li><a href="posts/landscape-analysis.html">Landscape Pattern Analysis</a></li>
-                <li><a href="posts/streets-with-eiffel.html">Streets with Tour Eiffel</a></li>
-                <li><a href="posts/urban-health.html">Mapping urban health and vulnerability</a></li>
-                <li><a href="posts/portfolio.html">Portfolio</a></li>
+                <li><a href="posts/paris-heatwave.html" data-i18n="nav.heatwave">Public places in Paris during heatwave</a></li>
+                <li><a href="posts/velib.html" data-i18n="nav.velib">Checking the pulse of Paris with Vélib</a></li>
+                <li><a href="posts/landscape-analysis.html" data-i18n="nav.landscape">Landscape Pattern Analysis</a></li>
+                <li><a href="posts/streets-with-eiffel.html" data-i18n="nav.eiffel">Streets with Tour Eiffel</a></li>
+                <li><a href="posts/urban-health.html" data-i18n="nav.urban">Mapping urban health and vulnerability</a></li>
+                <li><a href="posts/portfolio.html" data-i18n="nav.portfolio">Portfolio</a></li>
             </ul>
         </div>
         </div>
     </nav>
 
     <div class="page">
-        <a href="index.html" class="back-link">&larr; Back to home</a>
-        <h1>All work</h1>
+        <a href="index.html" class="back-link" data-i18n="back.home">&larr; Back to home</a>
 
         <ul class="work-list">
             <li>
-                <h2><a href="posts/paris-heatwave.html">Public places in Paris during heatwave &ndash; hot or not?</a></h2>
+                <h2><a href="posts/paris-heatwave.html" data-i18n="work.heatwave.title">Public places in Paris during heatwave &ndash; hot or not?</a></h2>
                 <p class="date">July 18, 2026</p>
-                <p>As Paris entered its third heatwave of the summer, how do the city's public spaces perform under extreme temperatures? A look at land surface temperature across parks, plazas, and streets.</p>
+                <p data-i18n="work.heatwave.desc">As Paris entered its third heatwave of the summer, how do the city's public spaces perform under extreme temperatures? A look at land surface temperature across parks, plazas, and streets.</p>
             </li>
             <li>
-                <h2><a href="posts/velib.html">Checking the pulse of Paris with V&eacute;lib&rsquo;</a></h2>
+                <h2><a href="posts/velib.html" data-i18n="work.velib.title">Checking the pulse of Paris with V&eacute;lib&rsquo;</a></h2>
                 <p class="date">September 11, 2022</p>
-                <p>Analysing the temporal rhythms of Paris through V&eacute;lib&rsquo; bike-sharing data &ndash; exploring morning and evening peaks, weekend patterns, and station-level activity across the city.</p>
+                <p data-i18n="work.velib.desc">Analysing the temporal rhythms of Paris through V&eacute;lib&rsquo; bike-sharing data &ndash; exploring morning and evening peaks, weekend patterns, and station-level activity across the city.</p>
             </li>
             <li>
-                <h2><a href="posts/urban-health.html">Mapping urban health and vulnerability</a></h2>
+                <h2><a href="posts/urban-health.html" data-i18n="work.urban.title">Mapping urban health and vulnerability</a></h2>
                 <p class="date">August 30, 2022</p>
-                <p>An urban health index and vulnerability index for Ferrara, Italy, using open data to understand the relationship between built environment quality and socio-demographic vulnerability at the census tract level.</p>
+                <p data-i18n="work.urban.desc">An urban health index and vulnerability index for Ferrara, Italy, using open data to understand the relationship between built environment quality and socio-demographic vulnerability at the census tract level.</p>
             </li>
             <li>
-                <h2><a href="posts/streets-with-eiffel.html">Streets with Tour Eiffel</a></h2>
+                <h2><a href="posts/streets-with-eiffel.html" data-i18n="work.eiffel.title">Streets with Tour Eiffel</a></h2>
                 <p class="date">August 30, 2022</p>
-                <p>A viewshed analysis to identify from which streets in Paris one can spot the Eiffel Tower, using DEM, building heights, and tree canopy data.</p>
+                <p data-i18n="work.eiffel.desc">A viewshed analysis to identify from which streets in Paris one can spot the Eiffel Tower, using DEM, building heights, and tree canopy data.</p>
             </li>
             <li>
-                <h2><a href="posts/landscape-analysis.html">Landscape Pattern Analysis: What data type works better?</a></h2>
+                <h2><a href="posts/landscape-analysis.html" data-i18n="work.landscape.title">Landscape Pattern Analysis: What data type works better?</a></h2>
                 <p class="date">February 12, 2023</p>
-                <p>Comparing vector and raster data types for landscape connectivity analysis using morphological spatial pattern analysis (MSPA) in the Lisbon metropolitan area.</p>
+                <p data-i18n="work.landscape.desc">Comparing vector and raster data types for landscape connectivity analysis using morphological spatial pattern analysis (MSPA) in the Lisbon metropolitan area.</p>
             </li>
             <li>
-                <h2><a href="posts/portfolio.html">Portfolio</a></h2>
+                <h2><a href="posts/portfolio.html" data-i18n="work.portfolio.title">Portfolio</a></h2>
                 <p class="date">September 2, 2022</p>
-                <p>Research, academic and professional projects from 2017 to 2021.</p>
+                <p data-i18n="work.portfolio.desc">Research, academic and professional projects from 2017 to 2021.</p>
             </li>
         </ul>
     </div>
@@ -267,10 +257,10 @@
         <div class="footer-inner">
             <div class="footer-col">
                 <div class="footer-site-title">Play with maps</div>
-                <p class="footer-desc">Experiments with urban data, mapping and GIS tools</p>
+                <p class="footer-desc" data-i18n="footer.subtitle">Experiments with urban data, mapping and GIS tools</p>
             </div>
             <div class="footer-col">
-                <h3>Get in touch</h3>
+                <h3 data-i18n="footer.get_in_touch">Get in touch</h3>
                 <div class="footer-social">
                     <a href="https://www.linkedin.com/in/amruta-mahakalkar-6826258b" target="_blank" rel="noopener" aria-label="LinkedIn">
                         <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg>
@@ -297,16 +287,8 @@
             }
         });
 
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,fr',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
     </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="/js/i18n.js"></script>
 
 </body>
 </html>

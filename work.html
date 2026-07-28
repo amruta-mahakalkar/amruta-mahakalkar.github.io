@@ -79,20 +79,21 @@
         .dropdown a:hover { background: #2a2a2a; color: #fffffe; }
         .nav-wrap { position: relative; }
 
-        .nav-right { display: flex; align-items: center; gap: 1rem; margin-left: auto; }
-        #google_translate_element select {
-            background: transparent;
-            color: #fffffe;
+        .nav-right { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+        .lang-btn {
+            background: none;
             border: 1px solid #555;
-            padding: 0.2rem 0.4rem;
-            font-size: 0.75rem;
+            color: #aaa;
+            padding: 0.2rem 0.45rem;
+            font-size: 0.72rem;
             font-family: inherit;
-            border-radius: 2px;
             cursor: pointer;
+            border-radius: 2px;
+            transition: 0.2s;
+            line-height: 1.2;
         }
-        #google_translate_element select option { color: #1a1a1a; background: #fff; }
-        .goog-te-gadget { color: transparent !important; font-size: 0 !important; }
-        .goog-te-gadget .goog-te-combo { margin: 0 !important; }
+        .lang-btn:hover, .lang-btn.active { color: #fffffe; border-color: #fffffe; }
+        #google_translate_element { display: none; }
 
         .page {
             max-width: 860px;
@@ -193,8 +194,10 @@
 <body>
 
     <nav>
-        <a href="index.html" class="nav-site-title">Play with maps</a>
+        <a href="index.html" class="nav-site-title" translate="no">Play with maps</a>
         <div class="nav-right">
+            <button class="lang-btn active" onclick="switchLang('en')">EN</button>
+            <button class="lang-btn" onclick="switchLang('fr')">FR</button>
             <div id="google_translate_element"></div>
             <div class="nav-wrap">
             <button class="menu-btn" id="menuBtn" aria-label="Menu">
@@ -290,8 +293,17 @@
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
                 includedLanguages: 'en,fr',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+                autoDisplay: false
             }, 'google_translate_element');
+        }
+        function switchLang(lang) {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            var select = document.querySelector('.goog-te-combo');
+            if (select) {
+                select.value = lang;
+                select.dispatchEvent(new Event('change'));
+            }
         }
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>

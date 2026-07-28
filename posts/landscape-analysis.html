@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landscape Pattern Analysis: What data type works better? - Play with maps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #1a1a1a;
+            background: #ffffff;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        nav {
+            background: #160e0e;
+            color: #fffffe;
+            padding: 1.2rem 4vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-site-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: #fffffe;
+        }
+        .menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #fffffe;
+            border-radius: 1px;
+            transition: 0.3s;
+        }
+        .menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .menu-btn.active span:nth-child(2) { opacity: 0; }
+        .menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        .dropdown {
+            position: absolute;
+            top: 60px;
+            right: 4vw;
+            background: #160e0e;
+            border: 1px solid #333;
+            border-radius: 4px;
+            list-style: none;
+            min-width: 220px;
+            display: none;
+            z-index: 100;
+        }
+        .dropdown.open { display: block; }
+        .dropdown li { border-bottom: 1px solid #2a2a2a; }
+        .dropdown li:last-child { border-bottom: none; }
+        .dropdown a {
+            display: block;
+            padding: 0.75rem 1.2rem;
+            color: #cccccc;
+            font-size: 0.85rem;
+            transition: background 0.2s, color 0.2s;
+        }
+        .dropdown a:hover { background: #2a2a2a; color: #fffffe; }
+        .nav-wrap { position: relative; }
+
+        .post-cover {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .post {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 3rem 4vw 4rem;
+        }
+        .post h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+        .post-date {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+        .post p {
+            margin-bottom: 1.2rem;
+            color: #333;
+        }
+        .post h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        .post h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem;
+        }
+        .post ul, .post ol {
+            margin-bottom: 1.2rem;
+            padding-left: 1.5rem;
+            color: #333;
+        }
+        .post li { margin-bottom: 0.4rem; }
+        .post blockquote {
+            border-left: 3px solid #160e0e;
+            padding-left: 1.2rem;
+            margin: 1.5rem 0;
+            color: #555;
+            font-style: italic;
+        }
+        .post blockquote p { margin-bottom: 0; }
+        .post a {
+            color: #555;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .post a:hover { color: #000; }
+        .post strong { font-weight: 600; }
+
+        .post table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin: 1.5rem 0;
+        }
+        .post th, .post td {
+            border: 1px solid #ccc;
+            padding: 0.6rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        .post th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+
+        .post figure {
+            margin: 1.5rem 0;
+        }
+        .post figure figcaption {
+            font-size: 0.8rem;
+            color: #888;
+            text-align: center;
+            margin-top: 0.4rem;
+        }
+
+        .media-block {
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+        .media-block .media-figure {
+            float: left;
+            width: 33.333%;
+            margin: 0 1.5rem 0.5rem 0;
+        }
+        .media-block.right .media-figure {
+            float: right;
+            margin: 0 0 0.5rem 1.5rem;
+        }
+        .media-block .media-figure > img {
+            width: 100%;
+            margin: 0;
+        }
+
+        .img-small {
+            max-width: 60%;
+            margin: 1.5rem auto;
+        }
+        .img-full {
+            margin: 1.5rem 0;
+        }
+
+        .img-row-three {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .img-row-three figure {
+            flex: 1;
+            margin: 0;
+        }
+        .img-row-three figcaption {
+            font-size: 0.7rem;
+            color: #888;
+            text-align: center;
+            margin-top: 0.4rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .back-link:hover { color: #1a1a1a; }
+
+        footer {
+            background: #160e0e;
+            color: #fffffe;
+            padding: 4rem 4vw;
+            font-size: 0.95rem;
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem 4rem;
+            justify-content: space-between;
+        }
+        .footer-col h3 {
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .footer-site-title {
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .footer-desc { color: #aaaaaa; font-size: 0.9rem; }
+        .footer-social { display: flex; gap: 1rem; justify-content: center; }
+        .footer-social a {
+            color: #aaaaaa;
+            transition: color 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+        }
+        .footer-social a:hover { color: #fffffe; transform: scale(1.25); }
+        .footer-social svg { width: 22px; height: 22px; fill: currentColor; }
+
+        @media (max-width: 768px) {
+            .post h1 { font-size: 1.5rem; }
+            .post-cover { max-height: 300px; }
+            .media-block .media-figure,
+            .media-block.right .media-figure {
+                float: none;
+                width: 100%;
+                margin: 0 0 1rem 0;
+            }
+            .img-row-three { flex-direction: column; }
+            .footer-inner { flex-direction: column; gap: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="../index.html" class="nav-site-title">Play with maps</a>
+        <div class="nav-wrap">
+            <button class="menu-btn" id="menuBtn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="dropdown" id="dropdown">
+                <li><a href="paris-heatwave.html">Public places in Paris during heatwave</a></li>
+                <li><a href="velib.html">Checking the pulse of Paris with Vélib</a></li>
+                <li><a href="landscape-analysis.html">Landscape Pattern Analysis</a></li>
+                <li><a href="#">Streets with Tour Eiffel</a></li>
+                <li><a href="#">Mapping urban health and vulnerability</a></li>
+                <li><a href="#">Portfolio</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <img class="post-cover" src="../images/landscape/cover-6.jpg" alt="Landscape view">
+
+    <article class="post">
+        <a href="../index.html" class="back-link">&larr; Back to home</a>
+        <h1>Landscape Pattern Analysis: What data type works better?</h1>
+        <p class="post-date">February 12, 2023</p>
+
+        <p>The conservation of forest and natural areas from the threat of ill-conceived urbanization and development involves understanding their form and physical structure. The fragmentation and degradation of the continuity of natural elements can cause loss of biodiversity and habitats. Therefore, it is important to identify the nodes and connections of regional landscape networks to formulate strategies to protect them from further damage as well as establish new improved connections.</p>
+
+        <p>One of the tools to assess landscape patterns and their components is MSPA (Morphological Spatial Pattern Analysis) developed by the European Commission. In general, this tool was designed to detect and describe the morphological features of any binary digital image. It is a simple tool that has been adopted in various scientific research associated with image processing such as <a href="https://doi.org/10.1016/j.jaridenv.2018.04.009" target="_blank" rel="noopener">wildlife habitat</a>, <a href="https://link.springer.com/article/10.1007/s11252-019-00868-4" target="_blank" rel="noopener">land cover management</a> and <a href="https://doi.org/10.1016/j.mio.2016.03.003" target="_blank" rel="noopener">marine research</a>.</p>
+
+        <p>MSPA uses a geometrical concept to mathematically analyse a binary image wherein the foreground pixels are the pixels of interest, and the rest of the pixels in which the foreground is embedded are called background.</p>
+
+        <p>The tool categorises its input into seven broad mutually exclusive components using the notion of <a href="https://doi.org/10.1016/j.patrec.2008.10.015" target="_blank" rel="noopener">path connectivity</a> as described in the table:</p>
+
+        <figure>
+            <img src="../images/landscape/mspalegend.gif" alt="MSPA segmentation procedure" />
+            <figcaption><em>MSPA segmentation procedure of a binary image - source: European Commission</em></figcaption>
+        </figure>
+
+        <table>
+            <thead>
+                <tr><th>Components</th><th>Description</th><th>Ecological Meaning</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Core</td><td>A collection of foreground pixels which are interconnected and greater than the user-specified edge width from background.</td><td>Large natural patches with high connectivity with other natural components.</td></tr>
+                <tr><td>Islet</td><td>A collection of foreground pixels which is smaller than the core zone and do not connect to any other foreground cells.</td><td>Individual smaller natural patches that are isolated and do not connect with other natural elements.</td></tr>
+                <tr><td>Perforation</td><td>The transition pixels between foreground and background inside core areas that form the inner edge.</td><td>Unnatural patch inside the core area.</td></tr>
+                <tr><td>Edge</td><td>Transition pixels between the foreground and background that form the outer edge.</td><td>The transition zone between vegetation and non-vegetation areas.</td></tr>
+                <tr><td>Loop</td><td>Linearly oriented foreground pixels extended from a core and connects back to the same core.</td><td>Corridor that extends out and reconnects with its natural core.</td></tr>
+                <tr><td>Bridge</td><td>A set of linear foreground pixels between two cores that connect two or more core areas.</td><td>The natural element that connects two cores, equivalent to the connecting corridors of the green space network.</td></tr>
+                <tr><td>Branch</td><td>Linearly oriented foreground pixels extended from core that do not connect to any other core area.</td><td>Linear form extending out from a core with low connectivity.</td></tr>
+            </tbody>
+        </table>
+
+        <p>I decided to use this tool to map the landscape network pattern of the city of Prague using the layer of its blue and green infrastructure (BGI) that would include its forests, farms, urban green areas and waterbodies. My first task was to decide the data source to identify and map BGI and that is what this article is about.</p>
+
+        <p style="text-align:center;font-style:italic;">To find different data sources of BGI suitable for MSPA and to compare their results.</p>
+
+        <div class="media-block right">
+            <div class="media-figure">
+                <img src="../images/landscape/sample-3.jpg" alt="Land parcels with different vegetation density" />
+            </div>
+            <p>To conduct land cover assessments, studies often rely on land use land cover (LULC) vector maps that are increasingly becoming available at granular level. For example, <a href="https://land.copernicus.eu/pan-european/corine-land-cover" target="_blank" rel="noopener">CORINE Land Cover</a> provides LULC data into 44 categories for Europe including forests, agricultural fields, open green areas, urban parks, etc. Local governments in Europe also generate and provide their own details land cover vector maps, such as in case of Prague, the open data on existing land use categorized LULC into 126 types. While LULC vectors represent homogeneous landscape patterns, they do not indicate the quality of vegetation and mass of canopy that in fact define the input for MSPA. Moreover, outdated LULC in dynamic urbanization scenario can also produce inaccurate outputs. For example the 'meadows, pastures, grass fields' category in Prague's vector map has different density of vegetation. This inconsistency might skew the results and identify barren land with no canopy as possible sites with ecosystems under MSPA.</p>
+        </div>
+
+        <h3>Methodology</h3>
+
+        <p>Other than vector maps, raster satellite imageries are often seen as primary sources to identify real canopy and in fact process them to delineate the natural and semi-natural areas of LULC vector. The commonly used index to measure the presence and quality of live green vegetation from a satellite imagery is NDVI (Normalized difference vegetation index) that takes into account red (visible) and near-infrared spectral bands and calculates the pixel values that represents the magnitude of vegetation greenness. Ranging between -1 to 1, higher values (0.60 - 1.00) are generated by pixels with healthy dense vegetation, 0.35 - 0.60 as moderately healthy canopy whereas values in negative are found to be water, clouds or snow.</p>
+
+        <p style="font-size:0.9rem;">To conduct the MSPA of the city of Prague, I used three types of data sources as detailed below:</p>
+
+        <table>
+            <thead>
+                <tr><th>Source No.</th><th>Map type</th><th>Source</th><th>Scale / resolution</th><th>Time</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>1.</td><td>Vector LULC map</td><td><a href="https://www.geoportalpraha.cz/cs/data/metadata/A0198E36-FCAD-42E7-BE4A-3B7755A48DAC" target="_blank" rel="noopener">Prague official geoportal</a></td><td>1:5000 m</td><td>Updated on November 2022</td></tr>
+                <tr><td>2.</td><td>Raster imageries 1</td><td><a href="https://scihub.copernicus.eu/dhus/#/home" target="_blank" rel="noopener">Sentinel 2 - Band 4 and Band 8</a></td><td>10 m</td><td>Downloaded for June and July 2022</td></tr>
+                <tr><td>3.</td><td>Raster imageries 2</td><td><a href="https://earthexplorer.usgs.gov/" target="_blank" rel="noopener">Landsat 8 - Band 4 and Band 5</a></td><td>30 m</td><td>Downloaded for May, June and July 2022</td></tr>
+            </tbody>
+        </table>
+
+        <div class="media-block">
+            <div class="media-figure">
+                <img src="../images/landscape/gtb_snap-2.png" alt="GTB interface" />
+            </div>
+            <p>For the vector LULC map, I selected features typically indicating blue and green infrastructure labelled as forests, agricultural and horticulture use, plantations, rural and urban green spaces, public and private land with vegetation and water bodies, and dissolved them into one single combined feature. Next, the vector layer was rasterized with the resolution of 5 m and fed as input in the MSPA tool. As the lowest resolution that would define minimum edge value is Landsat 8-9 data (30 m), the edge widths were set accordingly (6 for source 1, 3 for source 2 and 1 for source 3). Edge widths are often decided on the objective of the study and the resolution of the data. They vary from 16m to 300m from what I have read.</p>
+        </div>
+
+        <p>In case of NDVI, as I included farmlands and other plantation in the analysis, it was important to account for the crop patterns in Prague region. Since, between April to November months of the year, several kinds of crops are planted and harvested, it can be assumed that the aggregate of greenness from these months can provide a consolidated picture of vegetation health and greenness in a year.</p>
+
+        <div class="media-block right">
+            <div class="media-figure">
+                <img src="../images/landscape/ndvi_process-2.jpg" alt="NDVI merging process diagram" />
+                <p style="font-size:0.7rem;color:#888;text-align:center;margin-top:0.3rem;"><em>Dig.1 NDVI merging process</em></p>
+            </div>
+            <p>As the latest cloud-free satellite imageries for both Sentinel 2 and Landsat 8-9 images were available only for the months of May, June and July, they were used as input for NDVI calculation. Here, red (visible) and near-infrared spectral bands from Sentinel 2 and Landsat 8-9 were used to develop the NDVI rasters and pixels with values greater than 0.4 were chosen and overlaid for the selected months. The dig.1 demonstrates that for each cropping month (May, June and July), the rasters derived from Landsat 8-9 were transformed into binary rasters with pixels valued greater than 0.4. These binary rasters were merged and converted to a final binary raster representing green infrastructure in Prague.</p>
+        </div>
+
+        <p>For blue infrastructure, shapefiles from city's open portal were used and transformed into the same valued pixels as green infrastructure and merged into the final raster. These final binary rasters for both satellite sources were used as inputs for the MSPA and the results were visually juxtaposed and statistically compared.</p>
+
+        <figure class="img-full">
+            <img src="../images/landscape/bgi.jpg" alt="Forests, farmlands, open areas and water bodies in Prague" />
+            <figcaption><em>Forests, farmlands, open areas and water bodies in Prague (source: Geoportal - Prague)</em></figcaption>
+        </figure>
+
+        <h3>Outcome</h3>
+
+        <p>On analysing the three sources, the difference between vector and raster sources are quite evident. The total GBI area from LULC vector was found to be the largest, 29500 Ha. This is because unlike raster data, LUCL vectors capture all open and green areas irrespective of vegetation presence and quality, including barren sites.</p>
+
+        <p>Whereas, rasters compiled from the NDVI of satellite images only captured areas with vegetation and open spaces or farmlands with greenness that have the potential ecosystems and biodiversity. In terms of MSPA components, due to the consolidated structure of GBI in LULC vector data, the proportion of cores is much higher than those in raster inputs. Comparing the components of Sentinel 2 and Landsat 8-9, the total area identified with Landsat 8-9 is greater by 2% (450 Ha) than the former. Due to finer resolution of Sentinel 2, GBI network identified is more precise than Landsat 8-9 and hence, more fragmented. That is probably why the cores delineated in Sentinel 2 are fewer than the Landsat 8-9. Instead, islets that are standalone pixels without any core and bridges that connect two different cores are more in proportion in Sentinel 2. As visible from the blow-ups of the eastern GBI network of Prague, MSPA of Sentinel 2 has highlighted the bridges between cores with more granularity in comparison to LULC vector and Landsat 8-9.</p>
+
+        <div class="img-row-three">
+            <figure>
+                <img src="../images/landscape/opendata_mspa.jpg" alt="MSPA of vector LULC map" />
+                <figcaption><em>MSPA of vector LULC map</em></figcaption>
+            </figure>
+            <figure>
+                <img src="../images/landscape/sentinal_mspa.jpg" alt="MSPA of Sentinel 2" />
+                <figcaption><em>MSPA of Sentinel 2</em></figcaption>
+            </figure>
+            <figure>
+                <img src="../images/landscape/landsat_mspa.jpg" alt="MSPA of Landsat 8-9" />
+                <figcaption><em>MSPA of Landsat 8-9</em></figcaption>
+            </figure>
+        </div>
+
+        <div class="img-row-three">
+            <figure>
+                <img src="../images/landscape/opendata_mspa11.jpg" alt="Blow-up of vector MSPA" />
+            </figure>
+            <figure>
+                <img src="../images/landscape/sentinal_mspa1.jpg" alt="Blow-up of Sentinel 2 MSPA" />
+            </figure>
+            <figure>
+                <img src="../images/landscape/landsat_mspa1.jpg" alt="Blow-up of Landsat 8-9 MSPA" />
+            </figure>
+        </div>
+
+        <figure class="img-small">
+            <img src="../images/landscape/mspa_op-3.jpg" alt="Area of MSPA components" />
+            <figcaption><em>Area of MSPA components (in Ha)</em></figcaption>
+        </figure>
+
+        <h3>Learnings</h3>
+
+        <p>So what source works best for assessment of GBI network? It depends! It depends on what data you have, the quality of your data and the scale and scope of your project. If the project area has high resolution and well-categorised vector data, selecting specific categories representing required quality of vegetation is the easiest source for MSPA input. Using this data source does not need the skills and time for processing raw satellite files which often have limitations of cloud cover, sensor discrepancies and infrequent image acquisition.</p>
+
+        <p>If high resolution LULC data is not available, such as in many data-scarce places, processing satellite imageries could be a alternative. While Sentinel-2 provides higher resolution (10 m) global imageries, often certain datasets are "offline" and not readily available. On the other hand, Landsat 8-9 is widely available with more frequent dates of image acquisition but has lower resolution (30 m). However, if the scale of the project is large such as at city or regional scale, using low resolution data source can also meet the objective while avoiding high computational demand.</p>
+
+    </article>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-col">
+                <div class="footer-site-title">Play with maps</div>
+                <p class="footer-desc">Experiments with urban data, mapping and GIS tools</p>
+            </div>
+            <div class="footer-col">
+                <h3>Get in touch</h3>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/in/amruta-mahakalkar-6826258b" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg>
+                    </a>
+                    <a href="mailto:amrutamahakalkar3@gmail.com" aria-label="Email">
+                        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('menuBtn');
+        const dropdown = document.getElementById('dropdown');
+        btn.addEventListener('click', () => {
+            btn.classList.toggle('active');
+            dropdown.classList.toggle('open');
+        });
+        document.addEventListener('click', (e) => {
+            if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+                btn.classList.remove('active');
+                dropdown.classList.remove('open');
+            }
+        });
+    </script>
+
+</body>
+</html>

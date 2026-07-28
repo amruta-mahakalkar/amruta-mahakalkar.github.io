@@ -47,30 +47,19 @@ const geojsonData = {
   ]
 };
 
-const surfaceValues = geojsonData.features.map(f => f.properties['surface temp (max)']);
-const valMin = Math.min(...surfaceValues);
-const valMax = Math.max(...surfaceValues);
-
-const colorStops = [
-  { pos: 0, r: 26, g: 150, b: 65 },
-  { pos: 0.25, r: 166, g: 217, b: 106 },
-  { pos: 0.5, r: 255, g: 255, b: 191 },
-  { pos: 0.75, r: 253, g: 174, b: 97 },
-  { pos: 1, r: 215, g: 25, b: 28 }
+const classes = [
+  { min: 0, max: 40, color: '#1a9850', label: '&lt; 40' },
+  { min: 40, max: 48, color: '#91cf60', label: '40 – 48' },
+  { min: 48, max: 52, color: '#fee08b', label: '48 – 52' },
+  { min: 52, max: 55, color: '#fc8d59', label: '52 – 55' },
+  { min: 55, max: 999, color: '#d73027', label: '≥ 55' }
 ];
 
 function getColor(value) {
-  const t = (value - valMin) / (valMax - valMin);
-  for (let i = 0; i < colorStops.length - 1; i++) {
-    if (t >= colorStops[i].pos && t <= colorStops[i + 1].pos) {
-      const local = (t - colorStops[i].pos) / (colorStops[i + 1].pos - colorStops[i].pos);
-      const r = Math.round(colorStops[i].r + (colorStops[i + 1].r - colorStops[i].r) * local);
-      const g = Math.round(colorStops[i].g + (colorStops[i + 1].g - colorStops[i].g) * local);
-      const b = Math.round(colorStops[i].b + (colorStops[i + 1].b - colorStops[i].b) * local);
-      return `rgb(${r},${g},${b})`;
-    }
+  for (const c of classes) {
+    if (value >= c.min && value < c.max) return c.color;
   }
-  return 'rgb(215,25,28)';
+  return '#d73027';
 }
 
 const map = L.map('map').setView([48.858, 2.345], 14);
@@ -103,16 +92,9 @@ const geoLayer = L.geoJSON(geojsonData, {
 map.fitBounds(geoLayer.getBounds().pad(0.05));
 
 const legendDiv = document.getElementById('legend');
-const seen = new Set();
 legendDiv.innerHTML = '<div style="font-weight:700;margin-bottom:4px">Surface Temp Max (°C)</div>';
-geojsonData.features.forEach(f => {
-  const name = f.properties.Place;
-  const val = f.properties['surface temp (max)'];
-  const key = name + val;
-  if (seen.has(key)) return;
-  seen.add(key);
-  const color = getColor(val);
-  legendDiv.innerHTML += `<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px"><span style="display:inline-block;width:18px;height:12px;background:${color};border-radius:2px"></span>${name}: ${val.toFixed(1)}°C</div>`;
+classes.forEach(c => {
+  legendDiv.innerHTML += `<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px"><span style="display:inline-block;width:18px;height:12px;background:${c.color};border-radius:2px"></span>${c.label}°C</div>`;
 });
 </script>
 </body>

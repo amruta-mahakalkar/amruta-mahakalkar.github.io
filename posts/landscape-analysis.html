@@ -449,6 +449,137 @@
 
         </div>
         <div class="i18n-content" lang="fr" data-i18n-container>
+        <a href="../index.html" class="back-link" data-i18n="back.home">&larr; Retour à l'accueil</a>
+        <h1>Analyse des motifs paysagers : quel type de données fonctionne le mieux ?</h1>
+        <p class="post-date">12 février 2023</p>
+
+        <p>La conservation des forêts et des espaces naturels face à la menace d'une urbanisation et d'un développement mal conçus implique de comprendre leur forme et leur structure physique. La fragmentation et la dégradation de la continuité des éléments naturels peuvent entraîner une perte de biodiversité et d'habitats. Il est donc important d'identifier les nœuds et les connexions des réseaux paysagers régionaux pour formuler des stratégies afin de les protéger contre d'autres dommages et d'établir de nouvelles connexions améliorées.</p>
+
+        <p>L'un des outils pour évaluer les motifs paysagers et leurs composants est le <a href="https://doi.org/10.1016/j.patrec.2008.10.015" target="_blank" rel="noopener">MSPA</a> (Morphological Spatial Pattern Analysis) développé par la Commission européenne. En général, cet outil a été conçu pour détecter et décrire les caractéristiques morphologiques de toute image numérique binaire. C'est un outil simple qui a été adopté dans diverses recherches scientifiques associées au traitement d'images telles que l'<a href="https://doi.org/10.1016/j.jaridenv.2018.04.009" target="_blank" rel="noopener">habitat faunique</a>, la <a href="https://link.springer.com/article/10.1007/s11252-019-00868-4" target="_blank" rel="noopener">gestion de l'occupation des sols</a> et la <a href="https://doi.org/10.1016/j.mio.2016.03.003" target="_blank" rel="noopener">recherche marine</a>.</p>
+
+        <p>Le MSPA utilise un concept géométrique pour analyser mathématiquement une image binaire dans laquelle les pixels de premier plan sont les pixels d'intérêt, et le reste des pixels dans lesquels le premier plan est intégré sont appelés arrière-plan.</p>
+
+        <figure style="max-width:70%;margin:1.5rem auto;">
+            <img src="../images/landscape/mspalegend.gif" alt="Procédure de segmentation MSPA" />
+            <figcaption><em>Procédure de segmentation MSPA d'une image binaire - source : <a href="https://forest.jrc.ec.europa.eu/en/activities/lpa/mspa/" target="_blank" rel="noopener">Commission européenne</a></em></figcaption>
+        </figure>
+
+        <p>L'outil catégorise son entrée en sept grandes composantes mutuellement exclusives en utilisant la notion de <a href="https://doi.org/10.1016/j.patrec.2008.10.015" target="_blank" rel="noopener">connectivité de chemin</a> comme décrit dans le <a href="https://doi.org/10.5194/isprs-archives-XLVIII-4-W1-2022-427-2022" target="_blank" rel="noopener">tableau</a> :</p>
+
+        <table>
+            <thead>
+                <tr><th>Composants</th><th>Description</th><th>Signification écologique</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Core</td><td>Un ensemble de pixels de premier plan interconnectés et plus grands que la largeur de bordure spécifiée par l'utilisateur par rapport à l'arrière-plan.</td><td>Grands îlots naturels avec une connectivité élevée avec d'autres composants naturels.</td></tr>
+                <tr><td>Islet</td><td>Un ensemble de pixels de premier plan plus petit que la zone centrale et ne se connectant à aucune autre cellule de premier plan.</td><td>Petits îlots naturels individuels isolés qui ne se connectent pas avec d'autres éléments naturels.</td></tr>
+                <tr><td>Perforation</td><td>Les pixels de transition entre le premier plan et l'arrière-plan à l'intérieur des zones centrales qui forment le bord intérieur.</td><td>Zone non naturelle à l'intérieur de la zone centrale.</td></tr>
+                <tr><td>Edge</td><td>Les pixels de transition entre le premier plan et l'arrière-plan qui forment le bord extérieur.</td><td>La zone de transition entre les zones de végétation et de non-végétation.</td></tr>
+                <tr><td>Loop</td><td>Des pixels de premier plan orientés linéairement partant d'un noyau et se reconnectant au même noyau.</td><td>Corridor qui s'étend vers l'extérieur et se reconnecte avec son noyau naturel.</td></tr>
+                <tr><td>Bridge</td><td>Un ensemble de pixels de premier plan linéaires entre deux noyaux qui connectent deux ou plusieurs zones centrales.</td><td>L'élément naturel qui relie deux noyaux, équivalent aux corridors de connexion du réseau d'espaces verts.</td></tr>
+                <tr><td>Branch</td><td>Des pixels de premier plan orientés linéairement partant d'un noyau sans se connecter à aucune autre zone centrale.</td><td>Forme linéaire s'étendant à partir d'un noyau avec une faible connectivité.</td></tr>
+            </tbody>
+        </table>
+
+        <p>J'ai décidé d'utiliser cet outil pour cartographier le réseau paysager de la ville de Prague en utilisant la couche de son infrastructure bleue et verte (BGI) qui inclurait ses forêts, ses fermes, ses espaces verts urbains et ses plans d'eau. Ma première tâche a été de décider la source de données pour identifier et cartographier les BGI et c'est ce que cet article aborde.</p>
+
+        <blockquote>
+            <p><strong>Trouver différentes sources de données de BGI adaptées au MSPA et comparer leurs résultats.</strong></p>
+        </blockquote>
+
+        <p>Pour réaliser des évaluations de l'occupation des sols, les études s'appuient souvent sur des cartes vectorielles d'utilisation et d'occupation des sols (LULC) qui sont de plus en plus disponibles à un niveau granulaire. Par exemple, <a href="https://land.copernicus.eu/pan-european/corine-land-cover" target="_blank" rel="noopener">CORINE Land Cover</a> fournit des données LULC en 44 catégories pour l'Europe, incluant les forêts, les champs agricoles, les espaces verts ouverts, les parcs urbains, etc. Les gouvernements locaux en Europe génèrent et fournissent également leurs propres cartes vectorielles détaillées d'occupation des sols, comme dans le cas de Prague, où les données ouvertes sur <a href="https://www.geoportalpraha.cz/cs/data" target="_blank" rel="noopener">l'utilisation existante des sols</a> catégorisent le LULC en 126 types. Alors que les vecteurs LULC représentent des motifs paysagers homogènes, ils n'indiquent pas la qualité de la végétation et la masse de la canopée qui définissent en fait l'entrée pour le MSPA. De plus, un LULC obsolète dans un scénario d'urbanisation dynamique peut également produire des résultats inexacts. Par exemple, la catégorie « prairies, pâturages, champs d'herbe » dans la carte vectorielle de Prague présente différentes densités de végétation. Cette incohérence pourrait fausser les résultats et identifier des terres stériles sans canopée comme des sites potentiels d'écosystèmes selon le MSPA.</p>
+
+        <figure>
+            <img src="../images/landscape/sample-3.jpg" alt="Parcelles avec différentes densités de végétation" />
+            <figcaption><em>Parcelles avec différentes densités de végétation catégorisées comme « prairies, pâturages, champs d'herbe » par le portail officiel de Prague</em></figcaption>
+        </figure>
+
+        <h3>Méthodologie</h3>
+
+        <p>Outre les cartes vectorielles, les images satellites raster sont souvent considérées comme des sources principales pour identifier la canopée réelle et en fait les traiter pour délimiter les zones naturelles et semi-naturelles du <a href="https://link.springer.com/article/10.1007/s11042-020-09531-z" target="_blank" rel="noopener">vecteur LULC</a>. L'indice couramment utilisé pour mesurer la présence et la qualité de la végétation verte vivante à partir d'une image satellite est le <a href="https://earthobservatory.nasa.gov/features/MeasuringVegetation/measuring_vegetation_2.php" target="_blank" rel="noopener">NDVI</a> (Normalized Difference Vegetation Index) qui prend en compte les bandes spectrales rouges (visibles) et proches infrarouges et calcule les valeurs des pixels qui représentent l'ampleur de la verdure de la végétation. Allant de -1 à 1, des valeurs plus élevées (0,60 - 1,00) sont générées par les pixels avec une végétation dense et saine, 0,35 - 0,60 comme canopée modérément saine tandis que les valeurs négatives correspondent à l'eau, aux nuages ou à la neige.</p>
+
+        <p>Pour réaliser le MSPA de la ville de Prague, j'ai utilisé trois types de sources de données détaillées ci-dessous :</p>
+
+        <table>
+            <thead>
+                <tr><th>N° de source</th><th>Type de carte</th><th>Source</th><th>Échelle / résolution</th><th>Période</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>1.</td><td>Carte vectorielle LULC</td><td><a href="https://www.geoportalpraha.cz/cs/data/metadata/A0198E36-FCAD-42E7-BE4A-3B7755A48DAC" target="_blank" rel="noopener">Portail officiel de Prague</a></td><td>1:5000 m</td><td>Mise à jour en novembre 2022</td></tr>
+                <tr><td>2.</td><td>Images raster 1</td><td><a href="https://scihub.copernicus.eu/dhus/#/home" target="_blank" rel="noopener">Sentinel 2 - Bande 4 et Bande 8</a></td><td>10 m</td><td>Téléchargées pour juin et juillet 2022</td></tr>
+                <tr><td>3.</td><td>Images raster 2</td><td><a href="https://earthexplorer.usgs.gov/" target="_blank" rel="noopener">Landsat 8 - Bande 4 et Bande 5</a></td><td>30 m</td><td>Téléchargées pour mai, juin et juillet 2022</td></tr>
+            </tbody>
+        </table>
+
+        <div class="media-block">
+            <div class="media-figure" style="width:50%;">
+                <img src="../images/landscape/gtb_snap-2.png" alt="Interface GTB" />
+                <figcaption style="font-style:italic;color:#888;font-size:0.85rem;text-align:center;margin-top:0.3rem;">Interface de GTB (GuidosToolbox)</figcaption>
+            </div>
+            <p>Pour la carte vectorielle LULC, j'ai sélectionné les caractéristiques indiquant typiquement une infrastructure bleue et verte étiquetées comme forêts, usages agricoles et horticoles, plantations, espaces verts ruraux et urbains, terrains publics et privés avec végétation et plans d'eau, et je les ai fusionnées en une seule caractéristique combinée. Ensuite, la couche vectorielle a été rastérisée avec une résolution de 5 m et introduite dans l'<a href="https://forest.jrc.ec.europa.eu/en/activities/lpa/mspa/" target="_blank" rel="noopener">outil MSPA</a>. Comme la résolution la plus basse qui définirait la valeur de bordure minimale est celle des données Landsat 8-9 (30 m), les largeurs de bordure ont été définies en conséquence (6 pour la source 1, 3 pour la source 2 et 1 pour la source 3). Les largeurs de bordure sont souvent décidées en fonction de l'objectif de l'étude et de la résolution des données. Elles varient de <a href="http://dx.doi.org/10.5751/ES-06598-190321" target="_blank" rel="noopener">16 m</a> à <a href="http://dx.doi.org/10.1016/j.foreco.2011.03.017" target="_blank" rel="noopener">300 m</a> d'après ce que j'ai lu.</p>
+        </div>
+
+        <p>Dans le cas du NDVI, comme j'ai inclus les terres agricoles et autres plantations dans l'analyse, il était important de prendre en compte les motifs de culture dans la région de Prague. Puisque, entre les mois d'<a href="https://www.fas.usda.gov/data/production/e4" target="_blank" rel="noopener">avril et novembre</a> de l'année, plusieurs types de cultures sont plantés et récoltés, on peut supposer que l'agrégat de verdure de ces mois peut fournir une image consolidée de la santé et de la verdure de la végétation sur une année.</p>
+
+        <div class="media-block right">
+            <div class="media-figure">
+                <img src="../images/landscape/ndvi_process-2.jpg" alt="Diagramme du processus de fusion NDVI" />
+                <p style="font-size:0.7rem;color:#888;text-align:center;margin-top:0.3rem;"><em>Processus de fusion NDVI</em></p>
+            </div>
+            <p>Comme les dernières images satellites sans nuages pour Sentinel 2 et Landsat 8-9 n'étaient disponibles que pour les mois de mai, juin et juillet, elles ont été utilisées comme entrée pour le calcul du NDVI. Ici, les bandes spectrales rouges (visibles) et proches infrarouges de Sentinel 2 et Landsat 8-9 ont été utilisées pour développer les rasters NDVI et les pixels avec des valeurs supérieures à 0,4 ont été choisis et superposés pour les mois sélectionnés. La figure démontre que pour chaque mois de culture (mai, juin et juillet), les rasters dérivés de Landsat 8-9 ont été transformés en rasters binaires avec des pixels évalués à plus de 0,4.</p>
+            <p>Pour l'infrastructure bleue, les shapefiles du portail ouvert de la ville ont été utilisés et transformés en pixels de même valeur que l'infrastructure verte et fusionnés dans le raster final. Ces rasters binaires finaux pour les deux sources satellites ont été utilisés comme entrées pour le MSPA et les résultats ont été visuellement juxtaposés et statistiquement comparés.</p>
+        </div>
+
+        <h3>Résultats</h3>
+
+        <figure class="img-full">
+            <img src="../images/landscape/bgi.jpg" alt="Forêts, terres agricoles, espaces ouverts et plans d'eau à Prague" />
+            <figcaption><em>Forêts, terres agricoles, espaces ouverts et plans d'eau à Prague (source : <a href="https://www.geoportalpraha.cz/en" target="_blank" rel="noopener">Geoportal - Prague</a>)</em></figcaption>
+        </figure>
+
+        <div class="img-row-three">
+            <figure>
+                <img src="../images/landscape/opendata_mspa.jpg" alt="Analyse MSPA de la carte vectorielle LULC" />
+                <figcaption><em>Analyse MSPA de la carte vectorielle LULC</em></figcaption>
+            </figure>
+            <figure>
+                <img src="../images/landscape/sentinal_mspa.jpg" alt="Analyse MSPA de Sentinel 2" />
+                <figcaption><em>Analyse MSPA de Sentinel 2</em></figcaption>
+            </figure>
+            <figure>
+                <img src="../images/landscape/landsat_mspa.jpg" alt="Analyse MSPA de Landsat 8-9" />
+                <figcaption><em>Analyse MSPA de Landsat 8-9</em></figcaption>
+            </figure>
+        </div>
+
+        <div class="img-row-three">
+            <figure>
+                <img src="../images/landscape/opendata_mspa11.jpg" alt="Agrandissement de l'analyse MSPA vectorielle" />
+            </figure>
+            <figure>
+                <img src="../images/landscape/sentinal_mspa1.jpg" alt="Agrandissement de l'analyse MSPA de Sentinel 2" />
+            </figure>
+            <figure>
+                <img src="../images/landscape/landsat_mspa1.jpg" alt="Agrandissement de l'analyse MSPA de Landsat 8-9" />
+            </figure>
+        </div>
+        <figcaption style="text-align:center;font-style:italic;color:#888;font-size:0.85rem;margin-top:0.5rem;">Agrandissements de l'analyse MSPA de la ville : vecteur LULC, Sentinel 2 et Landsat 8-9</figcaption>
+
+        <figure class="img-full">
+            <img src="../images/landscape/mspa_op-3.jpg" alt="Superficie des composants MSPA" />
+            <figcaption><em>Superficie des composants MSPA (en Ha)</em></figcaption>
+        </figure>
+
+        <p>En analysant les trois sources, la différence entre les sources vectorielles et raster est assez évidente. La superficie totale des BGI à partir du vecteur LULC s'est avérée être la plus grande, 29 500 Ha. Cela est dû au fait que, contrairement aux données raster, les vecteurs LULC capturent toutes les zones ouvertes et vertes indépendamment de la présence et de la qualité de la végétation, y compris les sites stériles.</p>
+
+        <p>Alors que les rasters compilés à partir du NDVI des images satellites ont seulement capturé les zones avec de la végétation et des espaces ouverts ou des terres agricoles avec de la verdure ayant des écosystèmes et une biodiversité potentiels. En termes de composants MSPA, en raison de la structure consolidée des BGI dans les données vectorielles LULC, la proportion de cœurs est beaucoup plus élevée que celle des entrées raster. En comparant les composants de Sentinel 2 et Landsat 8-9, la superficie totale identifiée avec Landsat 8-9 est supérieure de 2 % (450 Ha) à celle de Sentinel 2. En raison de la résolution plus fine de Sentinel 2, le réseau BGI identifié est plus précis que celui de Landsat 8-9 et donc, plus fragmenté. C'est probablement pourquoi les cœurs délimités dans Sentinel 2 sont moins nombreux que ceux de Landsat 8-9. En revanche, les îlots qui sont des pixels autonomes sans aucun cœur et les ponts qui connectent deux cœurs différents sont plus nombreux en proportion dans Sentinel 2. Comme visible sur les agrandissements du réseau BGI est de Prague, l'analyse MSPA de Sentinel 2 a mis en évidence les ponts entre les cœurs avec plus de granularité par rapport au vecteur LULC et à Landsat 8-9.</p>
+
+        <h3>Enseignements</h3>
+
+        <p>Alors, quelle source fonctionne le mieux pour l'évaluation du réseau BGI ? Cela dépend ! Cela dépend des données que vous avez, de la qualité de vos données et de l'échelle et de la portée de votre projet. Si la zone du projet dispose de données vectorielles haute résolution et bien catégorisées, la sélection de catégories spécifiques représentant la qualité requise de la végétation est la source la plus facile pour l'entrée MSPA. L'utilisation de cette source de données ne nécessite pas les compétences et le temps nécessaires au traitement des fichiers satellites bruts qui ont souvent des limitations de couverture nuageuse, de divergences de capteurs et d'acquisition d'images peu fréquente.</p>
+
+        <p>Si des données LULC haute résolution ne sont pas disponibles, comme dans de nombreux endroits pauvres en données, le traitement d'images satellites pourrait être une alternative. Alors que Sentinel-2 fournit des images mondiales à plus haute résolution (10 m), certains ensembles de données sont souvent « hors ligne » et pas facilement disponibles. D'autre part, Landsat 8-9 est largement disponible avec des dates d'acquisition d'images plus fréquentes mais a une résolution plus faible (30 m). Cependant, si l'échelle du projet est grande, comme à l'échelle de la ville ou de la région, l'utilisation d'une source de données à faible résolution peut également atteindre l'objectif tout en évitant une demande de calcul élevée.</p>
+
         </div>
     </article>
 

@@ -528,6 +528,173 @@ for i in range(waitFor):
         </div>
         </div>
         <div class="i18n-content" lang="fr" data-i18n-container>
+        <a href="../index.html" class="back-link" data-i18n="back.home">&larr; Retour à l'accueil</a>
+        <h1>Checking the pulse of Paris with V&eacute;lib&rsquo;</h1>
+        <p class="post-date">11 septembre 2022</p>
+
+        <p>Ces dernières années, Paris s'est imposée comme une ville pionnière en matière de mobilité durable et douce, en encourageant activement la pratique du vélo et la marche. L'un des principaux modes de transport partagé proposés par la ville est le Vélib', un système public de vélos en libre-service lancé en 2007. Ce réseau, composé de 1 400 stations, dessert l'ensemble de la capitale ainsi que les communes limitrophes.</p>
+
+        <p>Très apprécié des Parisiens comme des touristes, ce service propose des vélos mécaniques et électriques accessibles via une application sur abonnement. L'analyse des schémas de demande de ces systèmes de mobilité offre un éclairage précieux sur les flux urbains. De plus, en superposant ces tendances aux usages du sol, les décideurs peuvent élaborer de meilleures stratégies pour combler l'écart entre l'offre et la demande, voire stimuler davantage cette dernière.</p>
+
+        <p>Le portail de données ouvertes (open data) de la Ville de Paris fournit des informations détaillées et actualisées chaque minute sur l'état des stations Vélib' en temps réel. J'ai décidé de tirer parti de cette disponibilité des données pour cartographier et étudier l'activité des stations Vélib' lors d'une journée de semaine et d'une journée de week-end ; les résultats obtenus sont passionnants !</p>
+
+        <h4>Défis liés aux données</h4>
+
+        <p>Bien que le portail de la ville indique l'état des stations Vélib' en temps réel et permette aux utilisateurs de télécharger ces données, il n'en conserve aucun historique. Cela complique la collecte de jeux de données couvrant une journée entière ou des périodes antérieures à des fins de recherche. J'ai donc décidé de consacrer deux journées complètes — le 8 septembre 2022 (jeudi) et le 10 septembre 2022 (samedi) — au téléchargement des données, en utilisant le code Python suivant pour automatiser la tâche toutes les 30 minutes :</p>
+        <pre><code class="language-python">import urllib.request
+from time import sleep
+
+# define API and folder location
+def download_and_save(n):
+    filename = "datafile" + str(n) + ".json"
+    url = 'https://opendata.paris.fr/api/v2/catalog/datasets/velib-disponibilite-en-temps-reel/exports/json?limit=-1&amp;offset=0&amp;lang=en&amp;timezone=UTC'
+    urllib.request.urlretrieve(url, 'folder_location/' + filename)
+    return
+
+# command scheduled task
+second = 1
+minute = second * 60
+halfHour = 30 * minute
+hour = 60 * minute
+
+waitFor = 48
+
+for i in range(waitFor):
+    download_and_save(i)
+    sleep(halfHour)</code></pre>
+
+        <p>Cela m'a permis d'obtenir 96 fichiers .json au total sur les deux jours. Je les ai fusionnés et convertis en un seul fichier .csv, puis je les ai transférés dans QGIS. J'ai supprimé les valeurs en double et nettoyé l'horodatage d'origine en ajoutant un nouveau champ. Ce fichier me renseigne désormais sur la capacité totale, ainsi que sur les places vacantes et occupées (vélos électriques et mécaniques) de chaque station Vélib', en fonction des horaires. Fait intéressant, j'ai observé que les horodatages étaient mis à jour toutes les heures plutôt que toutes les minutes par le portail.</p>
+
+        <p>Pour superposer les données de mobilité sur une couche de base des fonctions urbaines, j'ai choisi d'utiliser la densité de population et d'emploi plutôt que les données conventionnelles d'occupation des sols. Paris est une ville d'une mixité fonctionnelle étonnante, à tel point que ses usages du sol et du bâti existants ne peuvent pas être recensés de manière exhaustive. Un même bâtiment abrite souvent plusieurs usages difficiles à catégoriser, et un même espace est utilisé à différentes fins au fil du temps. Il est donc plus logique de comprendre la répartition des centralités générales de « logement » et de « travail ».</p>
+
+        <p>Pour ce faire, j'ai ensuite extrait les données de densité de population et d'emploi du recensement français. Si les données de population étaient disponibles à l'échelle des IRIS, la densité d'emploi n'était fournie que pour les arrondissements et les communes, ce qui n'est pas assez fin pour comprendre les tendances. Je n'ai trouvé qu'un seul PDF sur le site officiel concernant la densité d'emploi à l'échelle des IRIS, que j'ai réussi à convertir en couche SIG.</p>
+
+        <h4>Visualisation et interprétation</h4>
+
+        <p>J'ai utilisé une plateforme open source, kepler.gl, pour compiler et visualiser les données à l'aide de son outil de lecture. Les vidéos des transitions sur une journée se trouvent à la fin de cet article. Je partage ici quelques captures d'écran comparatives accompagnées de mes observations.</p>
+
+        <p>La densité d'emploi à Paris est la plus élevée au nord et au nord-ouest de la Seine. Elle reste également élevée vers le quartier de La Défense, à la périphérie nord-ouest, et Boulogne-Billancourt, à la périphérie sud-ouest de la ville. En revanche, la densité résidentielle est assez élevée dans toute la ville, à l'exception des quartiers à très forte densité d'emploi. Elle reste également moyennement élevée dans toutes les communes limitrophes, notamment au nord. Dans ce contexte, voici l'occupation des stations Vélib' par jour et par heure :</p>
+
+        <h3>Matin</h3>
+
+        <p>En semaine, toutes les stations situées dans les zones d'emploi centrales deviennent pleines (occupation faible à élevée indiquée par des points bleus à rouges), ce qui implique un flux d'arrivée de vélos important dans le centre-ville et les quartiers d'affaires comme La Défense. Mais le week-end, le mouvement des vélos semble assez dispersé et légèrement concentré dans le nord-est et le sud-ouest de la ville.</p>
+
+        <div class="slider-pair-half">
+            <div class="img-compare-wrap">
+                <div class="img-compare" data-position="50">
+                    <img src="../images/velib/job_morn-noon-2.png" alt="Densité d'emploi le matin en semaine" />
+                    <div class="img-compare-overlay">
+                        <img src="../images/velib/job_morn-noon_we-2.png" alt="Densité d'emploi le matin le week-end" />
+                    </div>
+                    <div class="img-compare-handle"></div>
+                </div>
+                <div class="img-compare-label"><em>Occupation le matin en semaine et le week-end (densité d'emploi)</em></div>
+            </div>
+            <div class="img-compare-wrap">
+                <div class="img-compare" data-position="50">
+                    <img src="../images/velib/res_morn-noon.png" alt="Densité de population le matin en semaine" />
+                    <div class="img-compare-overlay">
+                        <img src="../images/velib/res_morn-noon_we.png" alt="Densité de population le matin le week-end" />
+                    </div>
+                    <div class="img-compare-handle"></div>
+                </div>
+                <div class="img-compare-label"><em>Occupation le matin en semaine et le week-end (densité de population)</em></div>
+            </div>
+        </div>
+
+        <h3>Après-midi</h3>
+
+        <p>Le week-end, l'après-midi, l'occupation des vélos semble dispersée dans la ville, tandis qu'en semaine, les vélos se trouvaient loin des zones à forte densité d'emploi, étant peut-être utilisés par des usagers non actifs comme les touristes.</p>
+
+        <div class="slider-pair-half">
+            <div class="img-compare-wrap">
+                <div class="img-compare" data-position="50">
+                    <img src="../images/velib/job_afternoon.png" alt="Densité d'emploi l'après-midi en semaine" />
+                    <div class="img-compare-overlay">
+                        <img src="../images/velib/job_afternoon_we.png" alt="Densité d'emploi l'après-midi le week-end" />
+                    </div>
+                    <div class="img-compare-handle"></div>
+                </div>
+                <div class="img-compare-label"><em>Occupation l'après-midi en semaine et le week-end (densité d'emploi)</em></div>
+            </div>
+            <div class="img-compare-wrap">
+                <div class="img-compare" data-position="50">
+                    <img src="../images/velib/res_afternoon-1.png" alt="Densité de population l'après-midi en semaine" />
+                    <div class="img-compare-overlay">
+                        <img src="../images/velib/res_afternoon_we-1.png" alt="Densité de population l'après-midi le week-end" />
+                    </div>
+                    <div class="img-compare-handle"></div>
+                </div>
+                <div class="img-compare-label"><em>Occupation l'après-midi en semaine et le week-end (densité de population)</em></div>
+            </div>
+        </div>
+
+        <h3>Soirée</h3>
+
+        <p>On remarque qu'en semaine, les vélos retournent en masse vers les zones résidentielles après les heures de bureau. À l'inverse, le week-end, les vélos restent concentrés dans l'est de Paris, le long de la Seine, et dans le sud. L'est de Paris regorge de lieux de loisirs publics et privés, ce qui pourrait expliquer cette tendance.</p>
+
+        <div class="slider-pair-half">
+            <div class="img-compare-wrap">
+                <div class="img-compare" data-position="50">
+                    <img src="../images/velib/job_evening.png" alt="Densité d'emploi le soir en semaine" />
+                    <div class="img-compare-overlay">
+                        <img src="../images/velib/job_evening_we.png" alt="Densité d'emploi le soir le week-end" />
+                    </div>
+                    <div class="img-compare-handle"></div>
+                </div>
+                <div class="img-compare-label"><em>Occupation le soir en semaine et le week-end (densité d'emploi)</em></div>
+            </div>
+            <div class="img-compare-wrap">
+                <div class="img-compare" data-position="50">
+                    <img src="../images/velib/res_evening-1.png" alt="Densité de population le soir en semaine" />
+                    <div class="img-compare-overlay">
+                        <img src="../images/velib/res_evening_we.png" alt="Densité de population le soir le week-end" />
+                    </div>
+                    <div class="img-compare-handle"></div>
+                </div>
+                <div class="img-compare-label"><em>Occupation le soir en semaine et le week-end (densité de population)</em></div>
+            </div>
+        </div>
+
+        <h3>Nuit</h3>
+
+        <p>À l'inverse de la tendance matinale, les vélos Vélib' retournent dans les zones résidentielles la nuit, aussi bien en semaine que le week-end, comme pour aller se coucher.</p>
+
+        <div class="slider-pair-half">
+            <div class="img-compare-wrap">
+                <div class="img-compare" data-position="50">
+                    <img src="../images/velib/job_night.png" alt="Densité d'emploi la nuit en semaine" />
+                    <div class="img-compare-overlay">
+                        <img src="../images/velib/job_night_we.png" alt="Densité d'emploi la nuit le week-end" />
+                    </div>
+                    <div class="img-compare-handle"></div>
+                </div>
+                <div class="img-compare-label"><em>Occupation la nuit en semaine et le week-end (densité d'emploi)</em></div>
+            </div>
+            <div class="img-compare-wrap">
+                <div class="img-compare" data-position="50">
+                    <img src="../images/velib/res_night.png" alt="Densité de population la nuit en semaine" />
+                    <div class="img-compare-overlay">
+                        <img src="../images/velib/res_night_we.png" alt="Densité de population la nuit le week-end" />
+                    </div>
+                    <div class="img-compare-handle"></div>
+                </div>
+                <div class="img-compare-label"><em>Occupation la nuit en semaine et le week-end (densité de population)</em></div>
+            </div>
+        </div>
+
+        <p>Découvrez ces transitions scintillantes des vélos Vélib' qui circulent dans Paris en semaine et le week-end.</p>
+
+        <div class="img-gif-stack">
+            <figure>
+                <img src="../images/velib/wd1.gif" alt="Flux de Vélib' en semaine" />
+                <figcaption><em>Flux de Vélib' en semaine</em></figcaption>
+            </figure>
+            <figure>
+                <img src="../images/velib/we1.gif" alt="Flux de Vélib' le week-end" />
+                <figcaption><em>Flux de Vélib' le week-end</em></figcaption>
+            </figure>
+        </div>
         </div>
     </article>
 

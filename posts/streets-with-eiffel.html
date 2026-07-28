@@ -405,6 +405,96 @@
 
         </div>
         <div class="i18n-content" lang="fr" data-i18n-container>
+        <a href="../index.html" class="back-link" data-i18n="back.home">&larr; Retour à l'accueil</a>
+        <h1>Rues avec vue sur la Tour Eiffel</h1>
+        <p class="post-date">30 août 2022</p>
+
+        <div class="map-embed">
+            <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1mWjJl7Jw4T-tOFzsgTWpxbsafPPIonM&ehbc=2E312F&ll=48.8584%2C2.2945&z=14" allowfullscreen></iframe>
+        </div>
+
+        <p>Chaque fois que je visite Paris, je me lance dans le jeu «&nbsp;Où est la Tour Eiffel&nbsp;». Un jour de ciel dégagé, j'ai été surprise d'apercevoir une petite partie de la Tour Eiffel depuis une ruelle à environ 2&nbsp;km de l'autre côté de la Seine. Excitée, j'ai gravi Montmartre dans l'espoir d'apercevoir la Tour Eiffel depuis le Sacré-Cœur, mais à vol d'oiseau de plus de 4&nbsp;km, la tour géante devient brumeuse et est tout juste obstruée par les arbres.</p>
+
+        <p>Cela m'a inspirée à me demander&nbsp;:</p>
+
+        <blockquote>
+            <p><strong>Depuis quelles rues peut-on apercevoir la Tour Eiffel, ne serait-ce qu'un petit bout&nbsp;?</strong></p>
+        </blockquote>
+
+        <p>J'ai décidé de limiter la portée de cette question aux seules rues de plain-pied et aux espaces publics. Par conséquent, mon résultat se résume à des tronçons de rues et de places offrant une vue sur la Tour Eiffel. Ces analyses de visibilité sont souvent réalisées avec des outils SIG, comme l'analyse de champ de visibilité (viewshed).</p>
+
+        <p>En conservant l'observateur au niveau du sol, quatre facteurs définissent la visibilité de la Tour&nbsp;:</p>
+
+        <ol>
+            <li><strong>L'altitude</strong></li>
+            <li><strong>Les bâtiments</strong></li>
+            <li><strong>Les arbres</strong></li>
+            <li><strong>L'atmosphère</strong></li>
+        </ol>
+
+        <p><a href="https://pro.arcgis.com/en/pro-app/2.8/tool-reference/spatial-analyst/viewshed.htm" target="_blank" rel="noopener">Viewshed</a> dans ArcGIS est un outil d'analyse spatiale intéressant pour déterminer les emplacements de surface raster visibles depuis un ensemble d'observateurs. Réaliser cet exercice nécessite un raster d'altitude avec les points vectoriels d'observation et leurs hauteurs respectives. Bien que l'outil fût simple d'utilisation, la collecte et la compilation des ingrédients était tout un travail.</p>
+
+        <div class="img-row-three">
+            <figure>
+                <img src="../images/eiffel/elevation-2.jpg" alt="Modèle Numérique d'Altitude" />
+                <figcaption><em>Modèle Numérique d'Altitude</em></figcaption>
+            </figure>
+            <figure>
+                <img src="../images/eiffel/buildings.jpg" alt="Hauteurs des bâtiments" />
+                <figcaption><em>Hauteurs des bâtiments</em></figcaption>
+            </figure>
+            <figure>
+                <img src="../images/eiffel/trees-1.jpg" alt="Canopée arborée" />
+                <figcaption><em>Canopée arborée</em></figcaption>
+            </figure>
+        </div>
+
+        <figure>
+            <img src="../images/eiffel/dtm2.jpg" alt="Modèle Numérique de Surface" />
+            <figcaption><em>Modèle Numérique de Surface</em></figcaption>
+        </figure>
+
+        <p>Pour cela, j'ai d'abord extrait et découpé un Modèle Numérique d'Altitude (DEM) depuis <a href="https://search.earthdata.nasa.gov" target="_blank" rel="noopener">ASTER NASA Earth Data</a>. La meilleure résolution que j'ai pu obtenir était de 30&nbsp;m. Pour les bâtiments et la couverture arborée, j'ai téléchargé leurs shapefiles depuis le portail <a href="https://opendata.paris.fr/pages/home/" target="_blank" rel="noopener">open data</a> de Paris. Je les ai rasterisés avec une résolution de 1&nbsp;m et j'ai attribué leur hauteur comme coordonnée z. Pour la couche des bâtiments, les données d'origine ne comportaient pas la hauteur exacte mais seulement le nombre maximum d'étages (incluant des valeurs nulles&nbsp;!). Pour résoudre cela, j'ai pris en compte une hauteur moyenne de mur supposée de 3,5&nbsp;m et j'ai poursuivi la rasterisation. Les arbres, quant à eux, étaient délicats. Les données consistaient en une couche de points avec des champs pour la hauteur et la circonférence approximatives (à partir desquelles j'ai défini leur rayon et créé un tampon circulaire). Mais pour la rasterisation, seule la section d'arbre la plus haute devait être sélectionnée. Par conséquent, tous les tampons ont été intersectés entre eux et les géométries en double ont été supprimées à l'exception des valeurs les plus élevées, suivies de leur rasterisation.</p>
+
+        <p>Compte tenu de la capacité de traitement de mon ordinateur, j'ai décidé de limiter la portée de cette analyse aux limites de la ville de Paris et j'ai également supprimé les extensions du Bois de Boulogne et du Bois de Vincennes. Cependant, il existe plusieurs endroits en dehors des limites de la ville d'où l'on peut voir la Tour Eiffel.</p>
+
+        <p>Ensuite, pour compiler la surface raster finale, j'ai développé un Modèle Numérique de Surface (DSM) en fusionnant l'altitude avec les rasters des bâtiments et des arbres, et j'ai rééchantillonné la résolution à 2,5&nbsp;m. L'emplacement de la Tour Eiffel a une altitude de 30&nbsp;m et sa hauteur propre est de 330&nbsp;m. De même, la hauteur moyenne d'un observateur (déport) a été fixée à 1,6&nbsp;m. Le coefficient de réfraction qui définit la visibilité atmosphérique a été conservé à la valeur par défaut de 0,13. Avec ces composants, l'outil Viewshed 2 dans ArcMap 10.7.1 a produit un raster représentant la vue de la Tour depuis l'ensemble du DSM sous forme de pixels visibles / non visibles. Ici, le sommet des bâtiments et la couverture arborée qui se trouvent dans le champ de visibilité de la Tour sont également identifiés. Mais ces pixels doivent être supprimés, étant donné que notre observateur se trouve uniquement au niveau du sol (DEM) et que les hauteurs des bâtiments et des arbres n'ont été ajoutées que comme obstructions, et non comme points d'observation.</p>
+
+        <div class="img-row-two">
+            <figure>
+                <img src="../images/eiffel/viewshed1-1.jpg" alt="Résultat de l'analyse de visibilité" />
+                <figcaption><em>Résultat de l'analyse de visibilité (tampon de 3&nbsp;km)</em></figcaption>
+            </figure>
+            <figure>
+                <img src="../images/eiffel/viewshed2.jpg" alt="Analyse de visibilité intersectée avec la couche des rues" />
+                <figcaption><em>Analyse de visibilité intersectée avec la couche des rues</em></figcaption>
+            </figure>
+        </div>
+
+        <p>Enfin, le raster du champ de visibilité résultant est intersecté avec la couche des rues de Paris et découpé à 3&nbsp;km, considérant cela comme la portée visuelle d'un œil moyen dans une atmosphère urbaine. Comme le montre le résultat, en raison de la résolution grossière et de l'imprécision générale des données (comme la cartographie exacte de la canopée arborée en ville), des rues autres que celles ayant réellement une vue sur la Tour sont également identifiées par l'analyse. Pour améliorer la précision, j'ai parcouru Google Streetview et supprimé les rues mal identifiées ainsi que celles traversant des parcs.</p>
+
+        <p>Le résultat final est cette carte estimée des rues de Paris d'où l'on peut s'attendre à apercevoir la Tour Eiffel par temps clair.</p>
+
+        <p>Bisous&nbsp;!</p>
+
+        <div class="streetview-row">
+            <figure>
+                <iframe src="https://www.google.com/maps/embed?pb=!4v1661858668548!6m8!1m7!1scAqJ9lkoY8me4aZ_5IeVNg!2m2!1d48.87449639687448!2d2.295646520278978!3f201.2735426481745!4f3.206319739480591!5f0.7820865974627469" allowfullscreen></iframe>
+            </figure>
+            <figure>
+                <iframe src="https://www.google.com/maps/embed?pb=!4v1661858798593!6m8!1m7!1svle72EEUodPWuMu1nvhMsw!2m2!1d48.85884660289228!2d2.337725890207111!3f264.2575292822301!4f-3.4196411760210452!5f0.7820865974627469" allowfullscreen></iframe>
+            </figure>
+            <figure>
+                <iframe src="https://www.google.com/maps/embed?pb=!4v1661859063917!6m8!1m7!1slkjQvnpyO5gMvBu0n2Nhkw!2m2!1d48.83793233583383!2d2.317826494360413!3f339.7897263266168!4f-1.5581896015062853!5f0.7820865974627469" allowfullscreen></iframe>
+            </figure>
+        </div>
+
+        <h3>Références</h3>
+
+        <ul>
+            <li>Cassatella C.; Carlone G. (2013). GIS-based visual analysis for planning and designing historic urban landscapes. In: 2013 Digital Heritage International Congress, Marseille (FR), 28 oct-1 Nov. pp. 45-52</li>
+            <li>Garnero, Gabriele & Fabrizio, Enrico. (2015). Visibility analysis in urban spaces: a raster-based approach and case studies. Environment and Planning B: Planning and Design. 0-0. 10.1068/b130119p</li>
+        </ul>
         </div>
     </article>
 

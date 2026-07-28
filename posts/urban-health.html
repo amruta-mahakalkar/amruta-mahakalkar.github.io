@@ -503,6 +503,167 @@
 
         </div>
         <div class="i18n-content" lang="fr" data-i18n-container>
+        <a href="../index.html" class="back-link" data-i18n="back.home">&larr; Retour à l'accueil</a>
+        <h1>Cartographier la santé urbaine et la vulnérabilité</h1>
+        <p class="post-date">30 août 2022</p>
+
+        <div class="cover">
+            <img src="../images/health/kepler_screen-1.jpg" alt="Visualisation de la santé urbaine et de la vulnérabilité" />
+            <div class="cover-overlay">
+                <a href="https://amruta-meh.github.io/" target="_blank" rel="noopener">Indices de santé urbaine et de vulnérabilité</a>
+            </div>
+        </div>
+
+        <p style="text-align:center;margin-bottom:2rem;">
+            <strong><a href="https://amruta-meh.github.io/" target="_blank" rel="noopener">Cliquez pour ouvrir la visualisation interactive</a></strong>
+        </p>
+
+        <p>Avec une population de 132 000 habitants, Ferrare est une ville de la région d'Émilie-Romagne en Italie. Son centre-ville est particulièrement compact, avec quelques zones industrielles et banlieues en périphérie. En travaillant sur le projet <a href="https://airbreakferrara.net/" target="_blank" rel="noopener">AirBreak Ferrara</a>, j'ai eu l'occasion d'explorer les données ouvertes de la ville et de formuler un indice de santé urbaine. L'objectif de cet indice était de comprendre la qualité de vie dans les quartiers (ici, les sections de recensement) de la ville par rapport à la vulnérabilité de ses citoyens. Ce concept peut être visualisé à travers un cadre appelé <em>la carte de la santé</em>, développé par H. Barton et M. Grant, qui intègre la santé publique et l'urbanisme à travers des déterminants trans-échelles et trans-sectoriels.</p>
+
+        <div class="img-center">
+            <figure>
+                <img src="../images/health/healthy-city.jpg" alt="La carte de la santé par Barton et Grant" style="max-width:487px;" />
+                <figcaption><em>La carte de la santé</em> par Barton et Grant</figcaption>
+            </figure>
+        </div>
+
+        <blockquote>
+            <p><em>Une ville saine est une ville qui crée et améliore continuellement ses environnements physiques et sociaux, et qui développe les ressources communautaires permettant aux personnes de se soutenir mutuellement dans l'accomplissement de toutes les fonctions de la vie et dans le développement de leur potentiel maximal.</em></p>
+            <cite><em>(Hancock &amp; Duhl, 1986)</em></cite>
+        </blockquote>
+
+        <h2>Indice de santé urbaine</h2>
+
+        <p>Sur la base d'une revue de la littérature, un indice de santé urbaine a été proposé dans le but d'évaluer les déterminants de la qualité urbanistique aux échelles du quartier, de la ville et de la région. L'indice capture ces déterminants qui jouent un rôle crucial dans la définition de la santé physique et mentale d'un individu et sur lesquels les acteurs locaux et régionaux peuvent intervenir par des décisions d'urbanisme et de conception.</p>
+
+        <p>D'autres déterminants de la santé tels que la culture, le mode de vie, le revenu et le capital social, comme mentionné dans <em>la carte de la santé</em>, ne sont pas inclus dans l'indice en raison de leur portée bien plus large et intangible que les éléments locaux d'urbanisme et de planification. Cependant, les solutions spatiales et fonctionnelles ont bien l'influence de façonner certains de ces aspects intangibles, tels que les changements de mode de vie et culturels, grâce à des stratégies favorisant la marchabilité, un meilleur accès à une alimentation saine, etc.</p>
+
+        <p>À l'aide de la littérature sur la santé urbaine et publique, les déterminants suivants et leurs mesures, ainsi que les pondérations basées sur leur importance perçue, ont été identifiés et utilisés comme variables pour développer l'indice de santé urbaine.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Déterminants de la santé urbaine</th>
+                    <th>Mesures</th>
+                    <th>Pondération</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><strong>Environnement</strong></td>
+                    <td>Proximité des autoroutes et des rues artérielles<br>Température de surface<br>NDVI<br>Proximité des zones industrielles<br>Proximité de l'aéroport</td>
+                    <td>-1<br>-1<br>+1<br>-1<br>-2</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><strong>Infrastructure culturelle et sociale</strong></td>
+                    <td>Accessibilité à 15 minutes des services :<br>Écoles et jardins d'enfants<br>Activités culturelles telles que bibliothèques, centres communautaires, musées<br>Parcs<br>Aires de jeux et sports</td>
+                    <td><br>+1<br>+0,5<br>+1<br>+1</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><strong>Mobilité</strong></td>
+                    <td>Accès aux stations de transport en commun<br>Présence de pistes cyclables<br>Location de vélos<br>Réparation de vélos<br>Stationnement pour vélos<br>Rues piétonnes</td>
+                    <td>+1<br>+1<br>+0,25<br>+0,25<br>+0,25<br>+1</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><strong>Cadre bâti et utilisation des sols</strong></td>
+                    <td>Entropie de l'utilisation des sols<br>Combustion des bâtiments utilisant des combustibles polluants</td>
+                    <td>+1<br>-1</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td><strong>Confort dans les espaces publics</strong></td>
+                    <td>Présence d'aménagements de <em>confort</em> :<br>Bancs publics<br>Toilettes publiques<br>Fontaines à boire<br>Fontaines d'eau</td>
+                    <td><br>+1<br>+1<br>+1<br>+1</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Certaines mesures telles que l'accès aux stations de transport en commun, l'accès aux services sociaux et culturels, et la présence d'aménagements de <em>confort</em> ont été utilisées comme valeurs normalisées individuelles, générées par une analyse de superposition de leurs zones piétonnes dans un SIG. En conclusion, l'équation suivante a été adoptée pour calculer un indice de santé pour chaque section de recensement dans la zone d'étude :</p>
+
+        <div class="img-center">
+            <img src="https://s0.wp.com/latex.php?latex=HI_%7Bi%7D%3D%5Csum_%7Bi%3D1%7D%5Enm_%7Bi%7Dw_%7Bm%7D&bg=ffffff&fg=000&s=0&c=20201002&zoom=4.5" alt="HI_i = sum m_i w_m" style="max-width:150px;height:auto;" />
+        </div>
+
+        <p>où HI est l'indice de santé urbaine de la section de recensement <em>i</em>, <em>m</em> est la valeur de la mesure de santé urbaine et <em>w</em> est la pondération attribuée à la mesure <em>m</em>.</p>
+
+        <p>Le résultat s'aligne de manière intéressante avec la forme géographique et le plan de la ville. Ferrare, comme de nombreuses villes italiennes, est une ville radioconcentrique avec un noyau particulièrement compact et accessible à pied, entouré de petites villes périphériques et de banlieues, ainsi que de zones industrielles qui ont quitté les noyaux urbains depuis quelques décennies. Elle possède également deux autoroutes principales, l'A13 et la RA8, qui se croisent au sud-ouest de la ville à <em>Casello FE Sud</em>. En tenant compte de ces aspects, on peut observer que les sections de recensement avec les valeurs les plus élevées de l'indice de santé urbaine sont situées au centre-ville et dans les îlots adjacents. En revanche, les unités territoriales rurales, les îlots le long des autoroutes principales et ceux des zones industrielles en périphérie de la ville présentent des valeurs plus faibles de l'indice de santé urbaine. En effectuant le test d'<a href="https://geodacenter.github.io/workbook/5a_global_auto/lab5a.html#morans-i" target="_blank" rel="noopener">autocorrélation spatiale de Moran</a> pour comprendre le schéma de regroupement, la valeur élevée de 0,95 (graphique 1) indique un fort regroupement positif. Cela signifie que les quartiers ou sections de recensement de Ferrare connaissent une qualité de vie qui diminue progressivement à mesure que l'on s'éloigne du centre-ville. De plus, les sections de recensement à faible valeur sont également regroupées le long des autoroutes principales et dans les zones industrielles.</p>
+
+        <div class="img-col-two">
+            <div class="col-main">
+                <figure>
+                    <img src="../images/health/urban-health-index-2.jpg" alt="Carte de l'indice de santé urbaine" />
+                    <figcaption><em>Carte 1. Indice de santé urbaine</em></figcaption>
+                </figure>
+            </div>
+            <div class="col-side">
+                <figure>
+                    <img src="../images/health/composite_health_index_census2lisascatterplotframe-2.png" alt="Diagramme de dispersion de Moran" />
+                    <figcaption><em>Test de Moran &ndash; Indice de santé urbaine vs. décalage spatial</em></figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <h2>Indice de vulnérabilité</h2>
+
+        <p>Bien que les facteurs externes de l'environnement bâti et des services soient cruciaux pour définir la santé publique, tous les individus ne sont pas également capables de bénéficier des services ou ne sont pas exposés de la même manière aux problèmes urbains. Le profil démographique et socio-économique joue un rôle important dans la définition de la santé et de la vulnérabilité d'un individu ou d'un ménage. Par conséquent, pondérer ces déterminants de vulnérabilité par rapport à l'accès (et à la menace) à l'environnement bâti peut mieux aider à comprendre les disparités en matière de santé publique urbaine.</p>
+
+        <p><strong>Alors qu'un indice de santé urbaine visualise l'accès et la disponibilité des déterminants qui soutiennent la santé publique (habitabilité du quartier), l'indice de vulnérabilité capture la capacité &ndash; ou l'absence de capacité &ndash; d'une unité territoriale et de ses résidents à accéder à ces déterminants en intégrant leurs vulnérabilités.</strong></p>
+
+        <p>Pour évaluer la vulnérabilité sociodémographique des résidents de chaque section de recensement sous forme d'indice, la somme normalisée des individus et des ménages des groupes suivants a été utilisée à partir des <a href="https://www.istat.it/it/" target="_blank" rel="noopener">données du recensement de 2011</a> de l'Italie :</p>
+
+        <ul class="tight">
+            <li>Population de moins de 10 ans</li>
+            <li>Population de plus de 70 ans</li>
+            <li>Personnes analphabètes</li>
+            <li>Personnes au chômage</li>
+            <li>Personnes apatrides / étrangères</li>
+            <li>Ménages locataires</li>
+        </ul>
+
+        <p>Comme le montrent la carte 2 et le test de Moran (graphique 2), l'indice de vulnérabilité ne présente aucun schéma de regroupement marqué. La valeur de Moran proche de zéro, 0,285, implique une distribution aléatoire de la variable. Les valeurs dans le quadrant supérieur droit, qui indiquent un regroupement de valeurs positives, appartiennent aux sections de recensement situées au centre-ville de Ferrare et dans la ville septentrionale d'Occhiobello. Cela signifie qu'une vulnérabilité élevée est comparativement regroupée. Cependant, la présence récurrente de points de données dans le reste des quadrants indique une dispersion aléatoire des sections de recensement avec des valeurs moyennes et faibles de l'indice de vulnérabilité.</p>
+
+        <div class="img-col-two">
+            <div class="col-main">
+                <figure>
+                    <img src="../images/health/vulnerability-2.jpg" alt="Carte de l'indice de vulnérabilité" />
+                    <figcaption><em>Carte 2. Indice de vulnérabilité</em></figcaption>
+                </figure>
+            </div>
+            <div class="col-side">
+                <figure>
+                    <img src="../images/health/composite_health_index_census2lisascatter1.png" alt="Diagramme de dispersion de Moran" />
+                    <figcaption><em>Test de Moran &ndash; Indice de vulnérabilité vs. décalage spatial</em></figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <h2>Conclusion &ndash; Quels quartiers ont besoin d'être améliorés ?</h2>
+
+        <p>L'objectif ultime de la cartographie et de la compréhension de la santé urbaine et de la vulnérabilité pour la ville de Ferrare était de les juxtaposer et de localiser les quartiers ou sections de recensement nécessitant une amélioration. Les quartiers avec un indice de vulnérabilité élevé couplé à une faible valeur de l'indice de santé urbaine seraient classés comme les zones les plus justifiables d'une amélioration. Cela a été réalisé en classant les deux indices en trois niveaux chacun et en mettant en évidence les combinaisons préoccupantes. De nombreuses sections de recensement au centre-ville présentaient à la fois un indice de vulnérabilité élevé et un indice de santé urbaine élevé, tandis que celles de la périphérie immédiate continuaient d'avoir une vulnérabilité élevée / moyenne mais seulement un indice de santé urbaine moyen. Ces cas indiquent une marge d'amélioration de la qualité urbaine pour répondre à la forte vulnérabilité des unités. Enfin, des sections de recensement avec une vulnérabilité élevée et un faible indice de santé urbaine ont été trouvées dans les villes rurales et périphériques, certaines le long des autoroutes et près des zones industrielles. La catégorie <em>autre</em> comprend les sections de recensement avec :</p>
+
+        <ul class="tight">
+            <li>faible vulnérabilité et santé urbaine élevée ou</li>
+            <li>faible vulnérabilité et faible santé urbaine ou</li>
+            <li>indice de vulnérabilité invalide (cas des sections de recensement avec une population résidentielle nulle)</li>
+        </ul>
+
+        <figure>
+            <img src="../images/health/vulnerability-and-health-7.jpg" alt="Vulnérabilité vs Santé urbaine" />
+            <figcaption><em>Carte 3. Vulnérabilité vs. Santé urbaine</em></figcaption>
+        </figure>
+
+        <p><strong>Remarques :</strong></p>
+
+        <ul class="note">
+            <li>L'analyse des données a été réalisée à l'aide de données ouvertes dans le cadre d'un exercice académique. Les indices ont été formulés et les pondérations paramétriques ont été assumées par l'autrice. Ainsi, les résultats finaux pourraient s'écarter de la réalité effective.</li>
+            <li>La base de données a été nettoyée, compilée, analysée et visualisée dans le logiciel QGIS. Le logiciel open-source <a href="https://geodacenter.github.io/" target="_blank" rel="noopener">Geoda</a> a également été utilisé pour certaines analyses spatio-statistiques. La cartographie dynamique a été réalisée à l'aide de <a href="https://kepler.gl/" target="_blank" rel="noopener">kepler.gl</a> et <a href="https://www.mapbox.com/" target="_blank" rel="noopener">mapbox</a>.</li>
+        </ul>
+
         </div>
     </article>
 

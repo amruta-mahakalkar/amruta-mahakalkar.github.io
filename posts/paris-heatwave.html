@@ -368,8 +368,8 @@
     <nav>
         <a href="../index.html" class="nav-site-title" translate="no">Play with maps</a>
         <div class="nav-right">
-            <button class="lang-btn active" onclick="switchLang('en')">EN</button>
-            <button class="lang-btn" onclick="switchLang('fr')">FR</button>
+            <button class="lang-btn active" onclick="switchLang('en', this)">EN</button>
+            <button class="lang-btn" onclick="switchLang('fr', this)">FR</button>
             <div id="google_translate_element"></div>
             <div class="nav-wrap">
             <button class="menu-btn" id="menuBtn" aria-label="Menu">
@@ -630,19 +630,18 @@
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
                 includedLanguages: 'en,fr',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
                 autoDisplay: false
             }, 'google_translate_element');
-            var cookieLang = (document.cookie.match(/googtrans=.*?\/([a-z]{2})/) || [])[1];
-            if (cookieLang === 'fr') {
-                document.querySelector('.lang-btn[onclick*=\"fr\"]').classList.add('active');
-                document.querySelector('.lang-btn[onclick*=\"en\"]').classList.remove('active');
-            }
         }
-        function switchLang(lang) {
+        function switchLang(lang, btn) {
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            document.cookie = 'googtrans=/en/' + lang + '; path=/';
-            location.reload();
+            btn.classList.add('active');
+            var sel = document.querySelector('.goog-te-combo');
+            if (sel) {
+                sel.value = lang;
+                sel.dispatchEvent(new Event('change', { bubbles: true }));
+            }
         }
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>

@@ -25,27 +25,33 @@
   "work": {
     "heatwave": {
       "title": "Public places in Paris during heatwave \u2013 hot or not?",
-      "desc": "As Paris entered its third heatwave of the summer, how do the city\u2019s public spaces perform under extreme temperatures? A look at land surface temperature across parks, plazas, and streets."
+      "desc": "As Paris entered its third heatwave of the summer, how do the city\u2019s public spaces perform under extreme temperatures? A look at land surface temperature across parks, plazas, and streets.",
+      "date": "July 18, 2026"
     },
     "velib": {
       "title": "Checking the pulse of Paris with V\u00e9lib\u2019",
-      "desc": "Analysing the temporal rhythms of Paris through V\u00e9lib\u2019 bike-sharing data \u2013 exploring morning and evening peaks, weekend patterns, and station-level activity across the city."
+      "desc": "Analysing the temporal rhythms of Paris through V\u00e9lib\u2019 bike-sharing data \u2013 exploring morning and evening peaks, weekend patterns, and station-level activity across the city.",
+      "date": "September 11, 2022"
     },
     "landscape": {
       "title": "Landscape Pattern Analysis: What data type works better?",
-      "desc": "Comparing vector and raster data types for landscape connectivity analysis using morphological spatial pattern analysis (MSPA) in the Lisbon metropolitan area."
+      "desc": "Comparing vector and raster data types for landscape connectivity analysis using morphological spatial pattern analysis (MSPA) in the Lisbon metropolitan area.",
+      "date": "February 12, 2023"
     },
     "eiffel": {
       "title": "Streets with Tour Eiffel",
-      "desc": "A viewshed analysis to identify from which streets in Paris one can spot the Eiffel Tower, using DEM, building heights, and tree canopy data."
+      "desc": "A viewshed analysis to identify from which streets in Paris one can spot the Eiffel Tower, using DEM, building heights, and tree canopy data.",
+      "date": "August 30, 2022"
     },
     "urban": {
       "title": "Mapping urban health and vulnerability",
-      "desc": "An urban health index and vulnerability index for Ferrara, Italy, using open data to understand the relationship between built environment quality and socio-demographic vulnerability at the census tract level."
+      "desc": "An urban health index and vulnerability index for Ferrara, Italy, using open data to understand the relationship between built environment quality and socio-demographic vulnerability at the census tract level.",
+      "date": "August 30, 2022"
     },
     "portfolio": {
       "title": "Portfolio",
-      "desc": "Research, academic and professional projects from 2017 to 2021."
+      "desc": "Research, academic and professional projects from 2017 to 2021.",
+      "date": "September 2, 2022"
     }
   }
 }

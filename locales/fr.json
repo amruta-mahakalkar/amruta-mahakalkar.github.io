@@ -25,27 +25,33 @@
   "work": {
     "heatwave": {
       "title": "Les espaces publics à Paris pendant la canicule – chaud ou pas ?",
-      "desc": "Alors que Paris entrait dans sa troisième canicule de l’été, comment les espaces publics de la ville se comportent-ils sous des températures extrêmes ? Un regard sur la température de surface des sols à travers les parcs, les places et les rues."
+      "desc": "Alors que Paris entrait dans sa troisième canicule de l'été, comment les espaces publics de la ville se comportent-ils sous des températures extrêmes ? Un regard sur la température de surface des sols à travers les parcs, les places et les rues.",
+      "date": "18 juillet 2026"
     },
     "velib": {
       "title": "Prendre le rythme de Paris avec Vélib’",
-      "desc": "Analyser les rythmes temporels de Paris à travers les données de vélos en libre-service Vélib’ – explorer les pics matinaux et soirées, les tendances du week-end et l’activité au niveau des stations à travers la ville."
+      "desc": "Analyser les rythmes temporels de Paris à travers les données de vélos en libre-service Vélib’ – explorer les pics matinaux et soirées, les tendances du week-end et l’activité au niveau des stations à travers la ville.",
+      "date": "11 septembre 2022"
     },
     "landscape": {
       "title": "Analyse des motifs paysagers : quel type de données fonctionne le mieux ?",
-      "desc": "Comparaison des types de données vectorielles et raster pour l’analyse de la connectivité paysagère en utilisant l’analyse morphologique spatiale (MSPA) dans la région métropolitaine de Lisbonne."
+      "desc": "Comparaison des types de données vectorielles et raster pour l'analyse de la connectivité paysagère en utilisant l'analyse morphologique spatiale (MSPA) dans la région métropolitaine de Lisbonne.",
+      "date": "12 février 2023"
     },
     "eiffel": {
       "title": "Rues avec vue sur la Tour Eiffel",
-      "desc": "Une analyse de champ de visibilité pour identifier depuis quelles rues de Paris on peut apercevoir la Tour Eiffel, en utilisant le MNT, les hauteurs des bâtiments et les données de canopée."
+      "desc": "Une analyse de champ de visibilité pour identifier depuis quelles rues de Paris on peut apercevoir la Tour Eiffel, en utilisant le MNT, les hauteurs des bâtiments et les données de canopée.",
+      "date": "30 août 2022"
     },
     "urban": {
       "title": "Cartographier la santé et la vulnérabilité urbaines",
-      "desc": "Un indice de santé urbaine et un indice de vulnérabilité pour Ferrare, Italie, utilisant des données ouvertes pour comprendre la relation entre la qualité du cadre bâti et la vulnérabilité socio-démographique au niveau du quartier."
+      "desc": "Un indice de santé urbaine et un indice de vulnérabilité pour Ferrare, Italie, utilisant des données ouvertes pour comprendre la relation entre la qualité du cadre bâti et la vulnérabilité socio-démographique au niveau du quartier.",
+      "date": "30 août 2022"
     },
     "portfolio": {
       "title": "Portfolio",
-      "desc": "Projets de recherche, académiques et professionnels de 2017 à 2021."
+      "desc": "Projets de recherche, académiques et professionnels de 2017 à 2021.",
+      "date": "2 septembre 2022"
     }
   }
 }

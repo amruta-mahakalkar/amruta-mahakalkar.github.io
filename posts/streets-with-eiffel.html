@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streets with Tour Eiffel - Play with maps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #1a1a1a;
+            background: #ffffff;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        nav {
+            background: #160e0e;
+            color: #fffffe;
+            padding: 1.2rem 4vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-site-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: #fffffe;
+        }
+        .menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #fffffe;
+            border-radius: 1px;
+            transition: 0.3s;
+        }
+        .menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .menu-btn.active span:nth-child(2) { opacity: 0; }
+        .menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        .dropdown {
+            position: absolute;
+            top: 60px;
+            right: 4vw;
+            background: #160e0e;
+            border: 1px solid #333;
+            border-radius: 4px;
+            list-style: none;
+            min-width: 220px;
+            display: none;
+            z-index: 100;
+        }
+        .dropdown.open { display: block; }
+        .dropdown li { border-bottom: 1px solid #2a2a2a; }
+        .dropdown li:last-child { border-bottom: none; }
+        .dropdown a {
+            display: block;
+            padding: 0.75rem 1.2rem;
+            color: #cccccc;
+            font-size: 0.85rem;
+            transition: background 0.2s, color 0.2s;
+        }
+        .dropdown a:hover { background: #2a2a2a; color: #fffffe; }
+        .nav-wrap { position: relative; }
+
+        .post {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 3rem 4vw 4rem;
+        }
+        .post h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+        .post-date {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+        .post p {
+            margin-bottom: 1.2rem;
+            color: #333;
+        }
+        .post h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+        .post h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem;
+        }
+        .post ul, .post ol {
+            margin-bottom: 1.2rem;
+            padding-left: 1.5rem;
+            color: #333;
+        }
+        .post li { margin-bottom: 0.4rem; }
+        .post blockquote {
+            border-left: 3px solid #160e0e;
+            padding-left: 1.2rem;
+            margin: 1.5rem 0;
+            color: #555;
+            font-style: italic;
+        }
+        .post blockquote p { margin-bottom: 0; }
+        .post a {
+            color: #555;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .post a:hover { color: #000; }
+        .post strong { font-weight: 600; }
+
+        .post figure {
+            margin: 1.5rem 0;
+        }
+        .post figure figcaption {
+            font-size: 0.8rem;
+            color: #888;
+            text-align: center;
+            margin-top: 0.4rem;
+        }
+
+        .img-row-two {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .img-row-two figure {
+            flex: 1;
+            margin: 0;
+        }
+        .img-row-two figcaption {
+            font-size: 0.7rem;
+            color: #888;
+            text-align: center;
+            margin-top: 0.4rem;
+        }
+
+        .img-row-three {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .img-row-three figure {
+            flex: 1;
+            margin: 0;
+        }
+        .img-row-three figcaption {
+            font-size: 0.7rem;
+            color: #888;
+            text-align: center;
+            margin-top: 0.4rem;
+        }
+
+        .map-embed {
+            margin: 1.5rem 0;
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+        .map-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .streetview-row {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .streetview-row figure {
+            flex: 1;
+            margin: 0;
+        }
+        .streetview-row iframe {
+            width: 100%;
+            height: 350px;
+            border: 0;
+        }
+        .streetview-row figcaption {
+            font-size: 0.7rem;
+            color: #888;
+            text-align: center;
+            margin-top: 0.4rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .back-link:hover { color: #1a1a1a; }
+
+        footer {
+            background: #160e0e;
+            color: #fffffe;
+            padding: 4rem 4vw;
+            font-size: 0.95rem;
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem 4rem;
+            justify-content: space-between;
+        }
+        .footer-col h3 {
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .footer-site-title {
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .footer-desc { color: #aaaaaa; font-size: 0.9rem; }
+        .footer-social { display: flex; gap: 1rem; justify-content: center; }
+        .footer-social a {
+            color: #aaaaaa;
+            transition: color 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+        }
+        .footer-social a:hover { color: #fffffe; transform: scale(1.25); }
+        .footer-social svg { width: 22px; height: 22px; fill: currentColor; }
+
+        @media (max-width: 768px) {
+            .post h1 { font-size: 1.5rem; }
+            .img-row-two { flex-direction: column; }
+            .img-row-three { flex-direction: column; }
+            .streetview-row { flex-direction: column; }
+            .streetview-row iframe { height: 300px; }
+            .footer-inner { flex-direction: column; gap: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="../index.html" class="nav-site-title">Play with maps</a>
+        <div class="nav-wrap">
+            <button class="menu-btn" id="menuBtn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="dropdown" id="dropdown">
+                <li><a href="paris-heatwave.html">Public places in Paris during heatwave</a></li>
+                <li><a href="velib.html">Checking the pulse of Paris with Vélib</a></li>
+                <li><a href="landscape-analysis.html">Landscape Pattern Analysis</a></li>
+                <li><a href="streets-with-eiffel.html">Streets with Tour Eiffel</a></li>
+                <li><a href="#">Mapping urban health and vulnerability</a></li>
+                <li><a href="#">Portfolio</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <article class="post">
+        <a href="../index.html" class="back-link">&larr; Back to home</a>
+        <h1>Streets with Tour Eiffel</h1>
+        <p class="post-date">August 30, 2022</p>
+
+        <p>Every time I visit Paris, I engage myself in playing "Spot the Eiffel" game. Once on a clear day, I was surprised to spot a little portion of Tour Eiffel from an alley some 2 km on the other side of the Seine. Excited, I climbed Montmartre hoping to spot the Eiffel from the Sacre-Coeur, but with a crow fly distance of over 4 km, the giant tower gets hazy and is just narrowly obstructed by trees.</p>
+
+        <p>This inspired me to question:</p>
+
+        <blockquote>
+            <p><strong>From what all streets can one spot the Eiffel Tower, even a little portion?</strong></p>
+        </blockquote>
+
+        <p>I decided to keep the scope of this question only to ground level streets and public spaces. Therefore, my output will be just stretches of streets and piazzas with a view of the Eiffel Tower. Such visibility analyses are often done with GIS tools such as viewshed analysis.</p>
+
+        <p>As I kept the observer fixed on the ground level, there would be four factors defining the visibility to the Tower:</p>
+
+        <ol>
+            <li><strong>Elevation</strong></li>
+            <li><strong>Buildings</strong></li>
+            <li><strong>Trees</strong></li>
+            <li><strong>Atmosphere</strong></li>
+        </ol>
+
+        <p><a href="https://pro.arcgis.com/en/pro-app/2.8/tool-reference/spatial-analyst/viewshed.htm" target="_blank" rel="noopener">Viewshed</a> in ArcGIS is an interesting spatial analyst tool to determine the raster surface locations visible to a set of observer features. Conducting this exercise requires an elevation raster with the vector points of observation and their respective heights. While using this tool was easy, collecting and compiling the ingredients was a task.</p>
+
+        <div class="img-row-two">
+            <figure>
+                <img src="../images/eiffel/elevation-2.jpg" alt="Digital Elevation Model" />
+                <figcaption><em>Digital Elevation Model</em></figcaption>
+            </figure>
+            <figure>
+                <img src="../images/eiffel/buildings.jpg" alt="Building heights" />
+                <figcaption><em>Building heights</em></figcaption>
+            </figure>
+        </div>
+
+        <div class="img-row-two">
+            <figure>
+                <img src="../images/eiffel/trees-1.jpg" alt="Tree canopy" />
+                <figcaption><em>Tree canopy</em></figcaption>
+            </figure>
+            <figure>
+                <img src="../images/eiffel/dtm2.jpg" alt="Digital Surface Model" />
+                <figcaption><em>Digital Surface Model</em></figcaption>
+            </figure>
+        </div>
+
+        <p>For that, first I extracted and clipped a Digital Elevation Model (DEM) from <a href="https://search.earthdata.nasa.gov" target="_blank" rel="noopener">ASTER NASA Earth Data</a>. The best resolution I could acquire was 30 m. For building and tree cover, I downloaded their shapefiles from Paris's <a href="https://opendata.paris.fr/pages/home/" target="_blank" rel="noopener">open data</a> portal. I rasterized them with the resolution of 1 m and assigned their height as the z-coordinate. For the building layer, the original data did not have exact height but only the maximum number of floors (including some zero values!). To resolve this, I factors in an assumed average wall height of 3.5 m and went on with the rasterization. Trees, on the other hand were tricky. The data was a point layer with fields for approximate height and circumference (from which I mapped their radius and made circular buffer). But for rasterization, only the tallest overlapping tree section had to be selected. Therefore, all the buffers were intersected with themselves and duplicate geometries were deleted except the highest values, followed by their rasterization.</p>
+
+        <p>Considering the processing capacity of my computer, I decided to limit the scope of this analysis within the boundaries of the city of Paris and also deleted the extensions of Bois de Boulogne and Bois de Vincennes. However, there are several locations outside the city boundary from where the Eiffel Tower can be seen.</p>
+
+        <p>Now, to compile the final raster surface, I developed a Digital Surface Model (DSM) by merging the elevation with the rasters of buildings and tress, and resampled the resolution to 2.5m. The point location of the Eiffel Tower has an elevation of 30m and its own height is 330m. Likewise, the average height of an observer (offset) was set as 1.6m. Refractivity coefficient that defines the atmospheric visibility was kept at the default value of 0.13. With these components, the Viewshed 2 tool in ArcMap 10.7.1 produced a raster with the view of the Tower from the entire DSM in the form of visible / non-visible pixels. Here, the top of buildings and tree cover that come under the Tower's viewshed are also identified. But these pixels are to be removed, given our observer is only at ground level (DEM) and buildings and tree heights were only added as obstructions, and not observation points.</p>
+
+        <div class="img-row-two">
+            <figure>
+                <img src="../images/eiffel/viewshed1-1.jpg" alt="Viewshed analysis output" />
+                <figcaption><em>Viewshed analysis output (3 km buffer)</em></figcaption>
+            </figure>
+            <figure>
+                <img src="../images/eiffel/viewshed2.jpg" alt="Viewshed intersected with street layer" />
+                <figcaption><em>Viewshed intersected with street layer</em></figcaption>
+            </figure>
+        </div>
+
+        <p>Lastly, the output viewshed raster is intersected with the street layer of Paris and clipped to 3 km assuming that as the visual range of an average eye in an urban atmosphere. As seen from the result, due to the coarse resolution and general inaccuracy in data (such as mapping exact tree canopy in a city), streets other than actual ones with a view of the Tower are also identified by the analysis. To enhance the accuracy, I skimmed through Google Streetview and deleted wrongly identified streets and those going through parks.</p>
+
+        <p>The final result is this estimated map of streets in the city of Paris from where one can expect to spot the Eiffel Tower on a clear day.</p>
+
+        <h3>Interactive Map</h3>
+
+        <div class="map-embed">
+            <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1mWjJl7Jw4T-tOFzsgTWpxbsafPPIonM&ehbc=2E312F" allowfullscreen></iframe>
+        </div>
+
+        <h3>Street Views</h3>
+
+        <div class="streetview-row">
+            <figure>
+                <iframe src="https://www.google.com/maps/embed?pb=!4v1661858668548!6m8!1m7!1scAqJ9lkoY8me4aZ_5IeVNg!2m2!1d48.87449639687448!2d2.295646520278978!3f201.2735426481745!4f3.206319739480591!5f0.7820865974627469" allowfullscreen></iframe>
+            </figure>
+            <figure>
+                <iframe src="https://www.google.com/maps/embed?pb=!4v1661858798593!6m8!1m7!1svle72EEUodPWuMu1nvhMsw!2m2!1d48.85884660289228!2d2.337725890207111!3f264.2575292822301!4f-3.4196411760210452!5f0.7820865974627469" allowfullscreen></iframe>
+            </figure>
+            <figure>
+                <iframe src="https://www.google.com/maps/embed?pb=!4v1661859063917!6m8!1m7!1slkjQvnpyO5gMvBu0n2Nhkw!2m2!1d48.83793233583383!2d2.317826494360413!3f339.7897263266168!4f-1.5581896015062853!5f0.7820865974627469" allowfullscreen></iframe>
+            </figure>
+        </div>
+
+        <p>Bisous!</p>
+
+        <h3>References</h3>
+
+        <ul>
+            <li>Cassatella C.; Carlone G. (2013). GIS-based visual analysis for planning and designing historic urban landscapes. In: 2013 Digital Heritage International Congress, Marseille (FR), 28 oct-1 Nov. pp. 45-52</li>
+            <li>Garnero, Gabriele & Fabrizio, Enrico. (2015). Visibility analysis in urban spaces: a raster-based approach and case studies. Environment and Planning B: Planning and Design. 0-0. 10.1068/b130119p</li>
+        </ul>
+
+    </article>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-col">
+                <div class="footer-site-title">Play with maps</div>
+                <p class="footer-desc">Experiments with urban data, mapping and GIS tools</p>
+            </div>
+            <div class="footer-col">
+                <h3>Get in touch</h3>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/in/amruta-mahakalkar-6826258b" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg>
+                    </a>
+                    <a href="mailto:amrutamahakalkar3@gmail.com" aria-label="Email">
+                        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('menuBtn');
+        const dropdown = document.getElementById('dropdown');
+        btn.addEventListener('click', () => {
+            btn.classList.toggle('active');
+            dropdown.classList.toggle('open');
+        });
+        document.addEventListener('click', (e) => {
+            if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+                btn.classList.remove('active');
+                dropdown.classList.remove('open');
+            }
+        });
+    </script>
+
+</body>
+</html>

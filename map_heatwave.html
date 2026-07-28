@@ -103,13 +103,17 @@ const geoLayer = L.geoJSON(geojsonData, {
 map.fitBounds(geoLayer.getBounds().pad(0.05));
 
 const legendDiv = document.getElementById('legend');
-legendDiv.innerHTML = '<div style="font-weight:700;margin-bottom:4px">Surface Temp (°C)</div>';
-const steps = 6;
-for (let i = 0; i < steps; i++) {
-  const val = valMin + (valMax - valMin) * (i / (steps - 1));
+const seen = new Set();
+legendDiv.innerHTML = '<div style="font-weight:700;margin-bottom:4px">Surface Temp Max (°C)</div>';
+geojsonData.features.forEach(f => {
+  const name = f.properties.Place;
+  const val = f.properties['surface temp (max)'];
+  const key = name + val;
+  if (seen.has(key)) return;
+  seen.add(key);
   const color = getColor(val);
-  legendDiv.innerHTML += `<div style="display:flex;align-items:center;gap:6px"><span style="display:inline-block;width:18px;height:12px;background:${color};border-radius:2px"></span>${val.toFixed(1)}</div>`;
-}
+  legendDiv.innerHTML += `<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px"><span style="display:inline-block;width:18px;height:12px;background:${color};border-radius:2px"></span>${name}: ${val.toFixed(1)}°C</div>`;
+});
 </script>
 </body>
 </html>

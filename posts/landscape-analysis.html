@@ -301,18 +301,18 @@
 
         <p>The conservation of forest and natural areas from the threat of ill-conceived urbanization and development involves understanding their form and physical structure. The fragmentation and degradation of the continuity of natural elements can cause loss of biodiversity and habitats. Therefore, it is important to identify the nodes and connections of regional landscape networks to formulate strategies to protect them from further damage as well as establish new improved connections.</p>
 
-        <p>One of the tools to assess landscape patterns and their components is MSPA (Morphological Spatial Pattern Analysis) developed by the European Commission. In general, this tool was designed to detect and describe the morphological features of any binary digital image. It is a simple tool that has been adopted in various scientific research associated with image processing such as <a href="https://doi.org/10.1016/j.jaridenv.2018.04.009" target="_blank" rel="noopener">wildlife habitat</a>, <a href="https://link.springer.com/article/10.1007/s11252-019-00868-4" target="_blank" rel="noopener">land cover management</a> and <a href="https://doi.org/10.1016/j.mio.2016.03.003" target="_blank" rel="noopener">marine research</a>.</p>
+        <p>One of the tools to assess landscape patterns and their components is MSPA (Morphological Spatial Pattern Analysis) developed by the <a href="https://forest.jrc.ec.europa.eu/en/activities/lpa/mspa/" target="_blank" rel="noopener">European Commission</a>. In general, this tool was designed to detect and describe the morphological features of any binary digital image. It is a simple tool that has been adopted in various scientific research associated with image processing such as <a href="https://doi.org/10.1016/j.jaridenv.2018.04.009" target="_blank" rel="noopener">wildlife habitat</a>, <a href="https://link.springer.com/article/10.1007/s11252-019-00868-4" target="_blank" rel="noopener">land cover management</a> and <a href="https://doi.org/10.1016/j.mio.2016.03.003" target="_blank" rel="noopener">marine research</a>.</p>
 
         <p>MSPA uses a geometrical concept to mathematically analyse a binary image wherein the foreground pixels are the pixels of interest, and the rest of the pixels in which the foreground is embedded are called background.</p>
 
-        <p>The tool categorises its input into seven broad mutually exclusive components using the notion of <a href="https://doi.org/10.1016/j.patrec.2008.10.015" target="_blank" rel="noopener">path connectivity</a> as described in the table:</p>
-
-        <figure>
+        <figure style="max-width:70%;margin:1.5rem auto;">
             <img src="../images/landscape/mspalegend.gif" alt="MSPA segmentation procedure" />
-            <figcaption><em>MSPA segmentation procedure of a binary image - source: European Commission</em></figcaption>
+            <figcaption><em>MSPA segmentation procedure of a binary image - source: <a href="https://forest.jrc.ec.europa.eu/en/activities/lpa/mspa/" target="_blank" rel="noopener">European Commission</a></em></figcaption>
         </figure>
 
-        <table>
+        <p>The tool categorises its input into seven broad mutually exclusive components using the notion of <a href="https://doi.org/10.1016/j.patrec.2008.10.015" target="_blank" rel="noopener">path connectivity</a> as described in the <a href="#mspa-table">table</a>:</p>
+
+        <table id="mspa-table">
             <thead>
                 <tr><th>Components</th><th>Description</th><th>Ecological Meaning</th></tr>
             </thead>
@@ -331,12 +331,12 @@
 
         <p style="text-align:center;font-style:italic;">To find different data sources of BGI suitable for MSPA and to compare their results.</p>
 
-        <div class="media-block right">
-            <div class="media-figure">
-                <img src="../images/landscape/sample-3.jpg" alt="Land parcels with different vegetation density" />
-            </div>
-            <p>To conduct land cover assessments, studies often rely on land use land cover (LULC) vector maps that are increasingly becoming available at granular level. For example, <a href="https://land.copernicus.eu/pan-european/corine-land-cover" target="_blank" rel="noopener">CORINE Land Cover</a> provides LULC data into 44 categories for Europe including forests, agricultural fields, open green areas, urban parks, etc. Local governments in Europe also generate and provide their own details land cover vector maps, such as in case of Prague, the open data on existing land use categorized LULC into 126 types. While LULC vectors represent homogeneous landscape patterns, they do not indicate the quality of vegetation and mass of canopy that in fact define the input for MSPA. Moreover, outdated LULC in dynamic urbanization scenario can also produce inaccurate outputs. For example the 'meadows, pastures, grass fields' category in Prague's vector map has different density of vegetation. This inconsistency might skew the results and identify barren land with no canopy as possible sites with ecosystems under MSPA.</p>
-        </div>
+        <figure>
+            <img src="../images/landscape/sample-3.jpg" alt="Land parcels with different vegetation density" />
+            <figcaption><em>Land parcels with different vegetation density</em></figcaption>
+        </figure>
+
+        <p>To conduct land cover assessments, studies often rely on land use land cover (LULC) vector maps that are increasingly becoming available at granular level. For example, <a href="https://land.copernicus.eu/pan-european/corine-land-cover" target="_blank" rel="noopener">CORINE Land Cover</a> provides LULC data into 44 categories for Europe including forests, agricultural fields, open green areas, urban parks, etc. Local governments in Europe also generate and provide their own details land cover vector maps, such as in case of Prague, the <a href="https://www.geoportalpraha.cz/cs/data" target="_blank" rel="noopener">open data on existing land use</a> categorized LULC into 126 types. While LULC vectors represent homogeneous landscape patterns, they do not indicate the quality of vegetation and mass of canopy that in fact define the input for MSPA. Moreover, outdated LULC in dynamic urbanization scenario can also produce inaccurate outputs. For example the 'meadows, pastures, grass fields' category in Prague's vector map has different density of vegetation. This inconsistency might skew the results and identify barren land with no canopy as possible sites with ecosystems under MSPA.</p>
 
         <h3>Methodology</h3>
 
@@ -356,8 +356,9 @@
         </table>
 
         <div class="media-block">
-            <div class="media-figure">
+            <div class="media-figure" style="width:50%;">
                 <img src="../images/landscape/gtb_snap-2.png" alt="GTB interface" />
+                <figcaption style="font-style:italic;color:#888;font-size:0.85rem;text-align:left;margin-top:0.3rem;">Rasterization of vector LULC using ArcGIS</figcaption>
             </div>
             <p>For the vector LULC map, I selected features typically indicating blue and green infrastructure labelled as forests, agricultural and horticulture use, plantations, rural and urban green spaces, public and private land with vegetation and water bodies, and dissolved them into one single combined feature. Next, the vector layer was rasterized with the resolution of 5 m and fed as input in the MSPA tool. As the lowest resolution that would define minimum edge value is Landsat 8-9 data (30 m), the edge widths were set accordingly (6 for source 1, 3 for source 2 and 1 for source 3). Edge widths are often decided on the objective of the study and the resolution of the data. They vary from 16m to 300m from what I have read.</p>
         </div>
@@ -367,16 +368,16 @@
         <div class="media-block right">
             <div class="media-figure">
                 <img src="../images/landscape/ndvi_process-2.jpg" alt="NDVI merging process diagram" />
-                <p style="font-size:0.7rem;color:#888;text-align:center;margin-top:0.3rem;"><em>Dig.1 NDVI merging process</em></p>
+                <p style="font-size:0.7rem;color:#888;text-align:center;margin-top:0.3rem;"><em>NDVI merging process</em></p>
             </div>
             <p>As the latest cloud-free satellite imageries for both Sentinel 2 and Landsat 8-9 images were available only for the months of May, June and July, they were used as input for NDVI calculation. Here, red (visible) and near-infrared spectral bands from Sentinel 2 and Landsat 8-9 were used to develop the NDVI rasters and pixels with values greater than 0.4 were chosen and overlaid for the selected months. The dig.1 demonstrates that for each cropping month (May, June and July), the rasters derived from Landsat 8-9 were transformed into binary rasters with pixels valued greater than 0.4. These binary rasters were merged and converted to a final binary raster representing green infrastructure in Prague.</p>
         </div>
 
-        <p>For blue infrastructure, shapefiles from city's open portal were used and transformed into the same valued pixels as green infrastructure and merged into the final raster. These final binary rasters for both satellite sources were used as inputs for the MSPA and the results were visually juxtaposed and statistically compared.</p>
+        <p>For blue infrastructure, shapefiles from <a href="https://www.geoportalpraha.cz/en" target="_blank" rel="noopener">city's open portal</a> were used and transformed into the same valued pixels as green infrastructure and merged into the final raster. These final binary rasters for both satellite sources were used as inputs for the MSPA and the results were visually juxtaposed and statistically compared.</p>
 
         <figure class="img-full">
             <img src="../images/landscape/bgi.jpg" alt="Forests, farmlands, open areas and water bodies in Prague" />
-            <figcaption><em>Forests, farmlands, open areas and water bodies in Prague (source: Geoportal - Prague)</em></figcaption>
+            <figcaption><em>Forests, farmlands, open areas and water bodies in Prague (source: <a href="https://www.geoportalpraha.cz/en" target="_blank" rel="noopener">Geoportal - Prague</a>)</em></figcaption>
         </figure>
 
         <h3>Outcome</h3>
@@ -403,16 +404,19 @@
         <div class="img-row-three">
             <figure>
                 <img src="../images/landscape/opendata_mspa11.jpg" alt="Blow-up of vector MSPA" />
+                <figcaption><em>Blow-up of vector MSPA</em></figcaption>
             </figure>
             <figure>
                 <img src="../images/landscape/sentinal_mspa1.jpg" alt="Blow-up of Sentinel 2 MSPA" />
+                <figcaption><em>Blow-up of Sentinel 2 MSPA</em></figcaption>
             </figure>
             <figure>
                 <img src="../images/landscape/landsat_mspa1.jpg" alt="Blow-up of Landsat 8-9 MSPA" />
+                <figcaption><em>Blow-up of Landsat 8-9 MSPA</em></figcaption>
             </figure>
         </div>
 
-        <figure class="img-small">
+        <figure class="img-full">
             <img src="../images/landscape/mspa_op-3.jpg" alt="Area of MSPA components" />
             <figcaption><em>Area of MSPA components (in Ha)</em></figcaption>
         </figure>

@@ -81,20 +81,27 @@
         .nav-wrap { position: relative; }
 
         .nav-right { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
-        .lang-btn {
-            background: none;
+        #google_translate_element { display: inline-flex; align-items: center; }
+        .goog-te-gadget-simple {
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            font-size: 0 !important;
+            line-height: 0 !important;
+        }
+        .goog-te-combo {
+            background: transparent;
             border: 1px solid #555;
             color: #aaa;
             padding: 0.2rem 0.45rem;
-            font-size: 0.72rem;
+            font-size: 0.72rem !important;
             font-family: inherit;
             cursor: pointer;
             border-radius: 2px;
-            transition: 0.2s;
             line-height: 1.2;
+            outline: none;
         }
-        .lang-btn:hover, .lang-btn.active { color: #fffffe; border-color: #fffffe; }
-        #google_translate_element { display: none; }
+        .goog-te-combo:hover, .goog-te-combo:focus { color: #fffffe; border-color: #fffffe; }
 
         .post {
             max-width: 860px;
@@ -336,8 +343,6 @@
     <nav>
         <a href="../index.html" class="nav-site-title" translate="no">Play with maps</a>
         <div class="nav-right">
-            <button class="lang-btn active" onclick="switchLang('en', this)">EN</button>
-            <button class="lang-btn" onclick="switchLang('fr', this)">FR</button>
             <div id="google_translate_element"></div>
             <div class="nav-wrap">
             <button class="menu-btn" id="menuBtn" aria-label="Menu">
@@ -602,15 +607,6 @@ for i in range(waitFor):
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
                 autoDisplay: false
             }, 'google_translate_element');
-        }
-        function switchLang(lang, btn) {
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            var sel = document.querySelector('.goog-te-combo');
-            if (sel) {
-                sel.value = lang;
-                sel.dispatchEvent(new Event('change', { bubbles: true }));
-            }
         }
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>

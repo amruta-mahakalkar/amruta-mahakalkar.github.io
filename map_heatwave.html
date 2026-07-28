@@ -9,7 +9,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { height: 100%; }
 #map { height: 100%; width: 100%; }
-.leaflet-tile-pane { filter: saturate(0.5); }
+.leaflet-tile-pane { filter: saturate(0.8); }
 #legend {
   position: absolute;
   bottom: 20px;
@@ -65,7 +65,7 @@ function getColor(value) {
 
 const map = L.map('map').setView([48.858, 2.345], 14);
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
   maxZoom: 19,
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
 }).addTo(map);

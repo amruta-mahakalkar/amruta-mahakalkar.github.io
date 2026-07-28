@@ -142,30 +142,25 @@
         .post a:hover { color: #000; }
         .post strong { font-weight: 600; }
 
-        /* Media block: image + text side by side */
+        /* Media block: image floated with text wrapping */
         .media-block {
-            display: flex;
-            gap: 1.5rem;
             margin: 1.5rem 0;
-            align-items: flex-start;
+            overflow: hidden;
         }
         .media-block .media-figure {
-            flex: 0 0 33.333%;
-            min-width: 0;
+            float: left;
+            width: 33.333%;
+            margin: 0 1.5rem 0.5rem 0;
         }
-        .media-block .media-text {
-            flex: 1;
-            min-width: 0;
+        .media-block.right .media-figure {
+            float: right;
+            margin: 0 0 0.5rem 1.5rem;
         }
-        .media-block.right .media-figure { order: 2; }
-        .media-block.right .media-text { order: 1; }
         .media-block .media-figure .img-compare-wrap,
-        .media-block .media-figure img {
+        .media-block .media-figure > img {
             width: 100%;
             margin: 0;
         }
-        .media-block .media-text p { margin-bottom: 0.8rem; }
-        .media-block .media-text p:last-child { margin-bottom: 0; }
 
         /* Image comparison slider */
         .img-compare-wrap {
@@ -235,7 +230,7 @@
 
         /* Small standalone image (half width) */
         .img-small {
-            max-width: 50%;
+            max-width: 60%;
             margin: 1.5rem auto;
         }
 
@@ -333,9 +328,12 @@
 
         @media (max-width: 768px) {
             .post h1 { font-size: 1.5rem; }
-            .media-block { flex-direction: column; }
-            .media-block.right .media-figure { order: 0; }
-            .media-block .media-figure { flex: 0 0 100%; }
+            .media-block .media-figure,
+            .media-block.right .media-figure {
+                float: none;
+                width: 100%;
+                margin: 0 0 1rem 0;
+            }
             .slider-pair-half { flex-direction: column; }
             .img-small { max-width: 80%; }
             .post-cover { max-height: 300px; }

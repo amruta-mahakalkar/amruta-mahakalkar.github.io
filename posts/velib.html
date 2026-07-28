@@ -205,6 +205,9 @@
             display: flex;
             gap: 1rem;
             margin: 1.5rem 0;
+            width: calc(100% + 6rem);
+            margin-left: -3rem;
+            margin-right: -3rem;
         }
         .slider-pair-half .img-compare-wrap {
             flex: 1;
@@ -214,20 +217,35 @@
             font-size: 0.7rem;
         }
 
-        .img-gif-pair {
-            display: flex;
-            gap: 1rem;
+        .img-gif-stack {
             margin: 1.5rem 0;
         }
-        .img-gif-pair figure {
-            flex: 1;
-            margin: 0;
+        .img-gif-stack figure {
+            margin: 1.5rem 0;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .img-gif-pair figcaption {
+        .img-gif-stack figcaption {
             font-size: 0.8rem;
             color: #888;
             text-align: center;
             margin-top: 0.4rem;
+        }
+
+        pre {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin: 1.5rem 0;
+        }
+        pre code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            color: #333;
         }
 
         .back-link {
@@ -286,8 +304,13 @@
 
         @media (max-width: 768px) {
             .post h1 { font-size: 1.5rem; }
-            .slider-pair-half { flex-direction: column; }
-            .img-gif-pair { flex-direction: column; }
+            .slider-pair-half {
+                flex-direction: column;
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+            }
+            .img-gif-stack figure { max-width: 100%; }
             .footer-inner { flex-direction: column; gap: 2rem; }
         }
     </style>
@@ -326,6 +349,28 @@
         <h4>Data challenges</h4>
 
         <p>Although the city geoportal provides real-time V&eacute;lib station status and allows users to download the data, it does not keep any archives. This poses a challenge to collect day-long or earlier datasets for research purpose. I decided to dedicate two full days &ndash; 8/9/2022 (Thursday) and 10/9/2022 (Saturday) for data downloading and used this python code to automate the task every 30 minutes:</p>
+
+        <pre><code>import urllib.request
+from time import sleep
+
+# define API and folder location
+def download_and_save(n):
+    filename = "datafile" + str(n) + ".json"
+    url = 'https://opendata.paris.fr/api/v2/catalog/datasets/velib-disponibilite-en-temps-reel/exports/json?limit=-1&amp;offset=0&amp;lang=en&amp;timezone=UTC'
+    urllib.request.urlretrieve(url, 'folder_location/' + filename)
+    return
+
+# command scheduled task
+second = 1
+minute = second * 60
+halfHour = 30 * minute
+hour = 60 * minute
+
+waitFor = 48
+
+for i in range(waitFor):
+    download_and_save(i)
+    sleep(halfHour)</code></pre>
 
         <p>This gave me total 96 .json files over the course of two days which I merged and converted into a single .csv, transferring them in QGIS. I deleted duplicate values and cleaned up the original timestamp by adding a new field. This file now provides me the total capacity, time-wise vacant and parked slots of electric and mechanical bikes of each V&eacute;lib station. Interestingly, I observed that the timestamps appeared to be updated every hour rather than every minute by the portal.</p>
 
@@ -449,7 +494,7 @@
 
         <p>Check out these twinkling transitions of V&eacute;lib bikes flowing around Paris on the week and weekend day.</p>
 
-        <div class="img-gif-pair">
+        <div class="img-gif-stack">
             <figure>
                 <img src="../images/velib/wd1.gif" alt="V&eacute;lib flow on weekday" />
                 <figcaption><em>V&eacute;lib flow on the weekday</em></figcaption>

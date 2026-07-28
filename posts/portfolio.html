@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play with maps — Spaces and movements understood through maps</title>
+    <title>Portfolio - Play with maps</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -19,7 +19,6 @@
         a { text-decoration: none; color: inherit; }
         img { max-width: 100%; height: auto; display: block; }
 
-        /* Nav */
         nav {
             background: #160e0e;
             color: #fffffe;
@@ -55,7 +54,6 @@
         .menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
         .menu-btn.active span:nth-child(2) { opacity: 0; }
         .menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-
         .dropdown {
             position: absolute;
             top: 60px;
@@ -78,65 +76,52 @@
             font-size: 0.85rem;
             transition: background 0.2s, color 0.2s;
         }
-        .dropdown a:hover {
-            background: #2a2a2a;
-            color: #fffffe;
-        }
-
+        .dropdown a:hover { background: #2a2a2a; color: #fffffe; }
         .nav-wrap { position: relative; }
-
         .nav-right { display: flex; align-items: center; gap: 1rem; margin-left: auto; }
-        #google_translate_element select {
-            background: transparent;
-            color: #fffffe;
-            border: 1px solid #555;
-            padding: 0.2rem 0.4rem;
-            font-size: 0.75rem;
-            font-family: inherit;
-            border-radius: 2px;
-            cursor: pointer;
-        }
-        #google_translate_element select option { color: #1a1a1a; background: #fff; }
-        .goog-te-gadget { color: transparent !important; font-size: 0 !important; }
-        .goog-te-gadget .goog-te-combo { margin: 0 !important; }
 
-        /* Hero */
-        .hero {
-            max-width: 1200px;
+        .page {
+            max-width: 860px;
             margin: 0 auto;
-            padding: 4rem 4vw;
-            display: flex;
-            align-items: center;
-            gap: 3rem;
+            padding: 3rem 4vw 4rem;
         }
-        .hero-image { flex: 0 0 auto; width: 380px; }
-        .hero-image img { border-radius: 4px; width: 100%; }
-        .hero-text { flex: 1; text-align: center; }
-        .hero-text h1 {
-            font-size: 2.2rem;
+        .page h1 {
+            font-size: 1.8rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
         }
-        .hero-text p {
-            font-size: 1.1rem;
-            color: #444;
-            max-width: 560px;
-            margin: 0 auto 1.5rem;
+        .page p {
+            margin-bottom: 1.2rem;
+            color: #333;
         }
-        .hero-text .btn {
-            display: inline-block;
-            background: #160e0e;
-            color: #fffffe;
-            padding: 0.85rem 2rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            border-radius: 2px;
-            transition: opacity 0.2s;
+        .page a {
+            color: #555;
+            text-decoration: underline;
+            text-underline-offset: 2px;
         }
-        .hero-text .btn:hover { opacity: 0.85; }
+        .page a:hover { color: #000; }
 
-        /* Footer */
+        .pdf-wrap {
+            margin: 2rem 0;
+            width: 150%;
+            margin-left: -25%;
+            height: 620px;
+            border: 1px solid #ddd;
+        }
+        .pdf-wrap object {
+            width: 100%;
+            height: 100%;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .back-link:hover { color: #1a1a1a; }
+
         footer {
             background: #160e0e;
             color: #fffffe;
@@ -178,49 +163,49 @@
         .footer-social a:hover { color: #fffffe; transform: scale(1.25); }
         .footer-social svg { width: 22px; height: 22px; fill: currentColor; }
 
-        /* Mobile */
         @media (max-width: 768px) {
-            .hero { flex-direction: column; padding-top: 2rem; }
-            .hero-image { width: 220px; }
-            .hero-text h1 { font-size: 1.8rem; }
+            .page h1 { font-size: 1.5rem; }
             .footer-inner { flex-direction: column; gap: 2rem; }
+            .pdf-wrap { width: 100%; margin-left: 0; height: 400px; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="/" class="nav-site-title">Play with maps</a>
-        <div class="nav-wrap">
+        <a href="../index.html" class="nav-site-title">Play with maps</a>
+        <div class="nav-right">
+            <div id="google_translate_element"></div>
+            <div class="nav-wrap">
             <button class="menu-btn" id="menuBtn" aria-label="Menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
             <ul class="dropdown" id="dropdown">
-                <li><a href="posts/paris-heatwave.html">Public places in Paris during heatwave</a></li>
-                <li><a href="posts/velib.html">Checking the pulse of Paris with Vélib</a></li>
-                <li><a href="posts/landscape-analysis.html">Landscape Pattern Analysis</a></li>
-                <li><a href="posts/streets-with-eiffel.html">Streets with Tour Eiffel</a></li>
-                <li><a href="posts/urban-health.html">Mapping urban health and vulnerability</a></li>
-                <li><a href="posts/portfolio.html">Portfolio</a></li>
+                <li><a href="paris-heatwave.html">Public places in Paris during heatwave</a></li>
+                <li><a href="velib.html">Checking the pulse of Paris with Vélib</a></li>
+                <li><a href="landscape-analysis.html">Landscape Pattern Analysis</a></li>
+                <li><a href="streets-with-eiffel.html">Streets with Tour Eiffel</a></li>
+                <li><a href="urban-health.html">Mapping urban health and vulnerability</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
             </ul>
         </div>
-        <div class="nav-right">
-            <div id="google_translate_element"></div>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-image">
-            <img src="homepage_dp.jpg" alt="Amruta on a bike">
+    <div class="page">
+        <a href="../index.html" class="back-link">&larr; Back to home</a>
+        <h1>Portfolio</h1>
+
+        <p>I present here some of my research, academic and professional projects from 2017 to 2021.</p>
+
+        <div class="pdf-wrap">
+            <object data="../images/portfolio/portfolio_amruta-1.pdf" type="application/pdf" aria-label="Portfolio PDF">
+                <p>Your browser does not support PDFs. <a href="../images/portfolio/portfolio_amruta-1.pdf">Download the PDF</a>.</p>
+            </object>
         </div>
-        <div class="hero-text">
-            <h1>Hello!</h1>
-            <p>I am Amruta. I am an urban planner and spatial researcher, and I love working on cities using data and through discussion. I share here my experiments and exploration with spatial data.</p>
-            <a href="work.html" class="btn">Check out my work</a>
-        </div>
-    </section>
+    </div>
 
     <footer>
         <div class="footer-inner">

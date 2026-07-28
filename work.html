@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Play with maps</title>
+    <title>All work - Play with maps</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -79,6 +79,21 @@
         .dropdown a:hover { background: #2a2a2a; color: #fffffe; }
         .nav-wrap { position: relative; }
 
+        .nav-right { display: flex; align-items: center; gap: 1rem; margin-left: auto; }
+        #google_translate_element select {
+            background: transparent;
+            color: #fffffe;
+            border: 1px solid #555;
+            padding: 0.2rem 0.4rem;
+            font-size: 0.75rem;
+            font-family: inherit;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        #google_translate_element select option { color: #1a1a1a; background: #fff; }
+        .goog-te-gadget { color: transparent !important; font-size: 0 !important; }
+        .goog-te-gadget .goog-te-combo { margin: 0 !important; }
+
         .page {
             max-width: 860px;
             margin: 0 auto;
@@ -88,28 +103,36 @@
             font-size: 1.8rem;
             font-weight: 700;
             line-height: 1.3;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
-        .page p {
-            margin-bottom: 1.2rem;
-            color: #333;
-        }
-        .page a {
-            color: #555;
-            text-decoration: underline;
-            text-underline-offset: 2px;
-        }
-        .page a:hover { color: #000; }
 
-        .pdf-embed {
-            margin: 2rem 0;
-            width: 100%;
-            height: 620px;
-            border: 1px solid #ddd;
+        .work-list {
+            list-style: none;
+            padding: 0;
         }
-        .pdf-embed object {
-            width: 100%;
-            height: 100%;
+        .work-list li {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        .work-list li:last-child { border-bottom: none; }
+        .work-list h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+        .work-list h2 a {
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+        .work-list h2 a:hover { text-decoration: underline; }
+        .work-list .date {
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 0.5rem;
+        }
+        .work-list p {
+            color: #555;
+            font-size: 0.95rem;
         }
 
         .back-link {
@@ -164,7 +187,6 @@
         @media (max-width: 768px) {
             .page h1 { font-size: 1.5rem; }
             .footer-inner { flex-direction: column; gap: 2rem; }
-            .pdf-embed { height: 400px; }
         }
     </style>
 </head>
@@ -172,7 +194,9 @@
 
     <nav>
         <a href="index.html" class="nav-site-title">Play with maps</a>
-        <div class="nav-wrap">
+        <div class="nav-right">
+            <div id="google_translate_element"></div>
+            <div class="nav-wrap">
             <button class="menu-btn" id="menuBtn" aria-label="Menu">
                 <span></span>
                 <span></span>
@@ -184,22 +208,48 @@
                 <li><a href="posts/landscape-analysis.html">Landscape Pattern Analysis</a></li>
                 <li><a href="posts/streets-with-eiffel.html">Streets with Tour Eiffel</a></li>
                 <li><a href="posts/urban-health.html">Mapping urban health and vulnerability</a></li>
-                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="posts/portfolio.html">Portfolio</a></li>
             </ul>
+        </div>
         </div>
     </nav>
 
     <div class="page">
         <a href="index.html" class="back-link">&larr; Back to home</a>
-        <h1>Portfolio</h1>
+        <h1>All work</h1>
 
-        <p>I present here some of my research, academic and professional projects from 2017 to 2021.</p>
-
-        <div class="pdf-embed">
-            <object data="images/portfolio/portfolio_amruta-1.pdf" type="application/pdf" aria-label="Portfolio PDF">
-                <p>Your browser does not support PDFs. <a href="images/portfolio/portfolio_amruta-1.pdf">Download the PDF</a>.</p>
-            </object>
-        </div>
+        <ul class="work-list">
+            <li>
+                <h2><a href="posts/paris-heatwave.html">Public places in Paris during heatwave &ndash; hot or not?</a></h2>
+                <p class="date">July 18, 2026</p>
+                <p>As Paris entered its third heatwave of the summer, how do the city's public spaces perform under extreme temperatures? A look at land surface temperature across parks, plazas, and streets.</p>
+            </li>
+            <li>
+                <h2><a href="posts/velib.html">Checking the pulse of Paris with V&eacute;lib&rsquo;</a></h2>
+                <p class="date">September 11, 2022</p>
+                <p>Analysing the temporal rhythms of Paris through V&eacute;lib&rsquo; bike-sharing data &ndash; exploring morning and evening peaks, weekend patterns, and station-level activity across the city.</p>
+            </li>
+            <li>
+                <h2><a href="posts/urban-health.html">Mapping urban health and vulnerability</a></h2>
+                <p class="date">August 30, 2022</p>
+                <p>An urban health index and vulnerability index for Ferrara, Italy, using open data to understand the relationship between built environment quality and socio-demographic vulnerability at the census tract level.</p>
+            </li>
+            <li>
+                <h2><a href="posts/streets-with-eiffel.html">Streets with Tour Eiffel</a></h2>
+                <p class="date">August 30, 2022</p>
+                <p>A viewshed analysis to identify from which streets in Paris one can spot the Eiffel Tower, using DEM, building heights, and tree canopy data.</p>
+            </li>
+            <li>
+                <h2><a href="posts/landscape-analysis.html">Landscape Pattern Analysis: What data type works better?</a></h2>
+                <p class="date">February 12, 2023</p>
+                <p>Comparing vector and raster data types for landscape connectivity analysis using morphological spatial pattern analysis (MSPA) in the Lisbon metropolitan area.</p>
+            </li>
+            <li>
+                <h2><a href="posts/portfolio.html">Portfolio</a></h2>
+                <p class="date">September 2, 2022</p>
+                <p>Research, academic and professional projects from 2017 to 2021.</p>
+            </li>
+        </ul>
     </div>
 
     <footer>
@@ -235,7 +285,16 @@
                 dropdown.classList.remove('open');
             }
         });
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,fr',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
     </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 </html>

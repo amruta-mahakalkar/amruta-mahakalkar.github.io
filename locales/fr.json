@@ -4,7 +4,7 @@
   },
   "nav": {
     "heatwave": "Les espaces publics à Paris pendant la canicule",
-    "velib": "Prendre le pouls de Paris avec Vélib’",
+    "velib": "Prendre le rythme de Paris avec Vélib’",
     "landscape": "Analyse des motifs paysagers",
     "eiffel": "Rues avec vue sur la Tour Eiffel",
     "urban": "Cartographier la santé et la vulnérabilité urbaines",
@@ -28,7 +28,7 @@
       "desc": "Alors que Paris entrait dans sa troisième canicule de l’été, comment les espaces publics de la ville se comportent-ils sous des températures extrêmes ? Un regard sur la température de surface des sols à travers les parcs, les places et les rues."
     },
     "velib": {
-      "title": "Prendre le pouls de Paris avec Vélib’",
+      "title": "Prendre le rythme de Paris avec Vélib’",
       "desc": "Analyser les rythmes temporels de Paris à travers les données de vélos en libre-service Vélib’ – explorer les pics matinaux et soirées, les tendances du week-end et l’activité au niveau des stations à travers la ville."
     },
     "landscape": {

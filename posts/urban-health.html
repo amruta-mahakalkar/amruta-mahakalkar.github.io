@@ -240,6 +240,7 @@
         }
         .img-center figure {
             margin: 0;
+            max-width: 100%;
         }
 
         .back-link {
@@ -314,8 +315,9 @@
 
         @media (max-width: 768px) {
             .post h1 { font-size: 1.5rem; }
-            .post .cover { width: 100vw; max-height: 300px; }
+            .post .cover { width: 100%; margin-left: 0; max-height: 300px; }
             .post .cover img { height: 300px; }
+            .cover .cover-overlay a { font-size: 1.1rem; text-align: center; }
             .img-col-two { flex-direction: column; }
             .footer-inner { flex-direction: column; gap: 2rem; }
         }
@@ -367,7 +369,7 @@
 
         <div class="img-center">
             <figure>
-                <img src="../images/health/healthy-city.jpg" alt="The health map by Barton and Grant" style="max-width:487px;" />
+                <img src="../images/health/healthy-city.jpg" alt="The health map by Barton and Grant" />
                 <figcaption><em>The health map</em> by Barton and Grant</figcaption>
             </figure>
         </div>
@@ -551,7 +553,7 @@
 
         <div class="img-center">
             <figure>
-                <img src="../images/health/healthy-city.jpg" alt="La carte de la santé par Barton et Grant" style="max-width:487px;" />
+                <img src="../images/health/healthy-city.jpg" alt="La carte de la santé par Barton et Grant" />
                 <figcaption><em>La carte de la santé</em> par Barton et Grant</figcaption>
             </figure>
         </div>

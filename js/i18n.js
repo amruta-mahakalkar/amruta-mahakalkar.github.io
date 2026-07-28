@@ -17,7 +17,13 @@
       if (titleVal) document.title = titleVal;
     }
     document.querySelectorAll('[data-i18n-container]').forEach(function (el) {
-      el.style.display = el.getAttribute('lang') === currentLang ? 'block' : 'none';
+      var isVisible = el.getAttribute('lang') === currentLang;
+      el.style.display = isVisible ? 'block' : 'none';
+      if (isVisible) {
+        el.querySelectorAll('iframe').forEach(function (f) {
+          f.src = f.src;
+        });
+      }
     });
     document.querySelectorAll('.lang-btn').forEach(function (b) {
       b.classList.toggle('active', b.getAttribute('data-lang') === currentLang);

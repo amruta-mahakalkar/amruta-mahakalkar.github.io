@@ -1,51 +1,51 @@
 {
   "site": {
-    "subtitle": "Exp\u00e9rimentations avec des donn\u00e9es urbaines, la cartographie et les outils SIG"
+    "subtitle": "Expérimentations avec des données urbaines, la cartographie et les outils SIG"
   },
   "nav": {
-    "heatwave": "Les espaces publics \u00e0 Paris pendant la canicule",
-    "velib": "Prendre le pouls de Paris avec V\u00e9lib\u2019",
+    "heatwave": "Les espaces publics à Paris pendant la canicule",
+    "velib": "Prendre le pouls de Paris avec Vélib’",
     "landscape": "Analyse des motifs paysagers",
     "eiffel": "Rues avec vue sur la Tour Eiffel",
-    "urban": "Cartographier la sant\u00e9 et la vuln\u00e9rabilit\u00e9 urbaines",
+    "urban": "Cartographier la santé et la vulnérabilité urbaines",
     "portfolio": "Portfolio"
   },
   "hero": {
     "heading": "Bonjour !",
-    "desc": "Je suis Amruta. Je suis urbaniste et chercheuse en donn\u00e9es spatiales, et j\u2019aime travailler sur les villes en utilisant des donn\u00e9es et \u00e0 travers la discussion. Je partage ici mes exp\u00e9rimentations et explorations avec des donn\u00e9es spatiales.",
+    "desc": "Je suis Amruta. Je suis urbaniste et chercheuse en données spatiales, et j’aime travailler sur les villes en utilisant des données et à travers la discussion. Je partage ici mes expérimentations et explorations avec des données spatiales.",
     "cta": "Voir mon travail"
   },
   "footer": {
-    "subtitle": "Exp\u00e9rimentations avec des donn\u00e9es urbaines, la cartographie et les outils SIG",
+    "subtitle": "Expérimentations avec des données urbaines, la cartographie et les outils SIG",
     "get_in_touch": "Me contacter"
   },
   "back": {
-    "home": "\u2190 Retour \u00e0 l\u2019accueil"
+    "home": "← Retour à l’accueil"
   },
   "work": {
     "heatwave": {
-      "title": "Les espaces publics \u00e0 Paris pendant la canicule \u2013 chaud ou pas ?",
-      "desc": "Alors que Paris entrait dans sa troisi\u00e8me canicule de l\u2019\u00e9t\u00e9, comment les espaces publics de la ville se comportent-ils sous des temp\u00e9ratures extr\u00eames ? Un regard sur la temp\u00e9rature de surface des sols \u00e0 travers les parcs, les places et les rues."
+      "title": "Les espaces publics à Paris pendant la canicule – chaud ou pas ?",
+      "desc": "Alors que Paris entrait dans sa troisième canicule de l’été, comment les espaces publics de la ville se comportent-ils sous des températures extrêmes ? Un regard sur la température de surface des sols à travers les parcs, les places et les rues."
     },
     "velib": {
-      "title": "Prendre le pouls de Paris avec V\u00e9lib\u2019",
-      "desc": "Analyser les rythmes temporels de Paris \u00e0 travers les donn\u00e9es de v\u00e9los en libre-service V\u00e9lib\u2019 \u2013 explorer les pics matinaux et soir\u00e9es, les tendances du week-end et l\u2019activit\u00e9 au niveau des stations \u00e0 travers la ville."
+      "title": "Prendre le pouls de Paris avec Vélib’",
+      "desc": "Analyser les rythmes temporels de Paris à travers les données de vélos en libre-service Vélib’ – explorer les pics matinaux et soirées, les tendances du week-end et l’activité au niveau des stations à travers la ville."
     },
     "landscape": {
-      "title": "Analyse des motifs paysagers : quel type de donn\u00e9es fonctionne le mieux ?",
-      "desc": "Comparaison des types de donn\u00e9es vectorielles et raster pour l\u2019analyse de la connectivit\u00e9 paysag\u00e8re en utilisant l\u2019analyse morphologique spatiale (MSPA) dans la r\u00e9gion m\u00e9tropolitaine de Lisbonne."
+      "title": "Analyse des motifs paysagers : quel type de données fonctionne le mieux ?",
+      "desc": "Comparaison des types de données vectorielles et raster pour l’analyse de la connectivité paysagère en utilisant l’analyse morphologique spatiale (MSPA) dans la région métropolitaine de Lisbonne."
     },
     "eiffel": {
       "title": "Rues avec vue sur la Tour Eiffel",
-      "desc": "Une analyse de champ de visibilit\u00e9 pour identifier depuis quelles rues de Paris on peut apercevoir la Tour Eiffel, en utilisant le MNT, les hauteurs des b\u00e2timents et les donn\u00e9es de canop\u00e9e."
+      "desc": "Une analyse de champ de visibilité pour identifier depuis quelles rues de Paris on peut apercevoir la Tour Eiffel, en utilisant le MNT, les hauteurs des bâtiments et les données de canopée."
     },
     "urban": {
-      "title": "Cartographier la sant\u00e9 et la vuln\u00e9rabilit\u00e9 urbaines",
-      "desc": "Un indice de sant\u00e9 urbaine et un indice de vuln\u00e9rabilit\u00e9 pour Ferrare, Italie, utilisant des donn\u00e9es ouvertes pour comprendre la relation entre la qualit\u00e9 du cadre b\u00e2ti et la vuln\u00e9rabilit\u00e9 socio-d\u00e9mographique au niveau du quartier."
+      "title": "Cartographier la santé et la vulnérabilité urbaines",
+      "desc": "Un indice de santé urbaine et un indice de vulnérabilité pour Ferrare, Italie, utilisant des données ouvertes pour comprendre la relation entre la qualité du cadre bâti et la vulnérabilité socio-démographique au niveau du quartier."
     },
     "portfolio": {
       "title": "Portfolio",
-      "desc": "Projets de recherche, acad\u00e9miques et professionnels de 2017 \u00e0 2021."
+      "desc": "Projets de recherche, académiques et professionnels de 2017 à 2021."
     }
   }
 }

@@ -252,8 +252,9 @@
             display: flex;
             flex-wrap: wrap;
             gap: 2rem 4rem;
-            justify-content: space-between;
+            justify-content: center;
         }
+        .footer-col { text-align: center; }
         .footer-col h3 {
             font-size: 0.85rem;
             font-weight: 500;
@@ -264,13 +265,16 @@
             text-align: center;
         }
         .footer-site-title {
+            display: block;
             font-size: 1rem;
             font-weight: 500;
+            text-align: center;
             letter-spacing: 4px;
             text-transform: uppercase;
             margin-bottom: 0.5rem;
         }
         .footer-desc { color: #aaaaaa; font-size: 0.9rem; }
+        a.footer-site-title:hover { opacity: 0.7; }
         .footer-social { display: flex; gap: 1rem; justify-content: center; }
         .footer-social a {
             color: #aaaaaa;
@@ -646,7 +650,7 @@
     <footer>
         <div class="footer-inner">
             <div class="footer-col">
-                <div class="footer-site-title">Play with maps</div>
+                <a href="../index.html" class="footer-site-title">Play with maps</a>
                 <p class="footer-desc" data-i18n="footer.subtitle">Experiments with urban data, mapping and GIS tools</p>
             </div>
             <div class="footer-col">

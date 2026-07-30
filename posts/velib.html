@@ -16,6 +16,9 @@
             background: #ffffff;
             line-height: 1.7;
             font-size: 1.05rem;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         a { text-decoration: none; color: inherit; }
         img { max-width: 100%; height: auto; display: block; }
@@ -290,6 +293,7 @@
             color: #fffffe;
             padding: 4rem 4vw;
             font-size: 0.95rem;
+            margin-top: auto;
         }
         .footer-inner {
             max-width: 1200px;
@@ -297,9 +301,8 @@
             display: flex;
             flex-wrap: wrap;
             gap: 2rem 4rem;
-            justify-content: center;
+            justify-content: space-between;
         }
-        .footer-col { text-align: center; }
         .footer-col h3 {
             font-size: 0.85rem;
             font-weight: 500;
@@ -313,7 +316,6 @@
             display: block;
             font-size: 1rem;
             font-weight: 500;
-            text-align: center;
             letter-spacing: 4px;
             text-transform: uppercase;
             margin-bottom: 0.5rem;

@@ -40,7 +40,7 @@
     },
     "landscape": {
       "title": "Analyse des motifs paysagers : quel type de données fonctionne le mieux ?",
-      "desc": "Comparaison des types de données vectorielles et raster pour l'analyse de la connectivité paysagère en utilisant l'analyse morphologique spatiale (MSPA) dans la région métropolitaine de Lisbonne.",
+      "desc": "Comparaison des types de données vectorielles et raster pour l'analyse de la connectivité paysagère en utilisant l'analyse morphologique spatiale (MSPA) dans la région métropolitaine de Prague.",
       "date": "12 février 2023"
     },
     "eiffel": {

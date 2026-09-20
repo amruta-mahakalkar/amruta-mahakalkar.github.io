@@ -3,6 +3,7 @@
     "subtitle": "Expérimentations avec des données urbaines, la cartographie et les outils SIG"
   },
   "nav": {
+    "mumbai": "Mumbai – le grand paradoxe du logement",
     "heatwave": "Les espaces publics à Paris pendant la canicule",
     "velib": "Prendre le rythme de Paris avec Vélib’",
     "landscape": "Analyse des motifs paysagers",
@@ -28,6 +29,11 @@
     "home": "← Retour à l'accueil"
   },
   "work": {
+    "mumbai": {
+      "title": "Mumbai – le grand paradoxe du logement",
+      "desc": "Contenu de l'article à venir.",
+      "date": "Date à préciser"
+    },
     "heatwave": {
       "title": "Les espaces publics à Paris pendant la canicule – hot or not ?",
       "desc": "Alors que Paris entrait dans sa troisième canicule de l'été, comment les espaces publics de la ville se comportent-ils sous des températures extrêmes ? Un regard sur la température de surface des sols à travers les parcs, les places et les rues.",

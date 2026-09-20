@@ -3,6 +3,7 @@
     "subtitle": "Experiments with urban data, mapping and GIS tools"
   },
   "nav": {
+    "mumbai": "Mumbai \u2013 the great housing paradox",
     "heatwave": "Public places in Paris during heatwave",
     "velib": "Checking the pulse of Paris with V\u00e9lib\u2019",
     "landscape": "Landscape Pattern Analysis",
@@ -28,6 +29,11 @@
     "home": "\u2190 Back to home"
   },
   "work": {
+    "mumbai": {
+      "title": "Mumbai \u2013 the great housing paradox",
+      "desc": "Article content coming soon.",
+      "date": "Date TBD"
+    },
     "heatwave": {
       "title": "Public places in Paris during heatwave \u2013 hot or not?",
       "desc": "As Paris entered its third heatwave of the summer, how do the city\u2019s public spaces perform under extreme temperatures? A look at land surface temperature across parks, plazas, and streets.",

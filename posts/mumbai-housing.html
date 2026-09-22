@@ -447,6 +447,16 @@
         .stat-row .kv b { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; color: var(--accent); display: block; }
         .stat-row .kv span { font-size: 0.8rem; color: var(--mut); }
 
+        /* ===== Intro stat keys ===== */
+        .intro-key { display: flex; gap: 1.6rem; align-items: flex-start; }
+        .intro-key img { flex: 0 0 auto; width: 148px; height: auto; }
+        .key-group { margin-bottom: 1.6rem; }
+        .key-group:last-child { margin-bottom: 0; }
+        .key-group h4 { font-size: 0.72rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #b8871f; margin-bottom: 0.5rem; }
+        .key-group p { font-size: 0.92rem; color: var(--wt-mut); line-height: 1.55; margin-bottom: 0.3rem; }
+        .key-group p:last-child { margin-bottom: 0; }
+        .key-group p b { color: #171612; font-weight: 600; }
+
         /* ===== References ===== */
         .refs-wrap { margin-top: 1.4rem; }
         .refs-wrap details { border-top: 1px solid var(--wt-line); }
@@ -544,6 +554,8 @@
             .hero-sub { max-width: 100%; }
             .refs { columns: 1; }
             .stat b { font-size: 1.6rem; }
+            .intro-key { flex-direction: column; gap: 1rem; }
+            .intro-key img { width: 170px; }
         }
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
@@ -585,14 +597,8 @@
     <!-- ============ HERO ============ -->
     <header class="hero s-dv">
         <div class="wrap">
-            <p class="kicker hero-kicker" data-reveal>Mumbai &middot; Housing &middot; Spatial Policy</p>
             <h1 data-reveal>Mumbai &mdash;<br>the great housing <em>paradox</em></h1>
-            <p class="hero-sub" data-reveal>Five layers of legislation, policy and politics behind the city's housing crisis &mdash; a scroll-driven chronology from 1930 to 2020.</p>
-            <div class="hero-meta" data-reveal>
-                <span><b>Etude</b> Master of Science &middot; Urban Planning and Policy Design</span>
-                <span><b>School</b> Politecnico di Milano &middot; A.Y. 2019/20</span>
-                <span><b>Published</b> Date TBD</span>
-            </div>
+            <p class="hero-sub" data-reveal>This blog is my analysis of housing, particularly slum organisation and management in Mumbai. My insights are drawn from state and local policies stretching from last century until 2021. I used excerpts from Suketu Mehta&rsquo;s <em>Maximum City</em> to weave real life stories and perceptions through a macrostructure of policies and governance decisions.</p>
         </div>
         <div class="scr-hint">scroll<span class="chev"></span></div>
     </header>
@@ -600,16 +606,42 @@
     <!-- ============ INTRO (white) ============ -->
     <section class="s-wt sec">
         <div class="wrap">
-            <p class="kicker" data-reveal>The city</p>
-            <h2 class="h2" data-reveal>A city that mushrooms</h2>
+            <h2 class="h2" data-reveal>Mumbai introduced</h2>
             <div class="sl-grid" data-reveal>
+                <figure class="map-stage">
+                    <img src="../images/mumbai/src/1.svg" alt="Map of Mumbai and the Mumbai Metropolitan Region">
+                </figure>
                 <div class="prose">
-                    <p class="lead">Greater Mumbai is among the most densely populated urban agglomerations in the world &mdash; the main Greater Mumbai Island City and its suburbs on the north-east that gradually mushroomed over the last decades. The island city, though covering just 10% of the MMR, houses a fourth of its population.</p>
-                    <p>Apart from the issues of a typical megacity, Mumbai faces a peculiar problem of housing. It is not just a problem of space, but a complex nexus of political, policy and legislative decisions that has produced this mammoth challenge of housing disparity.</p>
+                    <p>Mumbai (renamed from <strong>Bombay</strong> in 1996) is one of the most significant cities of India and the Global South. Today, the financial, commercial, and entertainment capital of the country, it was originally a collection of seven fishing islands. After being reclaimed into a solid land from the sea only in 1845 by the British, Bombay witnessed an immense industrial growth till the late 20th century, attracting great influx of migrants around the nation.</p>
+                    <p>The second most populous city in India, it is amongst the densest megacities on the planet. Over the last century, with its exploding population, the city, despite its geographical constraints have sprawls outwards and today covers the vast Mumbai Metropolitan Region (MMR) of 4,250 km&sup2;.</p>
+                    <p>With its linear growth along the coast in the beginning, the city can be divided into the main Greater Mumbai Island City and its suburbs on the north-east that gradually mushroomed in the last decades. The island city though covering 10% of MMR, houses a fourth of its population.</p>
+                    <p>Apart from the issues of a typical megacity, Mumbai faces a peculiar problem of housing. It is not just the problem of space but a complex nexus of political, policy and legislative decisions that has produced this mammoth challenge of housing disparity in this city.</p>
                 </div>
-                <figure class="map-stage" data-reveal>
-                    <img src="../images/mumbai/src/p02.png" alt="Housing vs income growth chart, 2018">
-                    <figcaption class="cap">Housing vs. income growth, 2018 &middot; Source: Urban Futures &ndash; Edition 1, Knight Frank 2019</figcaption>
+            </div>
+            <div class="sl-grid" data-reveal>
+                <div class="intro-key">
+                    <img src="../images/mumbai/src/2.svg" alt="Illustration of key Mumbai housing figures">
+                    <div>
+                        <div class="key-group">
+                            <h4>Area</h4>
+                            <p><b>Mumbai Metropolitan Region (MMR)</b> &mdash; 4,253 km&sup2;</p>
+                            <p><b>Greater Mumbai Island City</b> &mdash; 440 km&sup2; (10% of total MMR)</p>
+                        </div>
+                        <div class="key-group">
+                            <h4>Population (2011)</h4>
+                            <p><b>Mumbai Metropolitan Region (MMR)</b> &mdash; 12.44 million</p>
+                            <p><b>Greater Mumbai Island City</b> &mdash; 3.085 million (25% of total MMR)</p>
+                        </div>
+                        <div class="key-group">
+                            <h4>Population Density</h4>
+                            <p><b>Mumbai Metropolitan Region</b> &mdash; 5,360 persons/km&sup2;</p>
+                            <p><b>Greater Mumbai Island City</b> &mdash; 28,425 persons/km&sup2;</p>
+                        </div>
+                    </div>
+                </div>
+                <figure class="map-stage">
+                    <img src="../images/mumbai/src/3.svg" alt="Housing vs income growth chart, 2018">
+                    <figcaption class="cap">Housing vs. Income growth, 2018 &middot; Source: URBAN FUTURES &mdash; Edition 1, Knight Frank 2019</figcaption>
                 </figure>
             </div>
         </div>

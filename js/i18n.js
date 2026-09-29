@@ -31,16 +31,24 @@
     document.documentElement.lang = currentLang;
   }
 
+  /* GitHub Pages serves the locale files with Cache-Control: max-age=600, and
+     applyTranslations() overwrites every [data-i18n] element's textContent. A
+     cached copy of the JSON therefore wins over the text already in the HTML,
+     so visitors can see a stale page for up to ten minutes after a deploy.
+     'no-cache' still allows a 304, it just forces revalidation first. */
+  function fetchLocale(lang) {
+    return fetch('/locales/' + lang + '.json', { cache: 'no-cache' })
+      .then(function (r) { return r.json(); });
+  }
+
   function loadLang(lang) {
     currentLang = lang;
     localStorage.setItem(LANG_KEY, lang);
-    fetch('/locales/' + lang + '.json')
-      .then(function (r) { return r.json(); })
+    fetchLocale(lang)
       .then(function (data) { applyTranslations(data); });
   }
 
-  fetch('/locales/' + currentLang + '.json')
-    .then(function (r) { return r.json(); })
+  fetchLocale(currentLang)
     .then(function (data) { applyTranslations(data); });
 
   window.switchLang = loadLang;

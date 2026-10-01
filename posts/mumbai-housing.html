@@ -463,6 +463,13 @@
         .census-table td:last-child { color: #f3ead2; font-weight: 600; text-align: right; white-space: nowrap; }
         .census-table small { display: block; color: var(--mut); font-weight: 400; font-size: 0.76rem; margin-top: 0.2rem; }
         .stat-em { display: grid; grid-template-columns: 1.1fr 1fr; gap: 2.6rem; align-items: center; margin-top: 3rem; padding: 2rem 0; border-top: 1px solid rgba(240,233,213,.14); border-bottom: 1px solid rgba(240,233,213,.14); }
+        /* 52.5% is the anchor of the whole intro, but as the left cell of a 1.1fr/1fr
+           grid it was pinned hard against the left edge, so the largest type on the
+           page read as a stray marginal note instead of a headline figure.
+           Centring the cell's own content puts it on the middle of the left half,
+           where it balances the two stacked keys opposite. The side column keeps
+           its left alignment, which is what the small caption text needs to read. */
+        .stat-em-main { text-align: center; }
         .stat-em-main b { font-family: "Playfair Display", Georgia, serif; font-size: clamp(3rem, 6vw, 4.5rem); font-weight: 700; line-height: 1; color: var(--accent-dark); display: block; margin-bottom: 0.8rem; }
         .stat-em-main span { color: #f3ead2; font-size: 1.05rem; line-height: 1.45; }
         .stat-em-side .kv { margin-bottom: 0.9rem; }
@@ -768,7 +775,7 @@
    Dropping the track to 62ch hands that width to the image column.
 
    12_13.svg replaces the former 12.svg + 13.svg pair as one composition. It is a
-   portrait piece (0.6182 wide:tall), so the generic .tl-ch-fig rules already do
+   portrait piece (0.6277 wide:tall), so the generic .tl-ch-fig rules already do
    the right thing: width:100% / height:auto fills the image column at the
    artwork's own aspect ratio, undamaged and with no letterboxing. An earlier
    version pinned the image to the text row's height with object-fit:contain,
@@ -809,7 +816,7 @@
 /* 15.svg takes the flexible column on the left, starting on the same edge as the
    chapter title, with the prose in a narrower 48ch column to its right. The
    quote sits under the art rather than in the text column: 15.svg is portrait
-   (0.806) and always width-bound, so the only way to make it bigger is to take
+   (0.757) and always width-bound, so the only way to make it bigger is to take
    width from the prose -- and a narrower measure adds lines, so the prose grows
    as fast as the art does. Keeping the quote out of the text column means the
    prose column is only ever as tall as the three paragraphs, which keeps the
@@ -867,26 +874,30 @@
 /* Needed because .tl-ch .sl-grid -- and the chapter-2 rule above -- both outrank
    the site's own .sl-grid collapse, so each has to be named here. */
 /* Girish's napkin drawing and the quote that reads it, side by side: drawing on
-   the left, quote on the right, both starting on the same line. 6.svg is a
-   landscape piece (1.362 wide:tall) and the quote is a tall three-paragraph
-   block, so the two can never be exactly the same height without either cropping
-   the drawing or cutting the quote down. The drawing is given the wider column
-   and the quote is stepped down a size, which pulls the two much closer while
-   keeping the drawing uncropped and the quote whole. The drawing fills its own
-   column at its natural aspect -- no crop, no letterboxing -- and
-   align-items:start is what puts the two tops on one line. */
+   the left, quote on the right. 6.svg is a landscape piece (1.406 wide:tall) and
+   the quote is a tall three-paragraph block, so the two can never be exactly the
+   same height without either cropping the drawing or cutting the quote down. The
+   drawing is given the wider column and the quote is stepped down a size, which
+   pulls the two much closer while keeping the drawing uncropped and the quote
+   whole. The drawing fills its own column at its natural aspect -- no crop, no
+   letterboxing. align-items:center then seats the drawing on the middle of the
+   quote rather than hanging it off the quote's first line: with a landscape
+   drawing against a tall quote, top-aligning left a wide band of empty column
+   under the art, so the drawing read as a caption to the quote's opening words
+   instead of as the picture the quote is illustrating. Centring matches the
+   drawing to the quote's optical centre. */
 .napkin-row {
   display: grid;
   grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
   gap: 3rem;
-  align-items: start;
+  align-items: center;
   margin-top: 3.4rem;
 }
 .napkin-row .napkin-fig { margin: 0; }
 .napkin-row .napkin-fig img {
   display: block;
   width: 100%;
-  height: auto;   /* keeps 6.svg at its own 1.362 aspect, so nothing stretches */
+  height: auto;   /* keeps 6.svg at its own 1.406 aspect, so nothing stretches */
 }
 .napkin-row .black-q {
   margin: 0;            /* was 3.4rem auto 0, for the stacked full-width layout */

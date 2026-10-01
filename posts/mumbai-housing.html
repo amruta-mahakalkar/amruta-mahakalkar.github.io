@@ -141,11 +141,12 @@
             margin-bottom: 1.6rem;
         }
         .prose p { margin-bottom: 1.3rem; color: inherit; max-width: 62ch; }
-/* Square metres in the running text (2.5 km2, 2000 m2). The browser default for
-   <sup> shrinks the digit to ~83% and raises it on the baseline grid, which is
-   heavier than an exponent wants to be, so the size is stepped down. line-height
-   is zeroed because a raised glyph otherwise grows its own line box and leaves
-   that one line sitting at a different rhythm from the rest of the paragraph. */
+/* Square metres in the running text (2.5 km2, 2000 m2). The browser default for a
+   superscript shrinks the digit to ~83% and raises it on the baseline grid,
+   which is heavier than an exponent wants to be, so the size is stepped down.
+   line-height is zeroed because a raised glyph otherwise grows its own line box
+   and leaves that one line sitting at a different rhythm from the rest of the
+   paragraph. */
 .prose sup { font-size: 0.7em; line-height: 0; vertical-align: super; }
         .prose p.lead { font-size: 1.2rem; color: inherit; }
         .mut { color: var(--mut); }

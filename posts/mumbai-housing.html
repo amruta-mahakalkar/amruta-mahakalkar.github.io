@@ -141,6 +141,12 @@
             margin-bottom: 1.6rem;
         }
         .prose p { margin-bottom: 1.3rem; color: inherit; max-width: 62ch; }
+/* Square metres in the running text (2.5 km2, 2000 m2). The browser default for
+   <sup> shrinks the digit to ~83% and raises it on the baseline grid, which is
+   heavier than an exponent wants to be, so the size is stepped down. line-height
+   is zeroed because a raised glyph otherwise grows its own line box and leaves
+   that one line sitting at a different rhythm from the rest of the paragraph. */
+.prose sup { font-size: 0.7em; line-height: 0; vertical-align: super; }
         .prose p.lead { font-size: 1.2rem; color: inherit; }
         .mut { color: var(--mut); }
         .small { font-size: 0.8rem; color: var(--mut); }
@@ -1158,7 +1164,7 @@
                     <div class="sl-grid">
                         <div class="prose tl-ch-text">
                             <p class="tl-sub">Decline of Cotton Mills, Urban Land Ceiling Act, 1976 and the FSI Conundrum</p>
-                            <p>The once thriving cotton textile industry in Mumbai reached its thresholds and declined in 1980s. This left about 2.5 km2 of under and unused land right in the heart of the city. However, the Urban Land (Ceiling and Holding) Act ULCRA - 1976 and Floor Space Index (FSI) restrictions under the city&#8217;s Development Control Regulations (DCR) made redevelopment of these land parcels impossible, causing an artificial scarcity of land. Mill land owners could not sell their lands without surrendering a large portion of land for public uses due to ULCRA 1976 that limited private ownership of land upto just 2000 m2. Instead of bringing the lands in the market, the Act locked them into legal disputes on state acquisition and compensation.</p>
+                            <p>The once thriving cotton textile industry in Mumbai reached its thresholds and declined in 1980s. This left about 2.5 km<sup>2</sup> of under and unused land right in the heart of the city. However, the Urban Land (Ceiling and Holding) Act ULCRA - 1976 and Floor Space Index (FSI) restrictions under the city&#8217;s Development Control Regulations (DCR) made redevelopment of these land parcels impossible, causing an artificial scarcity of land. Mill land owners could not sell their lands without surrendering a large portion of land for public uses due to ULCRA 1976 that limited private ownership of land upto just 2000 m<sup>2</sup>. Instead of bringing the lands in the market, the Act locked them into legal disputes on state acquisition and compensation.</p>
                             <p>Additionally, the landuse and FSI restriction under the Zoning Laws made it impossible to convert the land use or build a new construction with higher density. In comparison to other global megacities, Mumbai still has an unreasonably low FSI limit of 1.33 in the island city area. The Regional Plan of 1970 instead of optimally utilizing the available vacant land in the city centre for social housing and public spaces, pushed the development in the periphery.</p>
                             <p>Only in 1991, after the revision of the DCRs, redevelopment of these land parcels was specifically permitted, with the condition of reserving a third of land for open spaces, one third for social housing and rest one third for private development. But again the mill owners, not satisfied with the amount of land for profit protested for more land for luxury apartments and commercial use. The court judgment went in favor of the mill workers, but ultimately further reduced the possibility of new affordable housing in the island city.</p>
                         </div>

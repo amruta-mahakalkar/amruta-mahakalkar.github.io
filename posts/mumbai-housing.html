@@ -653,11 +653,44 @@
    else in the chapter already fills the content box, so on narrow screens the
    span is matched to that box. 92vw is the .wrap content width -- the same
    width the chapter figures get once .sl-grid collapses to one column -- and it
-   stays under 100vw, so the full-bleed negative margin can never push the band
-   past the viewport and scroll the page sideways. Band and label both read
-   --tl-span, so they rescale as one unit with the screen. */
+   stays under 100vw, so nothing can push the band past the viewport and scroll
+   the page sideways. Band and label both read --tl-span, so they rescale as one
+   unit with the screen.
+
+   The label art was drawn on the same 786-unit canvas as the band and keeps
+   22-48% of its width blank on the left on purpose, so the words start where
+   the axis does. Phone widths cannot afford that much dead space at 15.8:1, so
+   the left quarter of both the band and the label is dropped and the remaining
+   three quarters are refitted to the same width -- a 1.333x gain. The
+   .tl-axis figure holds both images and is itself --tl-span wide here, so it
+   serves as the crop window for the pair and the two stay locked to the same
+   box. Desktop is deliberately untouched: the full 1930-2020 axis and the
+   full blank-padded labels are the intended alignment on a wide screen. */
 @media (max-width: 760px) {
-  .tl-axis { --tl-span: 92vw; }
+  .tl-axis { --tl-span: 92vw; overflow: hidden; }
+  .tl-axis .tl-band {
+    max-width: none;         /* the shared var(--tl-span) cap would clamp this */
+    width: 133.333%;         /* 100 / 0.75 */
+    margin-left: -33.333%;  /* -0.25 / 0.75, replacing the desktop full-bleed */
+  }
+  /* Drop the full-bleed offset so the label sits in the text column, flush with
+     the band and the prose, rather than hanging off the left edge. */
+  .tl-label-wrap { margin-left: 0; }
+  .tl-label-wrap .tl-label {
+    max-width: none;         /* the desktop 100% cap would clamp the crop */
+    width: 133.333%;
+    margin-left: -33.333%;
+  }
+  /* Each label SVG's own top padding is expressed as a percentage of its
+     viewBox width, and that padding is now drawn 1.333x larger, so the trims
+     above are scaled by the same factor. Percentage margins resolve against the
+     wrapper's width, which is unchanged, so only the numbers move. */
+  .tl-ch[data-chapter="1"] .tl-label { margin-top: -1.053%; }
+  .tl-ch[data-chapter="2"] .tl-label { margin-top: -1.000%; }
+  .tl-ch[data-chapter="3"] .tl-label { margin-top: -1.307%; }
+  .tl-ch[data-chapter="4"] .tl-label { margin-top: -1.467%; }
+  .tl-ch[data-chapter="5"] .tl-label { margin-top: -1.720%; }
+  .tl-ch[data-chapter="6"] .tl-label { margin-top: -0.533%; }
 }
 
 /* Each chapter is a self-contained block: title, axis, label, copy, figures. */

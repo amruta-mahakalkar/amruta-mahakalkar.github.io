@@ -649,66 +649,15 @@
 .tl-ch[data-chapter="5"] .tl-label { margin-top: -1.29%; }   /* slum 2            */
 .tl-ch[data-chapter="6"] .tl-label { margin-top: -0.40%; }   /* shiv sena-cropped */
 
-/* Phone: the timeline is a 788.7 x 49.9 unit strip (aspect 15.79), so at any
-   width that fits a phone viewport the year glyphs land around 3-4px. Rather
-   than ship an unreadable axis, the band is replaced by three stacked windows,
-   each showing a third of the drawn axis at a scale where the years read. The
-   rows are plain <img> copies (not background-image) so the global
-   img { max-width: 100% } cannot clamp them and the SVG's own max-height
-   hint cannot interfere; .tl-row is the crop window.
-
-   Every geometry value below is a coefficient of --tl-span, which is the row
-   width. Scale is set by the 192.2-unit segment filling that width:
-     scale          = --tl-span / 192.2
-     img width      = 788.677 * scale
-     margin-left    = -(segment start) * scale
-     margin-top     = -3 * scale        (3 units of air above the artwork)
-     row height     =  38 * scale        (air + artwork + air, 36.4u of content) */
-.tl-stack { display: none; }
+/* Phone: 79.2vw leaves the strip noticeably short of the edges when everything
+   else in the chapter already fills the content box, so on narrow screens the
+   span is matched to that box. 92vw is the .wrap content width -- the same
+   width the chapter figures get once .sl-grid collapses to one column -- and it
+   stays under 100vw, so the full-bleed negative margin can never push the band
+   past the viewport and scroll the page sideways. Band and label both read
+   --tl-span, so they rescale as one unit with the screen. */
 @media (max-width: 760px) {
-  /* Fill the phone screen: at 79.2vw the strip wastes 21% of the width and the
-     labels sit noticeably short of the edges. */
-  .tl-axis { --tl-span: 100vw; }
-  html { overflow-x: clip; }   /* the full-bleed rows are exactly 100vw; this is a guard */
-
-  .tl-axis .tl-band { display: none; }   /* superseded by .tl-stack */
-  .tl-stack {
-    display: block;
-    width: var(--tl-span);
-    margin-left: calc(50% - 50vw);
-  }
-  .tl-row {
-    display: block;
-    overflow: hidden;
-    height: calc(0.19771 * var(--tl-span));
-    margin-bottom: 0.35rem;
-  }
-  .tl-row:last-child { margin-bottom: 0; }
-  .tl-row img {
-    display: block;
-    max-width: none;                        /* must beat the global img rule */
-    width: calc(4.10342 * var(--tl-span));
-    height: auto;
-    margin-top: calc(-0.015609 * var(--tl-span));
-    margin-left: calc(-0.90323 * var(--tl-span)); /* overridden per row below */
-  }
-  .tl-row:nth-child(2) img { margin-left: calc(-1.90323 * var(--tl-span)); }
-  .tl-row:nth-child(3) img { margin-left: calc(-2.90323 * var(--tl-span)); }
-
-  /* Each label SVG is 786 units wide but its artwork occupies only 52-78% of
-     that, so on a phone the text was rendering at 46% of the design size. Crop
-     to the ink and let it fill the full width instead: 1.6x to 2.4x larger.
-     width/margin are percentages of the wrap (which carries --tl-span); the
-     margin-top trims are the desktop values scaled by the same width factor, so
-     the gap above each label keeps its tuned proportion. */
-  .tl-label-wrap { overflow: hidden; }
-  .tl-label-wrap .tl-label { max-width: none; }   /* the desktop cap would clamp the crop */
-  .tl-ch[data-chapter="1"] .tl-label { width: 138.0%; margin-left: -36.7%; margin-top: -1.09%; }
-  .tl-ch[data-chapter="2"] .tl-label { width: 193.2%; margin-left: -93.2%; margin-top: -1.45%; }
-  .tl-ch[data-chapter="3"] .tl-label { width: 151.2%; margin-left: -51.1%; margin-top: -1.48%; }
-  .tl-ch[data-chapter="4"] .tl-label { width: 128.4%; margin-left: -28.4%; margin-top: -1.41%; }
-  .tl-ch[data-chapter="5"] .tl-label { width: 132.6%; margin-left: -32.6%; margin-top: -1.71%; }
-  .tl-ch[data-chapter="6"] .tl-label { width: 178.0%; margin-left: -70.4%; margin-top: -0.71%; }
+  .tl-axis { --tl-span: 92vw; }
 }
 
 /* Each chapter is a self-contained block: title, axis, label, copy, figures. */
@@ -1148,11 +1097,6 @@
                     <h2 class="h2 tl-ch-title">Rent Control's Unintended Consequences</h2>
                     <figure class="tl-axis">
                         <img class="tl-band" src="../images/mumbai/src/timeline.svg" alt="Mumbai housing timeline, 1930 to 2020">
-                        <div class="tl-stack" aria-hidden="true">
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                        </div>
                         <div class="tl-label-wrap">
                             <img class="tl-label" src="../images/mumbai/src/timeline_labels/rent_control.svg" alt="Rent control layer, 1930 to 2020">
                         </div>
@@ -1174,11 +1118,6 @@
                     <h2 class="h2 tl-ch-title">Cotton Mills and the Lands Ceiled</h2>
                     <figure class="tl-axis">
                         <img class="tl-band" src="../images/mumbai/src/timeline.svg" alt="Mumbai housing timeline, 1930 to 2020">
-                        <div class="tl-stack" aria-hidden="true">
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                        </div>
                         <div class="tl-label-wrap">
                             <img class="tl-label" src="../images/mumbai/src/timeline_labels/cotton mills.svg" alt="Cotton mills layer on the Mumbai housing timeline">
                         </div>
@@ -1203,11 +1142,6 @@
                     <h2 class="h2 tl-ch-title">Say Yes to Sprawls - Metropolitan Regional Plans</h2>
                     <figure class="tl-axis">
                         <img class="tl-band" src="../images/mumbai/src/timeline.svg" alt="Mumbai housing timeline, 1930 to 2020">
-                        <div class="tl-stack" aria-hidden="true">
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                        </div>
                         <div class="tl-label-wrap">
                             <img class="tl-label" src="../images/mumbai/src/timeline_labels/sprawls.svg" alt="Sprawls layer on the Mumbai housing timeline">
                         </div>
@@ -1238,11 +1172,6 @@
                     <h2 class="h2 tl-ch-title">Slums - Bulldozed but not Built Back</h2>
                     <figure class="tl-axis">
                         <img class="tl-band" src="../images/mumbai/src/timeline.svg" alt="Mumbai housing timeline, 1930 to 2020">
-                        <div class="tl-stack" aria-hidden="true">
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                        </div>
                         <div class="tl-label-wrap">
                             <img class="tl-label" src="../images/mumbai/src/timeline_labels/slums 1.svg" alt="Slum clearance layer on the Mumbai housing timeline">
                         </div>
@@ -1267,11 +1196,6 @@
                     <h2 class="h2 tl-ch-title">Slums Solved - Conditions Applied</h2>
                     <figure class="tl-axis">
                         <img class="tl-band" src="../images/mumbai/src/timeline.svg" alt="Mumbai housing timeline, 1930 to 2020">
-                        <div class="tl-stack" aria-hidden="true">
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                        </div>
                         <div class="tl-label-wrap">
                             <img class="tl-label" src="../images/mumbai/src/timeline_labels/slum 2.svg" alt="Slum redevelopment layer on the Mumbai housing timeline">
                         </div>
@@ -1295,11 +1219,6 @@
                     <h2 class="h2 tl-ch-title">Shiv Sena - An Alternate Governance</h2>
                     <figure class="tl-axis">
                         <img class="tl-band" src="../images/mumbai/src/timeline.svg" alt="Mumbai housing timeline, 1930 to 2020">
-                        <div class="tl-stack" aria-hidden="true">
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                            <div class="tl-row"><img src="../images/mumbai/src/timeline.svg" alt=""></div>
-                        </div>
                         <div class="tl-label-wrap">
                             <img class="tl-label" src="../images/mumbai/src/timeline_labels/shiv sena-cropped.svg" alt="Shiv Sena era on the Mumbai housing timeline">
                         </div>
